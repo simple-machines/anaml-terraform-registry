@@ -5,7 +5,7 @@ provider "kubernetes" {
 }
 
 locals {
-  deployment_labals = merge({
+  deployment_labels = merge({
     "app.kubernetes.io/name"       = "anaml-ui"
     "app.kubernetes.io/version"    = var.anaml_ui_version
     "app.kubernetes.io/component"  = "frontend"
@@ -18,19 +18,19 @@ resource "kubernetes_deployment" "anaml_ui" {
   metadata {
     name      = var.kubernetes_deployment_name
     namespace = var.kubernetes_namespace
-    labels    = local.deployment_labals
+    labels    = local.deployment_labels
   }
 
   spec {
     replicas = var.kubernetes_deployment_replicas
 
     selector {
-      match_labels = local.deployment_labals
+      match_labels = local.deployment_labels
     }
 
     template {
       metadata {
-        labels = local.deployment_labals
+        labels = local.deployment_labels
       }
 
       spec {
@@ -81,7 +81,7 @@ resource "kubernetes_service" "anaml_ui" {
   metadata {
     name        = var.kubernetes_deployment_name
     namespace   = var.kubernetes_namespace
-    labels      = local.deployment_labals
+    labels      = local.deployment_labels
     annotations = var.kubernetes_service_annotations
   }
 

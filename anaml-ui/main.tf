@@ -14,7 +14,7 @@ locals {
   }, var.kubernetes_deployment_labels)
 }
 
-resource "kubernetes_deployment" "anaml_ui_deployment" {
+resource "kubernetes_deployment" "anaml_ui" {
   metadata {
     name      = var.kubernetes_deployment_name
     namespace = var.kubernetes_namespace
@@ -72,4 +72,30 @@ resource "kubernetes_deployment" "anaml_ui_deployment" {
       }
     }
   }
+}
+
+# TODO: Do we want to do this (static NodePort) if it's generic? What is the alternative?
+resource "kubernetes_service" "anaml_ui" {
+  # depends_on = [kubernetes_manifest.anaml_ui_backend_config]
+
+  metadata {
+    name      = var.kubernetes_deployment_name
+    namespace = var.kubernetes_namespace
+    labels = local.deployment_labals
+    annotations = var.kubernetes_service_annotations
+  }
+
+  spec {
+    type = "NodePort"
+    selector = {
+      "app.kubernetes.io/name" = "anaml-ui"
+    }
+    port {
+      name        = "http"
+      port        = 8081
+      protocol    = "TCP"
+      target_port = 80
+    }
+  }
+
 }

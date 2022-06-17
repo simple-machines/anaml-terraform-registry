@@ -52,6 +52,12 @@ variable "kubernetes_image_pull_policy" {
   default = "IfNotPresent"
 }
 
+variable "kubernetes_service_annotations" {
+  type = map(string)
+  default = {}
+  description = "Additional annotations to add to Kubernetes anaml-ui service definition"
+}
+
 variable "kubernetes_deployment_labels" {
   type = map(string)
   default = {}

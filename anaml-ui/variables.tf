@@ -49,7 +49,7 @@ variable "kubernetes_deployment_replicas" {
 
 variable "kubernetes_image_pull_policy" {
   type = string
-  default = "Always"
+  default = "IfNotPresent"
 }
 
 variable "kubernetes_deployment_labels" {

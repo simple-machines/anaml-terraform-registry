@@ -8,7 +8,7 @@ resource "kubernetes_deployment" "anaml_ui_deployment" {
   metadata {
     name      = var.kubernetes_deployment_name
     namespace = var.kubernetes_namespace
-    labels = merge({}, var.kubernetes_deployment_labels)
+    labels = var.kubernetes_deployment_labels
   }
 
   spec {
@@ -22,7 +22,7 @@ resource "kubernetes_deployment" "anaml_ui_deployment" {
 
     template {
       metadata {
-        labels = merge({}, var.kubernetes_pod_labels)
+        labels = var.kubernetes_pod_labels
       }
 
       spec {

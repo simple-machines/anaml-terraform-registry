@@ -6,10 +6,10 @@ provider "kubernetes" {
 
 locals {
   deployment_labals = merge({
-    "app.kubernetes.io/name" = "anaml-ui"
-    "app.kubernetes.io/version" = var.anaml_ui_version
-    "app.kubernetes.io/component" = "frontend"
-    "app.kubernetes.io/part-of" = "anaml"
+    "app.kubernetes.io/name"       = "anaml-ui"
+    "app.kubernetes.io/version"    = var.anaml_ui_version
+    "app.kubernetes.io/component"  = "frontend"
+    "app.kubernetes.io/part-of"    = "anaml"
     "app.kubernetes.io/created-by" = "terraform"
   }, var.kubernetes_deployment_labels)
 }
@@ -18,7 +18,7 @@ resource "kubernetes_deployment" "anaml_ui" {
   metadata {
     name      = var.kubernetes_deployment_name
     namespace = var.kubernetes_namespace
-    labels = local.deployment_labals
+    labels    = local.deployment_labals
   }
 
   spec {
@@ -79,9 +79,9 @@ resource "kubernetes_service" "anaml_ui" {
   # depends_on = [kubernetes_manifest.anaml_ui_backend_config]
 
   metadata {
-    name      = var.kubernetes_deployment_name
-    namespace = var.kubernetes_namespace
-    labels = local.deployment_labals
+    name        = var.kubernetes_deployment_name
+    namespace   = var.kubernetes_namespace
+    labels      = local.deployment_labals
     annotations = var.kubernetes_service_annotations
   }
 

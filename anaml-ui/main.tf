@@ -4,30 +4,38 @@ provider "kubernetes" {
   token                  = var.kubernetes_token
 }
 
+locals {
+  deployment_labals = merge({
+    "app.kubernetes.io/name" = "anaml-ui"
+    "app.kubernetes.io/version" = var.anaml_ui_version
+    "app.kubernetes.io/component" = "frontend"
+    "app.kubernetes.io/part-of" = "anaml"
+    "app.kubernetes.io/created-by" = "terraform"
+  }, var.kubernetes_deployment_labels)
+}
+
 resource "kubernetes_deployment" "anaml_ui_deployment" {
   metadata {
     name      = var.kubernetes_deployment_name
     namespace = var.kubernetes_namespace
-    labels = var.kubernetes_deployment_labels
+    labels = local.deployment_labals
   }
 
   spec {
     replicas = var.kubernetes_deployment_replicas
 
     selector {
-      match_labels = {
-        app = "anaml-ui"
-      }
+      match_labels = local.deployment_labals
     }
 
     template {
       metadata {
-        labels = var.kubernetes_pod_labels
+        labels = local.deployment_labals
       }
 
       spec {
         node_selector = {
-          node_pool = "anaml-node-pool"
+          node_pool = var.kubernetes_deployment_node_pool
         }
         container {
           name              = var.kubernetes_deployment_name

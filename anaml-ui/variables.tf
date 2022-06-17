@@ -55,11 +55,13 @@ variable "kubernetes_image_pull_policy" {
 variable "kubernetes_deployment_labels" {
   type = map(string)
   default = {}
+  description = "Additional labels to add to Kubernetes deployment"
 }
 
-variable "kubernetes_pod_labels" {
-  type = map(string)
-  default = {}
+variable "kubernetes_deployment_node_pool" {
+  type = string
+  default = null
+  nullable = true
 }
 
 variable "skin" {

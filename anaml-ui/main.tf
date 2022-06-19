@@ -1,7 +1,10 @@
-provider "kubernetes" {
-  host                   = var.kubernetes_host
-  cluster_ca_certificate = var.kubernetes_cluster_ca_certificate
-  token                  = var.kubernetes_token
+terraform {
+  required_providers {
+    kubernetes = {
+      source = "hashicorp/kubernetes"
+      version = "~> 2.11"
+    }
+  }
 }
 
 locals {

@@ -21,18 +21,6 @@ variable "hostname" {
   description = "The hostname to use for UI links"
 }
 
-variable "kubernetes_host" {
-  type = string
-}
-
-variable "kubernetes_cluster_ca_certificate" {
-  type = string
-}
-
-variable "kubernetes_token" {
-  type = string
-}
-
 variable "kubernetes_namespace" {
   type = string
 }

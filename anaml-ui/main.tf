@@ -53,7 +53,7 @@ resource "kubernetes_deployment" "anaml_ui" {
           }
           env {
             name  = "REACT_APP_API_URL"
-            value = "https://${var.hostname}/api"
+            value = var.api_url
           }
           env {
             name  = "REACT_APP_ENABLE_POLICY"

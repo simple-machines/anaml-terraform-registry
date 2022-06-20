@@ -21,6 +21,10 @@ variable "hostname" {
   description = "The hostname to use for UI links"
 }
 
+variable "api_url" {
+  type = string
+}
+
 variable "kubernetes_namespace" {
   type = string
 }

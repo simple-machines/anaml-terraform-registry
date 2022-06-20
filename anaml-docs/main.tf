@@ -75,5 +75,4 @@ resource "kubernetes_service" "anaml_docs" {
       target_port = 80
     }
   }
-
 }

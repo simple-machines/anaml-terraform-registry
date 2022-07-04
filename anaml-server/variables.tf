@@ -4,7 +4,7 @@ variable "container_registry" {
   description = "The container registry to use to fetch the anaml-server container"
 }
 
-variable "hostname" {
+variable "anaml_external_domain" {
   type        = string
   nullable    = false
   description = "The hostname to use for UI links"
@@ -42,12 +42,17 @@ variable "kubernetes_deployment_labels" {
 }
 
 variable "kubernetes_secret_refs" {
-  type = list(string)
+  type    = list(string)
   default = []
 }
 
-variable "kubernetes_deployment_node_pool" {
-  type     = string
+variable "kubernetes_service_type" {
+  type    = string
+  default = "NodePort"
+}
+
+variable "kubernetes_node_selector" {
+  type     = map(string)
   default  = null
   nullable = true
 }
@@ -58,39 +63,52 @@ variable "anaml_server_version" {
   description = "The version of anaml-server to deploy"
 }
 
-variable "authentication_method" {
-  type        = string
-  description = "End-user authentication method. oidc or form"
-  default     = "form"
-  validation {
-    condition     = var.authentication_method == "oidc" || var.authentication_method == "form"
-    error_message = "Only 'oidc' and 'form' authentication methods are supported."
-  }
-}
-
 variable "oidc_discovery_uri" {
   type        = string
   description = "OpenID Connect discovery URI for OIDC authentcation. Required when using OIDC authentication method."
-  default     = ""
+  default     = null
+}
+
+variable "oidc_enable" {
+  type        = bool
+  description = "Enable OpenID Connect login"
+  default     = false
+}
+
+variable "oidc_client_id" {
+  type        = string
+  default     = null
+}
+
+variable "oidc_client_secret" {
+  type        = string
+  default     = null
+  sensitive   = true
+}
+
+variable "enable_form_client" {
+  type        = bool
+  description = "Enable Login form"
+  default     = false
 }
 
 variable "oidc_permitted_users_group_id" {
   type        = string
   description = "OpenID Connect user group to allow access to Anaml. Optional when using OIDC authentication method."
-  default     = ""
+  default     = null
 }
 
 variable "oidc_additional_scopes" {
   type        = list(string)
-  sensitive   = false
-  description = "OpenID Connect scopes to request from the provider. Optional when using OIDC authentication method."
   default     = []
+  description = "OpenID Connect scopes to request from the provider. Optional when using OIDC authentication method."
+  sensitive   = false
 }
 
 variable "anaml_database_name" {
   type        = string
-  description = "The name of the PostgreSQL database to use for the Anaml Server."
   default     = "anaml"
+  description = "The name of the PostgreSQL database to use for the Anaml Server."
 }
 
 variable "anaml_database_schema_name" {
@@ -103,17 +121,43 @@ variable "postgres_host" {
 }
 
 variable "postgres_port" {
-  type = number
+  type    = number
   default = "5432"
 }
 
 variable "postgres_user" {
-  type = string
+  type    = string
   default = null
 }
 
 # TODO: shouldn't do this as will be stored in state store. Refactor out
 variable "postgres_password" {
-  type = string
+  type    = string
   default = null
+}
+
+
+variable "anaml_admin_email" {
+  type        = string
+  default     = null
+  description = "If enable_form_client is true, the admin account email address for sign in"
+}
+
+variable "anaml_admin_password" {
+  type        = string
+  default     = null
+  description = "If enable_form_client is true, the initial admin account password for sign in"
+  sensitive   = true
+}
+
+variable "anaml_admin_secret" {
+  type        = string
+  default     = null
+  sensitive   = true
+}
+
+variable "anaml_admin_token" {
+  type        = string
+  default     = null
+  sensitive   = true
 }

@@ -1,4 +1,5 @@
 terraform {
+  required_version = ">= 1.1"
   required_providers {
     kubernetes = {
       source  = "hashicorp/kubernetes"
@@ -31,15 +32,21 @@ resource "kubernetes_config_map" "anaml_server" {
     ANAML_POSTGRES_PORT            = var.postgres_port
     ANAML_POSTGRES_USER            = var.postgres_user
 
+    ANAML_ADMIN_EMAIL    = var.anaml_admin_email
+    ANAML_ADMIN_PASSWORD = var.anaml_admin_password
+    ANAML_ADMIN_SECRET   = var.anaml_admin_secret
+    ANAML_ADMIN_TOKEN    = var.anaml_admin_token
 
-    JAVA_OPTS = "-Dconfig.file=/config/application.conf -Dlog4j2.configurationFile=/config/log4j2.xml"
+    OIDC_CLIENT_ID     = var.oidc_client_id
+    OIDC_CLIENT_SECRET = var.oidc_client_secret
 
     "application.conf" = templatefile("${path.module}/_templates/application.conf", {
-      anaml_external_domain   = var.hostname
-      authentication_method   = var.authentication_method
-      discovery_uri           = var.oidc_discovery_uri
-      permitted_user_group_id = var.oidc_permitted_users_group_id
-      additional_scopes       = var.oidc_additional_scopes
+      anaml_external_domain   = var.anaml_external_domain
+      enable_oidc_client      = var.oidc_enable
+      enable_form_client      = var.enable_form_client
+      discovery_uri           = var.oidc_discovery_uri != null ? var.oidc_discovery_uri : ""
+      permitted_user_group_id = var.oidc_permitted_users_group_id != null ? var.oidc_permitted_users_group_id : ""
+      additional_scopes       = var.oidc_additional_scopes != null ? var.oidc_additional_scopes : []
     })
 
     "log4j2.xml" = file("${path.module}/_templates/log4j2.xml")
@@ -72,9 +79,9 @@ resource "kubernetes_deployment" "anaml_server" {
             name = kubernetes_config_map.anaml_server.metadata.0.name
           }
         }
-        node_selector = {
-          node_pool = var.kubernetes_deployment_node_pool
-        }
+
+        node_selector = var.kubernetes_node_selector
+
         container {
           name              = var.kubernetes_deployment_name
           image             = "${var.container_registry}/anaml-server:${var.anaml_server_version}"
@@ -82,6 +89,7 @@ resource "kubernetes_deployment" "anaml_server" {
 
           port {
             container_port = 8080
+            name           = "http-web-svc"
           }
 
           liveness_probe {
@@ -90,8 +98,35 @@ resource "kubernetes_deployment" "anaml_server" {
               port = 8080
             }
 
-            initial_delay_seconds = 15
-            period_seconds        = 3
+            initial_delay_seconds = 30
+            period_seconds        = 10
+            timeout_seconds       = 5
+            failure_threshold     = 3
+          }
+
+          readiness_probe {
+            http_get {
+              path = "/"
+              port = 8080
+            }
+
+            initial_delay_seconds = 30
+            period_seconds        = 10
+            timeout_seconds       = 5
+            failure_threshold     = 3
+          }
+
+          # Startup probe allows enough time (180 seconds) for DB migrations to run
+          startup_probe {
+            http_get {
+              path = "/"
+              port = 8080
+            }
+
+            period_seconds  = 10
+            initial_delay_seconds = 10
+            timeout_seconds = 5
+            failure_threshold = 18
           }
 
           volume_mount {
@@ -100,9 +135,14 @@ resource "kubernetes_deployment" "anaml_server" {
             read_only  = true
           }
 
+          env {
+            name  = "JAVA_OPTS"
+            value = "-Dconfig.file=/config/application.conf -Dlog4j2.configurationFile=/config/log4j2.xml"
+          }
+
           env_from {
             config_map_ref {
-              name = "${var.kubernetes_deployment_name}"
+              name = var.kubernetes_deployment_name
             }
           }
 
@@ -127,27 +167,34 @@ resource "kubernetes_deployment" "anaml_server" {
       }
     }
   }
+
+  timeouts {
+    create = "5m"
+  }
 }
 
-# TODO: Do we want to do this (static NodePort) if it's generic? What is the alternative?
-# resource "kubernetes_service" "anaml_server" {
-#   metadata {
-#     name        = var.kubernetes_deployment_name
-#     namespace   = var.kubernetes_namespace
-#     labels      = local.deployment_labels
-#     annotations = var.kubernetes_service_annotations
-#   }
+resource "kubernetes_service" "anaml_server" {
+  metadata {
+    name        = var.kubernetes_deployment_name
+    namespace   = var.kubernetes_namespace
+    labels      = local.deployment_labels
+    annotations = var.kubernetes_service_annotations
+  }
 
-#   spec {
-#     type = "NodePort"
-#     selector = {
-#       "app.kubernetes.io/name" = "anaml-server"
-#     }
-#     port {
-#       name        = "http"
-#       port        = 8082
-#       protocol    = "TCP"
-#       target_port = 80
-#     }
-#   }
-# }
+  spec {
+    type = var.kubernetes_service_type
+    selector = {
+      "app.kubernetes.io/name" = "anaml-server"
+    }
+    port {
+      name        = "http"
+      port        = 8080
+      protocol    = "TCP"
+      target_port = "http-web-svc"
+    }
+  }
+
+  lifecycle {
+    ignore_changes = [metadata[0].annotations["cloud.google.com/neg-status"]]
+  }
+}

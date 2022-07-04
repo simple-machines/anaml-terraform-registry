@@ -1,7 +1,8 @@
 terraform {
+  required_version = ">= 1.1"
   required_providers {
     kubernetes = {
-      source = "hashicorp/kubernetes"
+      source  = "hashicorp/kubernetes"
       version = "~> 2.11"
     }
   }
@@ -37,42 +38,71 @@ resource "kubernetes_deployment" "anaml_docs" {
       }
 
       spec {
-        node_selector = {
-          node_pool = var.kubernetes_deployment_node_pool
-        }
+        node_selector = var.kubernetes_node_selector
+
         container {
           name              = var.kubernetes_deployment_name
           image             = "${var.container_registry}/anaml-docs:${var.anaml_docs_version}"
           image_pull_policy = var.kubernetes_image_pull_policy
           port {
             container_port = 80
+            name           = "http-web-svc"
           }
           args = ["https://${var.hostname}", "docs"]
+
+          liveness_probe {
+            http_get {
+              path = "/"
+              port = 80
+            }
+
+            initial_delay_seconds = 10
+            period_seconds        = 10
+            failure_threshold     = 3
+            timeout_seconds       = 5
+          }
+
+          readiness_probe {
+            http_get {
+              path = "/"
+              port = 80
+            }
+
+            period_seconds  = 5
+            timeout_seconds = 5
+          }
         }
       }
     }
   }
+
+  timeouts {
+    create = "5m"
+  }
 }
 
-# TODO: Do we want to do this (static NodePort) if it's generic? What is the alternative?
 resource "kubernetes_service" "anaml_docs" {
   metadata {
+    annotations = var.kubernetes_service_annotations
+    labels      = local.deployment_labels
     name        = var.kubernetes_deployment_name
     namespace   = var.kubernetes_namespace
-    labels      = local.deployment_labels
-    annotations = var.kubernetes_service_annotations
   }
 
   spec {
-    type = "NodePort"
+    type = var.kubernetes_service_type
     selector = {
       "app.kubernetes.io/name" = "anaml-docs"
     }
     port {
       name        = "http"
-      port        = 8082
+      port        = 80
       protocol    = "TCP"
-      target_port = 80
+      target_port = "http-web-svc"
     }
+  }
+
+  lifecycle {
+    ignore_changes = [metadata[0].annotations["cloud.google.com/neg-status"]]
   }
 }

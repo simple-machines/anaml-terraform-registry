@@ -1,3 +1,9 @@
+variable "anaml_docs_version" {
+  type        = string
+  nullable    = false
+  description = "The version of anaml-docs to deploy"
+}
+
 variable "container_registry" {
   type        = string
   nullable    = false
@@ -8,10 +14,6 @@ variable "hostname" {
   type        = string
   nullable    = false
   description = "The hostname to use for UI links"
-}
-
-variable "kubernetes_namespace" {
-  type = string
 }
 
 variable "kubernetes_deployment_name" {
@@ -29,26 +31,29 @@ variable "kubernetes_image_pull_policy" {
   default = "IfNotPresent"
 }
 
-variable "kubernetes_service_annotations" {
-  type        = map(string)
-  default     = {}
-  description = "Additional annotations to add to Kubernetes anaml-docs service definition"
+variable "kubernetes_namespace" {
+  type = string
 }
 
-variable "kubernetes_deployment_labels" {
-  type        = map(string)
-  default     = {}
-  description = "Additional labels to add to Kubernetes deployment"
-}
-
-variable "kubernetes_deployment_node_pool" {
-  type     = string
+variable "kubernetes_node_selector" {
+  type     = map(string)
   default  = null
   nullable = true
 }
 
-variable "anaml_docs_version" {
-  type        = string
-  nullable    = false
-  description = "The version of anaml-docs to deploy"
+variable "kubernetes_deployment_labels" {
+  type        = map(string)
+  default     = null
+  description = "Kubernetes labels to set if any. These values will be merged with the defaults"
+}
+
+variable "kubernetes_service_annotations" {
+  type        = map(string)
+  default     = null
+  description = "Kubernetes service annotations to set if any"
+}
+
+variable "kubernetes_service_type" {
+  type    = string
+  default = "ClusterIP"
 }

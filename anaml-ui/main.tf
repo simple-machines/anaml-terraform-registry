@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     kubernetes = {
-      source = "hashicorp/kubernetes"
+      source  = "hashicorp/kubernetes"
       version = "~> 2.11"
     }
   }
@@ -37,15 +37,15 @@ resource "kubernetes_deployment" "anaml_ui" {
       }
 
       spec {
-        node_selector = {
-          node_pool = var.kubernetes_deployment_node_pool
-        }
+        node_selector = var.kubernetes_node_selector
+
         container {
           name              = var.kubernetes_deployment_name
           image             = "${var.container_registry}/anaml-ui:${var.anaml_ui_version}"
           image_pull_policy = var.kubernetes_image_pull_policy
           port {
             container_port = 80
+            name           = "http-web-svc"
           }
           env {
             name  = "ANAML_EXTERNAL_DOMAIN"
@@ -71,16 +71,39 @@ resource "kubernetes_deployment" "anaml_ui" {
             name  = "SPARK_HISTORY_SERVER"
             value = var.spark_history_server_url
           }
+
+          liveness_probe {
+            http_get {
+              path = "/"
+              port = 80
+            }
+
+            initial_delay_seconds = 10
+            period_seconds        = 10
+            failure_threshold     = 3
+            timeout_seconds       = 5
+          }
+
+          readiness_probe {
+            http_get {
+              path = "/"
+              port = 80
+            }
+
+            period_seconds  = 5
+            timeout_seconds = 5
+          }
         }
       }
     }
   }
+
+  timeouts {
+    create = "5m"
+  }
 }
 
-# TODO: Do we want to do this (static NodePort) if it's generic? What is the alternative?
 resource "kubernetes_service" "anaml_ui" {
-  # depends_on = [kubernetes_manifest.anaml_ui_backend_config]
-
   metadata {
     name        = var.kubernetes_deployment_name
     namespace   = var.kubernetes_namespace
@@ -89,16 +112,19 @@ resource "kubernetes_service" "anaml_ui" {
   }
 
   spec {
-    type = "NodePort"
+    type = var.kubernetes_service_type
     selector = {
       "app.kubernetes.io/name" = "anaml-ui"
     }
     port {
       name        = "http"
-      port        = 8081
+      port        = 80
       protocol    = "TCP"
-      target_port = 80
+      target_port = "http-web-svc"
     }
   }
 
+  lifecycle {
+    ignore_changes = [metadata[0].annotations["cloud.google.com/neg-status"]]
+  }
 }

@@ -6,7 +6,7 @@ variable "container_registry" {
 
 variable "docs_url" {
   type    = string
-  default = "https://example.com/docs"
+  nullable = false
 }
 
 variable "enable_new_functionality" {
@@ -50,14 +50,19 @@ variable "kubernetes_service_annotations" {
   description = "Additional annotations to add to Kubernetes anaml-ui service definition"
 }
 
+variable "kubernetes_service_type" {
+  type = string
+  default = "NodePort"
+}
+
 variable "kubernetes_deployment_labels" {
   type        = map(string)
   default     = {}
   description = "Additional labels to add to Kubernetes deployment"
 }
 
-variable "kubernetes_deployment_node_pool" {
-  type     = string
+variable "kubernetes_node_selector" {
+  type     = map(string)
   default  = null
   nullable = true
 }
@@ -71,7 +76,7 @@ variable "skin" {
 
 variable "spark_history_server_url" {
   type    = string
-  default = "https://example.com"
+  nullable = false
 }
 
 variable "anaml_ui_version" {

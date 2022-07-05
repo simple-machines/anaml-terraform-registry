@@ -9,11 +9,15 @@ terraform {
 }
 
 locals {
-  version = "14.3"
+  # Pinned to 14.4.0.
+  version =  {
+    number  = "14.4.0"
+    sha     = "sha256:55a57492116045a79c4df4528a4778a31ea13ab31dbc4ee4d8f6c17f67422473"
+  }
 
   deployment_labels = merge({
     "app.kubernetes.io/name"       = "postgres"
-    "app.kubernetes.io/version"    = local.version
+    "app.kubernetes.io/version"    = local.version.number
     "app.kubernetes.io/component"  = "database"
     "app.kubernetes.io/part-of"    = "anaml"
     "app.kubernetes.io/created-by" = "terraform"
@@ -46,7 +50,8 @@ resource "kubernetes_stateful_set" "postgres" {
         # Set permissions on the volume so Postgres can write to it as user 1001 (Bitnami default postgres user)
         init_container {
           name = "init-chown-data"
-          image = "busybox:latest"
+          # Pinned to 1.31.1
+          image = "busybox@sha256:dcdf379c574e1773d703f0c0d56d67594e7a91d6b84d11ff46799f60fb081c52"
           image_pull_policy = "IfNotPresent"
           command = ["chown", "-R", "1001:1001", "/bitnami/postgresql"]
 
@@ -59,8 +64,8 @@ resource "kubernetes_stateful_set" "postgres" {
 
         container {
           name  = "postgres"
-          # Pinned to 14.4.0. Bitnami is the re-packaged official Postgres contained with non root support. Bitnami is VMWare so we trust this image
-          image = "bitnami/postgresql@sha256:55a57492116045a79c4df4528a4778a31ea13ab31dbc4ee4d8f6c17f67422473"
+          # Bitnami is the re-packaged official Postgres contained with non root support. Bitnami is VMWare so we trust this image
+          image = "bitnami/postgresql@${local.version.sha}"
           port {
             container_port = 5432
           }

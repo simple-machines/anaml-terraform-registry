@@ -59,7 +59,8 @@ resource "kubernetes_stateful_set" "postgres" {
 
         container {
           name  = "postgres"
-          image = "bitnami/postgresql:14.4.0" # Bitnami is re-packaged official postgres with non root support. Bitnami is VMWare so trusted
+          # Pinned to 14.4.0. Bitnami is the re-packaged official Postgres contained with non root support. Bitnami is VMWare so we trust this image
+          image = "bitnami/postgresql@sha256:55a57492116045a79c4df4528a4778a31ea13ab31dbc4ee4d8f6c17f67422473"
           port {
             container_port = 5432
           }

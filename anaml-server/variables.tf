@@ -109,11 +109,14 @@ variable "anaml_database_name" {
   type        = string
   default     = "anaml"
   description = "The name of the PostgreSQL database to use for the Anaml Server."
+  nullable    = false
 }
 
 variable "anaml_database_schema_name" {
   type        = string
+  default     = "anaml"
   description = "The name of the PostgreSQL schema to use for the Anaml server."
+  nullable    = false
 }
 
 variable "postgres_host" {
@@ -130,7 +133,6 @@ variable "postgres_user" {
   default = null
 }
 
-# TODO: shouldn't do this as will be stored in state store. Refactor out
 variable "postgres_password" {
   type    = string
   default = null

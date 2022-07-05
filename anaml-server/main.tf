@@ -26,8 +26,8 @@ resource "kubernetes_config_map" "anaml_server" {
   }
 
   data = {
-    ANAML_POSTGRES_DATABASE_NAME   = var.anaml_database_schema_name
-    ANAML_POSTGRES_DATABASE_SCHEMA = var.anaml_database_name
+    ANAML_POSTGRES_DATABASE_NAME   = var.anaml_database_name
+    ANAML_POSTGRES_DATABASE_SCHEMA = var.anaml_database_schema_name
     ANAML_POSTGRES_HOST            = var.postgres_host
     ANAML_POSTGRES_PORT            = var.postgres_port
     ANAML_POSTGRES_USER            = var.postgres_user

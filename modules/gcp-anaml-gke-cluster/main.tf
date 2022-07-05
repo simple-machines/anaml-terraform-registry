@@ -14,7 +14,7 @@ module "gke_cluster" {
   source                 = "terraform-google-modules/kubernetes-engine/google//modules/private-cluster"
   version                = "21.1.0"
   grant_registry_access  = true
-  project_id             = var.gcp_project_name
+  project_id             = var.gcp_project_id
   name                   = "${var.name_prefix}-${random_id.name_suffix.hex}"
   region                 = var.gcp_region
   regional               = var.regional
@@ -47,9 +47,9 @@ module "gke_cluster" {
       name               = "anaml-app-pool"
       machine_type       = var.anaml_app_pool_machine_type
       node_locations     = join(",", var.gcp_zones)
-      min_count          = var.min_anaml_node_pool_size
-      max_count          = var.max_anaml_node_pool_size
-      initial_node_count = var.min_anaml_node_pool_size
+      min_count          = var.min_anaml_app_node_pool_size
+      max_count          = var.max_anaml_app_node_pool_size
+      initial_node_count = var.min_anaml_app_node_pool_size
       disk_size_gb       = 100
       auto_upgrade       = true
     },
@@ -60,8 +60,8 @@ module "gke_cluster" {
       preemptible        = true
       node_locations     = join(",", var.gcp_zones)
       autoscaling        = true
-      min_count          = 0
-      max_count          = 8
+      min_count          = var.min_anaml_spark_node_pool_size
+      max_count          = var.max_anaml_spark_node_pool_size
       initial_node_count = 0
       disk_size_gb       = 200
       local_ssd_count    = 0
@@ -81,7 +81,7 @@ module "gke_cluster" {
 
 # Allow cluster to scale down to a single node
 resource "kubernetes_pod_disruption_budget" "kube_dns" {
-  count = var.max_anaml_node_pool_size <= 2 ? 1 : 0
+  count = var.max_anaml_app_node_pool_size <= 2 ? 1 : 0
 
   metadata {
     name      = "kube-dns-pdb"
@@ -101,7 +101,7 @@ resource "kubernetes_pod_disruption_budget" "kube_dns" {
 
 module "gke_auth" {
   source       = "terraform-google-modules/kubernetes-engine/google//modules/auth"
-  project_id   = var.gcp_project_name
+  project_id   = var.gcp_project_id
   cluster_name = module.gke_cluster.name
   location     = module.gke_cluster.region
 }

@@ -6,7 +6,7 @@ To use a module use the below:
 
 ```
 module "foo" {
-  source = "git@github.com:simple-machines/anaml-terraform-registry.git//[MODULE-NAME]"
+  source = "git@github.com:simple-machines/anaml-terraform-registry.git//modules/[MODULE-NAME]"
   [INSERT MODULE PARAMETERS]
 }
 ```

@@ -1,6 +1,6 @@
 variable "anaml_route_not_found_service_version" {
   type        = string
-  default     = "v0.2"
+  default     = "v0.3"
   description = "The version of anaml-route-not-found-service to deploy"
   nullable    = false
 }

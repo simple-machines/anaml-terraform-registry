@@ -45,9 +45,14 @@ resource "kubernetes_deployment" "anaml_route_not_found_service" {
           image             = "${var.container_registry}/anaml-route-not-found-service:${var.anaml_route_not_found_service_version}"
           image_pull_policy = var.kubernetes_image_pull_policy
           port {
-            container_port = 80
+            container_port = 8080
             name           = "http-web-svc"
           }
+        }
+
+        security_context {
+          run_as_non_root = true
+          run_as_user = 101 #nginx user in container
         }
       }
     }

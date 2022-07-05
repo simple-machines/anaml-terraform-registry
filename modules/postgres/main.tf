@@ -109,7 +109,7 @@ resource "kubernetes_stateful_set" "postgres" {
           fs_group = 1001
         }
 
-        termination_grace_period_seconds = 300
+        termination_grace_period_seconds = 60
       }
     }
 

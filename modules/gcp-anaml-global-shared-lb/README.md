@@ -6,7 +6,7 @@ It's likely you do not want to deploy this!
 
 This module is for multi-tenant environments allowing a GKE cluster serving multiple instances of Anaml to use a single GCP Global Loadbalancer for routing instead of a Loadbalancer per deployment if using standard Kubernetes Ingress.
 
-This module relies upon Google Clouds and GKE built in Network Endpoint Group (NEG) functionality.
+This module relies on Google Clouds and GKE built in Network Endpoint Group (NEG) functionality.
 
 To use this module deployments need to be annotated with `cloud.google.com/neg` annotations. See the below example:
 

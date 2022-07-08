@@ -46,10 +46,18 @@ resource "google_sql_database_instance" "anaml_postgres_instance" {
   project             = var.project_name
 }
 
-# resource "google_sql_user" "users" {
-#   for_each        = toset(var.postgresql_deploy_versions)
-#   name            = "postgres"
-#   instance        = google_sql_database_instance.anaml_postgres_instance[each.key].name
-#   password        = random_password.anaml_postgres_password.result
-#   deletion_policy = "ABANDON"
-# }
+
+resource "google_sql_database" "anaml" {
+  for_each         = toset(var.postgresql_deploy_versions)
+
+  name     = "anaml"
+  instance = google_sql_database_instance.anaml_postgres_instance[each.key].name
+}
+
+resource "google_sql_user" "users" {
+  for_each        = toset(var.postgresql_deploy_versions)
+  name            = "postgres"
+  instance        = google_sql_database_instance.anaml_postgres_instance[each.key].name
+  password        = random_password.anaml_postgres_password.result
+  deletion_policy = "ABANDON"
+}

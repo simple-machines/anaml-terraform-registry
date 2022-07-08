@@ -261,3 +261,37 @@ variable "kubernetes_persistent_volume_claim_storage_class_name_postgres" {
   type    = string
   default = null
 }
+
+variable "kubernetes_pod_anaml_server_sidecars" {
+  type = set(
+    object({
+      name              = string,
+      image             = string,
+      image_pull_policy = optional(string), # Optional
+
+      command = optional(list(string))
+
+      env = optional(list(object({
+        name  = string,
+        value = string,
+      })))
+
+      env_from = optional(list(object({
+        config_map_ref = object({ name = string })
+        secret_ref     = object({ name = string })
+      })))
+
+      volume_mount = optional(list(object({
+        name       = string,
+        mount_path = string,
+        read_only  = bool
+      })))
+
+      security_context = optional(object({
+        run_as_non_root = optional(bool)
+      }))
+    })
+  )
+  default     = []
+  description = "Optional sidecars to provision i.e. Google Cloud SQL Auth Proxy if deploying in GCP"
+}

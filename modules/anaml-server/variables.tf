@@ -42,7 +42,7 @@ variable "kubernetes_deployment_labels" {
 }
 
 variable "kubernetes_secret_refs" {
-  type    = list(string)
+  type    = set(string)
   default = []
 }
 
@@ -55,6 +55,40 @@ variable "kubernetes_node_selector" {
   type     = map(string)
   default  = null
   nullable = true
+}
+
+variable "kubernetes_pod_sidecars" {
+  type = set(
+    object({
+      name              = string,
+      image             = string,
+      image_pull_policy = optional(string), # Optional
+
+      command = optional(list(string))
+
+      env = optional(list(object({
+        name  = string,
+        value = string,
+      })))
+
+      env_from = optional(list(object({
+        config_map_ref = object({ name = string })
+        secret_ref     = object({ name = string })
+      })))
+
+      volume_mount = optional(list(object({
+        name       = string,
+        mount_path = string,
+        read_only  = bool
+      })))
+
+      security_context = optional(object({
+        run_as_non_root = optional(bool)
+      }))
+    })
+  )
+  default     = []
+  description = "Optional sidecars to provision i.e. Google Cloud SQL Auth Proxy if deploying in GCP"
 }
 
 variable "anaml_server_version" {
@@ -76,14 +110,14 @@ variable "oidc_enable" {
 }
 
 variable "oidc_client_id" {
-  type        = string
-  default     = null
+  type    = string
+  default = null
 }
 
 variable "oidc_client_secret" {
-  type        = string
-  default     = null
-  sensitive   = true
+  type      = string
+  default   = null
+  sensitive = true
 }
 
 variable "enable_form_client" {
@@ -99,7 +133,7 @@ variable "oidc_permitted_users_group_id" {
 }
 
 variable "oidc_additional_scopes" {
-  type        = list(string)
+  type        = set(string)
   default     = []
   description = "OpenID Connect scopes to request from the provider. Optional when using OIDC authentication method."
   sensitive   = false
@@ -153,13 +187,13 @@ variable "anaml_admin_password" {
 }
 
 variable "anaml_admin_secret" {
-  type        = string
-  default     = null
-  sensitive   = true
+  type      = string
+  default   = null
+  sensitive = true
 }
 
 variable "anaml_admin_token" {
-  type        = string
-  default     = null
-  sensitive   = true
+  type      = string
+  default   = null
+  sensitive = true
 }

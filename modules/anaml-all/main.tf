@@ -6,6 +6,8 @@ terraform {
       version = "~> 2.11"
     }
   }
+
+  experiments = [module_variable_optional_attrs]
 }
 
 resource "kubernetes_namespace" "anaml_namespace" {
@@ -72,6 +74,8 @@ module "anaml-server" {
   postgres_password              = "$(PGPASSWORD)"
   postgres_port                  = var.postgres_port
   postgres_user                  = var.postgres_user
+
+  kubernetes_pod_sidecars = var.kubernetes_pod_anaml_server_sidecars
 
   depends_on = [kubernetes_namespace.anaml_namespace]
 }

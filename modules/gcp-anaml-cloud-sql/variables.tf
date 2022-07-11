@@ -62,3 +62,13 @@ variable "insights_config_record_client_address" {
   type = bool
   default = false
 }
+
+variable "password" {
+  type = string
+  nullable = false
+}
+
+variable "user" {
+  type = string
+  default = "anaml"
+}

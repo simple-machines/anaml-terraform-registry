@@ -17,11 +17,6 @@ resource "random_id" "anaml_db_name_suffix" {
   byte_length = 4
 }
 
-resource "random_password" "anaml_postgres_password" {
-  length  = 32
-  special = false
-}
-
 resource "google_sql_database_instance" "anaml_postgres_instance" {
   for_each         = toset(var.postgresql_deploy_versions)
   name             = "${var.name_prefix}${random_id.anaml_db_name_suffix[each.key].hex}"
@@ -56,8 +51,8 @@ resource "google_sql_database" "anaml" {
 
 resource "google_sql_user" "users" {
   for_each        = toset(var.postgresql_deploy_versions)
-  name            = "postgres"
+  name            = var.user
   instance        = google_sql_database_instance.anaml_postgres_instance[each.key].name
-  password        = random_password.anaml_postgres_password.result
+  password        = var.password
   deletion_policy = "ABANDON"
 }

@@ -96,14 +96,3 @@ output "name" {
     for k, v in  google_sql_database_instance.anaml_postgres_instance: k => v.name
   }
 }
-
-output "db_user" {
-  value = {
-    for k, v in  google_sql_user.users: k => v.name
-  }
-}
-
-output "db_password" {
-  value = random_password.anaml_postgres_password
-  sensitive = true
-}

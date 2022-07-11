@@ -33,6 +33,17 @@ resource "kubernetes_secret" "postgres_secret" {
   depends_on = [kubernetes_namespace.anaml_namespace]
 }
 
+
+resource "kubernetes_service_account" "anaml" {
+  count = var.kubernetes_service_account_create && var.kubernetes_service_account_name != null ? 1 : 0
+  metadata {
+    name = var.kubernetes_service_account_name
+    namespace = var.kubernetes_namespace_name
+    annotations = var.kubernetes_service_account_annotations
+  }
+
+}
+
 module "anaml-docs" {
   source = "../anaml-docs"
 

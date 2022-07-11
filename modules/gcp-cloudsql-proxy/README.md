@@ -9,7 +9,7 @@ This module is available primarily for debug purposes where you want to connect 
 ```
 NAMESPACE=anaml-dev
 POD=$(kubectl -n $NAMESPACE get pods -l 'app.kubernetes.io/name=cloudsql-proxy' -o name)
-kubectl -n anaml-dev port-forward $POD 5432:5432
+kubectl -n $NAMESPACE port-forward $POD 5432:5432
 
 psql -h 127.0.0.1 -p 5432 anaml anaml
 ```

@@ -46,7 +46,6 @@ resource "kubernetes_deployment" "default" {
             ["-instances=${join(",", var.gcp_cloudsql_instances)}=tcp:5432"],
             ["-log_debug_stdout"],
             ["-use_http_health_check"],
-            ["-verbose"],
             var.gcp_cloudsql_structured_logs ? ["-structured_logs"] : [],
             var.gcp_cloudsql_use_private_ip ? ["-ip_address_types=PRIVATE"] : []
           ])
@@ -54,6 +53,11 @@ resource "kubernetes_deployment" "default" {
             run_as_non_root = true
             run_as_group    = 2000
             run_as_user     = 1000
+          }
+
+          port {
+            container_port = 5432
+            name           = "postgres"
           }
         }
       }

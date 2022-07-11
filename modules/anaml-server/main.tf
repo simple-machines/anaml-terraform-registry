@@ -222,6 +222,13 @@ resource "kubernetes_deployment" "anaml_server" {
               }
             }
 
+            dynamic "port" {
+              for_each = container.value.port == null ? [] : [container.value.port]
+              content {
+                container_port = port.value.container_port
+              }
+            }
+
           }
         }
       }

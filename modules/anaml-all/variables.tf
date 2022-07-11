@@ -290,6 +290,10 @@ variable "kubernetes_pod_anaml_server_sidecars" {
       security_context = optional(object({
         run_as_non_root = optional(bool)
       }))
+
+      port = optional(object({
+        container_port = number
+      }))
     })
   )
   default     = []

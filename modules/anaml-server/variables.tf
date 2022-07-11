@@ -84,6 +84,8 @@ variable "kubernetes_pod_sidecars" {
 
       security_context = optional(object({
         run_as_non_root = optional(bool)
+        run_as_group    = optional(number)
+        run_as_user     = optional(number)
       }))
 
       port = optional(object({

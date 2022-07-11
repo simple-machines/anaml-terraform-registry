@@ -219,6 +219,8 @@ resource "kubernetes_deployment" "anaml_server" {
               for_each = container.value.security_context == null ? [] : [container.value.security_context]
               content {
                 run_as_non_root = security_context.value.run_as_non_root
+                run_as_group    = security_context.value.run_as_group
+                run_as_user     = security_context.value.run_as_user
               }
             }
 

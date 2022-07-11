@@ -22,7 +22,7 @@ resource "kubernetes_deployment" "default" {
   metadata {
     name      = var.kubernetes_deployment_name
     namespace = var.kubernetes_namespace
-    labels = local.deployment_labels
+    labels    = local.deployment_labels
   }
   spec {
     selector {
@@ -32,13 +32,13 @@ resource "kubernetes_deployment" "default" {
       metadata {
         name      = var.kubernetes_deployment_name
         namespace = var.kubernetes_namespace
-        labels = local.deployment_labels
+        labels    = local.deployment_labels
       }
       spec {
         service_account_name = var.kubernetes_service_account
-        node_selector = var.kubernetes_node_selector
+        node_selector        = var.kubernetes_node_selector
         container {
-          name  = "cloudsql-proxy"
+          name  = var.kubernetes_deployment_name
           image = "${var.gcp_cloudsql_image_repository}:${var.gcp_cloudsql_proxy_version}"
           command = flatten([
             ["/cloud_sql_proxy"],
@@ -62,5 +62,30 @@ resource "kubernetes_deployment" "default" {
         }
       }
     }
+  }
+}
+
+resource "kubernetes_service" "default" {
+  count = var.kubernetes_service_enable ? 1 : 0
+  metadata {
+    annotations = var.kubernetes_service_annotations
+    labels      = local.deployment_labels
+    name        = var.kubernetes_deployment_name
+    namespace   = var.kubernetes_namespace
+  }
+
+  spec {
+    type     = var.kubernetes_service_type
+    selector = local.deployment_labels
+    port {
+      name        = "postgres"
+      port        = 5432
+      protocol    = "TCP"
+      target_port = "postgress"
+    }
+  }
+
+  lifecycle {
+    ignore_changes = [metadata[0].annotations["cloud.google.com/neg-status"]]
   }
 }

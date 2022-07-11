@@ -1,5 +1,5 @@
 variable "gcp_cloudsql_proxy_version" {
-  type = string
+  type    = string
   default = "1.31.0"
 }
 
@@ -11,6 +11,11 @@ variable "kubernetes_deployment_name" {
 variable "kubernetes_deployment_replicas" {
   type    = number
   default = 1
+}
+
+variable "kubernetes_service_enable" {
+  type    = bool
+  default = false
 }
 
 variable "kubernetes_image_pull_policy" {
@@ -29,7 +34,7 @@ variable "kubernetes_node_selector" {
 }
 
 variable "kubernetes_service_account" {
-  type = string
+  type    = string
   default = null
 }
 
@@ -46,12 +51,12 @@ variable "kubernetes_deployment_labels" {
 #  - eu.gcr.io/cloudsql-docker/gce-proxy
 #  - asia.gcr.io/cloudsql-docker/gce-proxy
 variable "gcp_cloudsql_image_repository" {
-  type = string
+  type    = string
   default = "gcr.io/cloudsql-docker/gce-proxy"
 }
 
 variable "gcp_cloudsql_use_private_ip" {
-  type = bool
+  type    = bool
   default = true
 }
 
@@ -60,6 +65,17 @@ variable "gcp_cloudsql_instances" {
 }
 
 variable "gcp_cloudsql_structured_logs" {
-  type = bool
+  type    = bool
   default = true
+}
+
+variable "kubernetes_service_annotations" {
+  type        = map(string)
+  default     = null
+  description = "Kubernetes service annotations to set if any"
+}
+
+variable "kubernetes_service_type" {
+  type    = string
+  default = "ClusterIP"
 }

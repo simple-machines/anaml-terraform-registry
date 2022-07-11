@@ -75,6 +75,8 @@ module "anaml-server" {
   postgres_port                  = var.postgres_port
   postgres_user                  = var.postgres_user
 
+  kubernetes_service_account_name = var.kubernetes_service_account_name
+
   kubernetes_pod_sidecars = var.kubernetes_pod_anaml_server_sidecars
 
   depends_on = [kubernetes_namespace.anaml_namespace]

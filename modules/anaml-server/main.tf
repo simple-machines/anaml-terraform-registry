@@ -75,6 +75,8 @@ resource "kubernetes_deployment" "anaml_server" {
       }
 
       spec {
+        service_account_name = var.kubernetes_service_account_name
+
         volume {
           name = "config"
           config_map {

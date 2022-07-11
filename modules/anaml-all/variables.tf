@@ -295,3 +295,18 @@ variable "kubernetes_pod_anaml_server_sidecars" {
   default     = []
   description = "Optional sidecars to provision i.e. Google Cloud SQL Auth Proxy if deploying in GCP"
 }
+
+variable "kubernetes_service_account_name" {
+  type = string
+  default = null
+}
+
+variable "kubernetes_service_account_create" {
+  type = bool
+  default = false
+}
+
+variable "kubernetes_service_account_annotations" {
+  type =  map(string)
+  default = {}
+}

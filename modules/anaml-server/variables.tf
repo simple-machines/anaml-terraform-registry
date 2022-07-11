@@ -197,3 +197,9 @@ variable "anaml_admin_token" {
   default   = null
   sensitive = true
 }
+
+
+variable "kubernetes_service_account_name" {
+  type = string
+  default = null
+}

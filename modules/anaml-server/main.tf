@@ -35,9 +35,6 @@ resource "kubernetes_config_map" "anaml_server" {
     ANAML_POSTGRES_USER            = var.postgres_user
 
     ANAML_ADMIN_EMAIL    = var.anaml_admin_email
-    ANAML_ADMIN_PASSWORD = var.anaml_admin_password
-    ANAML_ADMIN_SECRET   = var.anaml_admin_secret
-    ANAML_ADMIN_TOKEN    = var.anaml_admin_token
 
     OIDC_CLIENT_ID     = var.oidc_client_id
     OIDC_CLIENT_SECRET = var.oidc_client_secret
@@ -54,6 +51,36 @@ resource "kubernetes_config_map" "anaml_server" {
     "log4j2.xml" = file("${path.module}/_templates/log4j2.xml")
   }
 }
+
+resource "kubernetes_secret" "anaml_server_admin_password" {
+  metadata {
+    name = "${var.kubernetes_deployment_name}-admin-password"
+    namespace = var.kubernetes_namespace
+    labels = local.deployment_labels
+  }
+
+  data = {
+    ANAML_ADMIN_PASSWORD = var.anaml_admin_password
+  }
+
+  type = "Opaque"
+}
+
+resource "kubernetes_secret" "anaml_server_admin_api_auth" {
+  metadata {
+    name = "${var.kubernetes_deployment_name}-admin-api-auth"
+    namespace = var.kubernetes_namespace
+    labels = local.deployment_labels
+  }
+
+  data = {
+    ANAML_ADMIN_SECRET   = var.anaml_admin_secret
+    ANAML_ADMIN_TOKEN    = var.anaml_admin_token
+  }
+
+  type = "Opaque"
+}
+
 
 resource "kubernetes_deployment" "anaml_server" {
   metadata {
@@ -147,6 +174,18 @@ resource "kubernetes_deployment" "anaml_server" {
           env_from {
             config_map_ref {
               name = var.kubernetes_deployment_name
+            }
+          }
+
+          env_from {
+            secret_ref {
+              name = kubernetes_secret.anaml_server_admin_password.metadata[0].name
+            }
+          }
+
+          env_from {
+            secret_ref {
+              name = kubernetes_secret.anaml_server_admin_api_auth.metadata[0].name
             }
           }
 

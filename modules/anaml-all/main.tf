@@ -10,6 +10,10 @@ terraform {
   experiments = [module_variable_optional_attrs]
 }
 
+locals {
+  postgres_host = var.kubernetes_service_enable_postgres ? "postgres.${var.kubernetes_namespace_name}.svc.cluster.local" : var.postgres_host
+}
+
 resource "kubernetes_namespace" "anaml_namespace" {
   count = var.kubernetes_namespace_create ? 1 : 0
   metadata {
@@ -37,8 +41,8 @@ resource "kubernetes_secret" "postgres_secret" {
 resource "kubernetes_service_account" "anaml" {
   count = var.kubernetes_service_account_create && var.kubernetes_service_account_name != null ? 1 : 0
   metadata {
-    name = var.kubernetes_service_account_name
-    namespace = var.kubernetes_namespace_name
+    name        = var.kubernetes_service_account_name
+    namespace   = var.kubernetes_namespace_name
     annotations = var.kubernetes_service_account_annotations
   }
 
@@ -81,7 +85,7 @@ module "anaml-server" {
   oidc_discovery_uri             = var.oidc_discovery_uri
   oidc_enable                    = var.oidc_enable
   oidc_permitted_users_group_id  = var.oidc_permitted_users_group_id
-  postgres_host                  = var.kubernetes_service_enable_postgres ? "postgres.${var.kubernetes_namespace_name}.svc.cluster.local" : var.postgres_host
+  postgres_host                  = local.postgres_host
   postgres_password              = "$(PGPASSWORD)"
   postgres_port                  = var.postgres_port
   postgres_user                  = var.postgres_user
@@ -92,6 +96,32 @@ module "anaml-server" {
 
   depends_on = [kubernetes_namespace.anaml_namespace]
 }
+
+module "spark-server" {
+  source               = "../anaml-spark-server"
+  kubernetes_namespace = var.kubernetes_namespace_name
+  anaml_spark_server_version = var.override_anaml_spark_server_version != null ? var.override_anaml_spark_server_version : var.anaml_version
+  container_registry = var.container_registry
+
+  checkpoint_location = "foo" # TODO parameterise
+  postgres_host = local.postgres_host
+  postgres_port = var.postgres_port
+  postgres_password = "$(PGPASSWORD)"
+
+
+  additional_env_from = [
+    # Inject the anaml-server API credentials
+    { secret_ref = { name = module.anaml-server.anaml_admin_api_kubernetes_secret_name } },
+
+    # Inject the Postgres password
+    { secret_ref = { name = kubernetes_secret.postgres_secret.metadata[0].name } }
+  ]
+
+  # Reference the API auth credentials from environment variables injected above
+  anaml_server_user = "$${?ANAML_ADMIN_TOKEN}"
+  anaml_server_password = "$${?ANAML_ADMIN_SECRET}"
+}
+
 
 module "anaml-ui" {
   source = "../anaml-ui"

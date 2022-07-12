@@ -130,9 +130,15 @@ variable "override_anaml_server_version" {
   description = "anaml-server version override. This value should contain the container tag to deploy"
 }
 
-variable "override_anaml_server_anaml_database_schema_name" {
+variable "override_anaml_spark_server_version" {
   type        = string
   default     = null
+  description = "anaml-spark-server version override. This value should contain the container tag to deploy"
+}
+
+variable "override_anaml_server_anaml_database_schema_name" {
+  type    = string
+  default = null
 }
 
 variable "override_anaml_ui_version" {
@@ -303,16 +309,16 @@ variable "kubernetes_pod_anaml_server_sidecars" {
 }
 
 variable "kubernetes_service_account_name" {
-  type = string
+  type    = string
   default = null
 }
 
 variable "kubernetes_service_account_create" {
-  type = bool
+  type    = bool
   default = false
 }
 
 variable "kubernetes_service_account_annotations" {
-  type =  map(string)
+  type    = map(string)
   default = {}
 }

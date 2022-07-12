@@ -98,18 +98,22 @@ module "anaml-server" {
 }
 
 module "spark-server" {
-  source               = "../anaml-spark-server"
-  kubernetes_namespace = var.kubernetes_namespace_name
+  source                     = "../anaml-spark-server"
+  kubernetes_namespace       = var.kubernetes_namespace_name
   anaml_spark_server_version = var.override_anaml_spark_server_version != null ? var.override_anaml_spark_server_version : var.anaml_version
-  container_registry = var.container_registry
+  container_registry         = var.container_registry
 
   checkpoint_location = var.override_anaml_spark_server_checkpoint_location
-  postgres_host = local.postgres_host
-  postgres_port = var.postgres_port
-  postgres_password = "$(PGPASSWORD)"
+  postgres_host       = local.postgres_host
+  postgres_port       = var.postgres_port
+  postgres_password   = "$(PGPASSWORD)"
 
 
-  kubernetes_pod_sidecars = var.kubernetes_pod_anaml_spark_server_sidecars
+  kubernetes_pod_sidecars                 = var.kubernetes_pod_anaml_spark_server_sidecars
+  kubernetes_node_selector_spark_executor = var.kubernetes_pod_node_selector_spark_executor
+  kubernetes_node_selector_app            = var.kubernetes_pod_node_selector_app
+
+  spark_config_overrides = var.override_anaml_spark_server_spark_config_overrides
 
 
   additional_env_from = [
@@ -121,7 +125,7 @@ module "spark-server" {
   ]
 
   # Reference the API auth credentials from environment variables injected above
-  anaml_server_user = "$${?ANAML_ADMIN_TOKEN}"
+  anaml_server_user     = "$${?ANAML_ADMIN_TOKEN}"
   anaml_server_password = "$${?ANAML_ADMIN_SECRET}"
 }
 

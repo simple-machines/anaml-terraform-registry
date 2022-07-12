@@ -136,6 +136,11 @@ variable "override_anaml_spark_server_version" {
   description = "anaml-spark-server version override. This value should contain the container tag to deploy"
 }
 
+variable "override_anaml_spark_server_spark_config_overrides" {
+  type    = map(string)
+  default = {}
+}
+
 variable "override_anaml_server_anaml_database_schema_name" {
   type    = string
   default = null
@@ -203,7 +208,7 @@ variable "override_anaml_ui_enable_new_functionality" {
 }
 
 variable "override_anaml_spark_server_checkpoint_location" {
-  type        = string
+  type = string
 }
 
 variable "oidc_client_id" {

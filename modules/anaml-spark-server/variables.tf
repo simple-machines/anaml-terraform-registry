@@ -10,10 +10,18 @@ variable "kubernetes_deployment_labels" {
 
 # This is the Driver deployment so deploy to the app pool so the expensive spark pool can scale down
 # The driver is configured so workers will use anaml-spark-pool
-variable "kubernetes_node_selector" {
+variable "kubernetes_node_selector_app" {
   type = map(string)
   default = {
     node_pool = "anaml-app-pool"
+  }
+  nullable = true
+}
+
+variable "kubernetes_node_selector_spark_executor" {
+  type = map(string)
+  default = {
+    node_pool = "anaml-spark-pool"
   }
   nullable = true
 }
@@ -112,12 +120,6 @@ variable "additional_volume_mounts" {
     read_only  = bool
   }))
   default = []
-}
-
-variable "spark_node_pool" {
-  type     = string
-  default  = "anaml-spark-pool"
-  nullable = false
 }
 
 variable "postgres_host" {

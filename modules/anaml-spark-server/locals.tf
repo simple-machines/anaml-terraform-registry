@@ -31,7 +31,7 @@ locals {
     "spark.kubernetes.executor.volumes.emptyDir.spark-local-dir-1.mount.path"     = "/spark-work-dir-1"
     "spark.kubernetes.memoryOverheadFactor"                                       = "0.1"
     "spark.kubernetes.namespace"                                                  = var.kubernetes_namespace
-    "spark.kubernetes.node.selector.node_pool"                                    = var.spark_node_pool
+    "spark.kubernetes.node.selector.node_pool"                                    = var.kubernetes_node_selector_spark_executor.node_pool
     "spark.local.dir"                                                             = "/spark-work-dir-1"
     "spark.scheduler.mode"                                                        = "FAIR"
     "spark.sql.autoBroadcastJoinThreshold"                                        = "96m"

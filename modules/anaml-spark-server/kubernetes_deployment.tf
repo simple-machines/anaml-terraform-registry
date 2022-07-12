@@ -53,7 +53,7 @@ resource "kubernetes_deployment" "anaml_spark_server_deployment" {
           }
         }
 
-        node_selector = var.kubernetes_node_selector
+        node_selector = var.kubernetes_node_selector_app
 
         container {
           name              = "anaml-spark-server"

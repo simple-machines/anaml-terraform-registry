@@ -6,7 +6,7 @@ variable "anaml_version" {
 
 variable "container_registry" {
   type     = string
-  default  = "gcr.io/anaml-release-artifacts"
+  default  = "australia-southeast1-docker.pkg.dev/anaml-release-artifacts/docker"
   nullable = false
 }
 

@@ -308,6 +308,46 @@ variable "kubernetes_pod_anaml_server_sidecars" {
   description = "Optional sidecars to provision i.e. Google Cloud SQL Auth Proxy if deploying in GCP"
 }
 
+variable "kubernetes_pod_anaml_spark_server_sidecars" {
+  type = set(
+    object({
+      name              = string,
+      image             = string,
+      image_pull_policy = optional(string), # Optional
+
+      command = optional(list(string))
+
+      env = optional(list(object({
+        name  = string,
+        value = string,
+      })))
+
+      env_from = optional(list(object({
+        config_map_ref = object({ name = string })
+        secret_ref     = object({ name = string })
+      })))
+
+      volume_mount = optional(list(object({
+        name       = string,
+        mount_path = string,
+        read_only  = bool
+      })))
+
+      security_context = optional(object({
+        run_as_non_root = optional(bool)
+        run_as_group    = optional(number)
+        run_as_user     = optional(number)
+      }))
+
+      port = optional(object({
+        container_port = number
+      }))
+    })
+  )
+  default     = []
+  description = "Optional sidecars to provision i.e. Google Cloud SQL Auth Proxy if deploying in GCP"
+}
+
 variable "kubernetes_service_account_name" {
   type    = string
   default = null

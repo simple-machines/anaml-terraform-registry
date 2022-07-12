@@ -109,6 +109,9 @@ module "spark-server" {
   postgres_password = "$(PGPASSWORD)"
 
 
+  kubernetes_pod_sidecars = var.kubernetes_pod_anaml_spark_server_sidecars
+
+
   additional_env_from = [
     # Inject the anaml-server API credentials
     { secret_ref = { name = module.anaml-server.anaml_admin_api_kubernetes_secret_name } },

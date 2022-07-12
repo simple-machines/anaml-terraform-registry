@@ -6,9 +6,9 @@ resource "kubernetes_config_map" "anaml_spark_server_config" {
 
   data = {
     "application.conf" = templatefile("${path.module}/_templates/application.conf", {
-      checkpointLocation = var.checkpoint_location
-      anamlServerUrl     = var.anaml_server_url
-      spark_conf         = merge(local.spark_conf_base, var.spark_config_overrides)
+      checkpointLocation  = var.checkpoint_location
+      anamlServerUrl      = var.anaml_server_url
+      spark_conf          = merge(local.spark_conf_base, var.spark_config_overrides)
       anamlServerUsername = var.anaml_server_user
       anamlServerPassword = var.anaml_server_password
     })

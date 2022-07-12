@@ -38,14 +38,14 @@ resource "kubernetes_deployment" "anaml_spark_server_deployment" {
             name = volume.name
 
             dynamic "secret" {
-              for_each = volume.value.secret != null ? [volume.value.secret]:[]
+              for_each = volume.value.secret != null ? [volume.value.secret] : []
               content {
                 secret_name = secret.name
               }
             }
 
             dynamic "config_map" {
-              for_each = volume.value.config_map != null ? [volume.value.config_map]:[]
+              for_each = volume.value.config_map != null ? [volume.value.config_map] : []
               content {
                 name = config_map.name
               }
@@ -126,9 +126,9 @@ resource "kubernetes_deployment" "anaml_spark_server_deployment" {
           dynamic "volume_mount" {
             for_each = var.additional_volume_mounts
             content {
-              name = volume_mount.name
+              name       = volume_mount.name
               mount_path = volume_mount.mount_path
-              read_only = volume_mount.read_only
+              read_only  = volume_mount.read_only
             }
           }
 
@@ -139,6 +139,71 @@ resource "kubernetes_deployment" "anaml_spark_server_deployment" {
             "--databasePassword=${var.postgres_password}",
             "--databaseSchema=${var.anaml_database_schema_name}",
           ]
+        }
+
+        # User provided sidecars i.e Google Cloud SQL Auth Proxy or Logging sidecars
+        dynamic "container" {
+          for_each = var.kubernetes_pod_sidecars == null ? [] : var.kubernetes_pod_sidecars
+
+          content {
+            name              = container.value.name
+            image             = container.value.image
+            image_pull_policy = container.value.image_pull_policy
+            command           = container.value.command == null ? [] : container.value.command
+
+            dynamic "env" {
+              for_each = container.value.env == null ? [] : container.value.env
+              content {
+                name  = env.name
+                value = env.value
+              }
+            }
+
+            dynamic "env_from" {
+              for_each = container.value.env_from == null ? [] : container.value.env_from
+              content {
+                dynamic "config_map_ref" {
+                  for_each = env_from.value.config_map_ref == null ? [] : [env_from.value.config_map_ref]
+                  content {
+                    name = config_map_ref.name
+                  }
+                }
+
+                dynamic "secret_ref" {
+                  for_each = env_from.value.secret_ref == null ? [] : [env_from.value.secret_ref]
+                  content {
+                    name = secret_ref.name
+                  }
+                }
+              }
+            }
+
+            dynamic "volume_mount" {
+              for_each = container.value.volume_mount == null ? [] : container.value.volume_mount
+              content {
+                name       = volume_mount.name
+                mount_path = volume_mount.mount_path
+                read_only  = volume_mount.read_only
+              }
+            }
+
+            dynamic "security_context" {
+              for_each = container.value.security_context == null ? [] : [container.value.security_context]
+              content {
+                run_as_non_root = security_context.value.run_as_non_root
+                run_as_group    = security_context.value.run_as_group
+                run_as_user     = security_context.value.run_as_user
+              }
+            }
+
+            dynamic "port" {
+              for_each = container.value.port == null ? [] : [container.value.port]
+              content {
+                container_port = port.value.container_port
+              }
+            }
+
+          }
         }
       }
     }

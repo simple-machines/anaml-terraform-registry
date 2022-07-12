@@ -14,9 +14,9 @@ locals {
   # Platform independent spark conf.
   # GCP/AWS specfic conf is injected in and merged using var.spark_config_overrides
   spark_conf_base = {
-    "spark.dynamicAllocation.enabled"                 = "true"
-    "spark.dynamicAllocation.schedulerBacklogTimeout" = "2s"
-    "spark.dynamicAllocation.shuffleTracking.enabled" = "true"
+    "spark.dynamicAllocation.enabled"                                             = "true"
+    "spark.dynamicAllocation.schedulerBacklogTimeout"                             = "2s"
+    "spark.dynamicAllocation.shuffleTracking.enabled"                             = "true"
     "spark.eventLog.enabled"                                                      = "true"
     "spark.executor.extraClassPath"                                               = "/opt/docker/lib/*"
     "spark.executorEnv.ANAML_HISTORICAL_CHUNK_SIZE"                               = "10"

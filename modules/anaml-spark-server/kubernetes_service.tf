@@ -1,13 +1,13 @@
 resource "kubernetes_service" "anaml_spark_server_service" {
   metadata {
-    name      = "anaml-spark-server"
-    namespace = var.kubernetes_namespace
-    labels = local.deployment_labels
+    name        = "anaml-spark-server"
+    namespace   = var.kubernetes_namespace
+    labels      = local.deployment_labels
     annotations = var.kubernetes_service_annotations
   }
 
   spec {
-    type = var.kubernetes_service_type
+    type     = var.kubernetes_service_type
     selector = local.deployment_labels
     port {
       name        = "http"
@@ -24,13 +24,13 @@ resource "kubernetes_service" "anaml_spark_server_service" {
 
 resource "kubernetes_service" "anaml_spark_driver" {
   metadata {
-    name      = "anaml-spark-driver"
-    namespace = var.kubernetes_namespace
-    labels = local.deployment_labels
+    name        = "anaml-spark-driver"
+    namespace   = var.kubernetes_namespace
+    labels      = local.deployment_labels
     annotations = var.kubernetes_service_annotations
   }
   spec {
-    type = var.kubernetes_service_type
+    type     = var.kubernetes_service_type
     selector = local.deployment_labels
     port {
       name        = "driver-rpc-port"

@@ -56,12 +56,12 @@ variable "anaml_server_url" {
 }
 
 variable "anaml_server_user" {
-  type = string
+  type     = string
   nullable = false
 }
 
 variable "anaml_server_password" {
-  type = string
+  type     = string
   nullable = false
 }
 
@@ -107,45 +107,45 @@ variable "additional_env_from" {
 
 variable "additional_volume_mounts" {
   type = list(object({
-    name = string
+    name       = string
     mount_path = string
-    read_only = bool
+    read_only  = bool
   }))
   default = []
 }
 
 variable "spark_node_pool" {
-  type = string
-  default = "anaml-spark-pool"
+  type     = string
+  default  = "anaml-spark-pool"
   nullable = false
 }
 
 variable "postgres_host" {
-  type = string
+  type     = string
   nullable = false
 }
 
 variable "postgres_port" {
-  type = number
-  default = 5432
+  type     = number
+  default  = 5432
   nullable = false
 }
 
 variable "postgres_password" {
-  type = string
+  type     = string
   nullable = false
 }
 
 variable "anaml_database_name" {
-  type = string
-  default = "anaml"
+  type     = string
+  default  = "anaml"
   nullable = false
 }
 
 
 variable "anaml_database_schema_name" {
-  type = string
-  default = "anaml"
+  type     = string
+  default  = "anaml"
   nullable = false
 }
 
@@ -153,4 +153,44 @@ variable "kubernetes_service_annotations" {
   type        = map(string)
   default     = null
   description = "Kubernetes service annotations to set if any"
+}
+
+variable "kubernetes_pod_sidecars" {
+  type = set(
+    object({
+      name              = string,
+      image             = string,
+      image_pull_policy = optional(string), # Optional
+
+      command = optional(list(string))
+
+      env = optional(list(object({
+        name  = string,
+        value = string,
+      })))
+
+      env_from = optional(list(object({
+        config_map_ref = object({ name = string })
+        secret_ref     = object({ name = string })
+      })))
+
+      volume_mount = optional(list(object({
+        name       = string,
+        mount_path = string,
+        read_only  = bool
+      })))
+
+      security_context = optional(object({
+        run_as_non_root = optional(bool)
+        run_as_group    = optional(number)
+        run_as_user     = optional(number)
+      }))
+
+      port = optional(object({
+        container_port = number
+      }))
+    })
+  )
+  default     = []
+  description = "Optional sidecars to provision i.e. Google Cloud SQL Auth Proxy if deploying in GCP"
 }

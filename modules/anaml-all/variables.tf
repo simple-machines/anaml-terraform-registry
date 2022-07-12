@@ -202,6 +202,10 @@ variable "override_anaml_ui_enable_new_functionality" {
   description = "true|false - whether to enable new functionality behind feature flags"
 }
 
+variable "override_anaml_spark_server_checkpoint_location" {
+  type        = string
+}
+
 variable "oidc_client_id" {
   type        = string
   description = "OpenID Connect client identifier. Required when using OIDC authentication method."

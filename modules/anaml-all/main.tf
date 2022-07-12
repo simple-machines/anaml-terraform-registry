@@ -103,7 +103,7 @@ module "spark-server" {
   anaml_spark_server_version = var.override_anaml_spark_server_version != null ? var.override_anaml_spark_server_version : var.anaml_version
   container_registry = var.container_registry
 
-  checkpoint_location = "foo" # TODO parameterise
+  checkpoint_location = var.override_anaml_spark_server_checkpoint_location
   postgres_host = local.postgres_host
   postgres_port = var.postgres_port
   postgres_password = "$(PGPASSWORD)"

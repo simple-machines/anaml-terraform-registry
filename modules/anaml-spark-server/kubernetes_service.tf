@@ -16,6 +16,10 @@ resource "kubernetes_service" "anaml_spark_server_service" {
       target_port = 8762
     }
   }
+
+  lifecycle {
+    ignore_changes = [metadata[0].annotations["cloud.google.com/neg-status"]]
+  }
 }
 
 resource "kubernetes_service" "anaml_spark_driver" {
@@ -46,5 +50,9 @@ resource "kubernetes_service" "anaml_spark_driver" {
       protocol    = "TCP"
       target_port = 4040
     }
+  }
+
+  lifecycle {
+    ignore_changes = [metadata[0].annotations["cloud.google.com/neg-status"]]
   }
 }

@@ -55,6 +55,16 @@ variable "anaml_server_url" {
   nullable = false
 }
 
+variable "anaml_server_user" {
+  type = string
+  nullable = false
+}
+
+variable "anaml_server_password" {
+  type = string
+  nullable = false
+}
+
 variable "checkpoint_location" {
   type     = string
   nullable = false

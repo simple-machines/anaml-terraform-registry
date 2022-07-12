@@ -83,7 +83,7 @@ resource "kubernetes_deployment" "anaml_spark_server_deployment" {
               dynamic "secret_ref" {
                 for_each = [env_from.value.secret_ref]
                 content {
-                  name = secret_ref.name
+                  name = secret_ref.value.name
                 }
               }
             }

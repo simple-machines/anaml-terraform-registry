@@ -273,6 +273,7 @@ resource "kubernetes_deployment" "spark_history_server_deployment" {
           image             = local.image
           command           = ["/opt/spark/bin/spark-class", "org.apache.spark.deploy.history.HistoryServer"]
           image_pull_policy = var.kubernetes_image_pull_policy
+
           port {
             container_port = 18080
           }
@@ -320,8 +321,6 @@ resource "kubernetes_deployment" "spark_history_server_deployment" {
               }
             }
           }
-
-
 
           # Spark History Server re-uses log4j2.xml config from anaml-spark-server, it looks to
           # ignore other files under /config

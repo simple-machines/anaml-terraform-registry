@@ -119,9 +119,6 @@ module "spark-server" {
 
 
   additional_env_from = [
-    # Inject the anaml-server API credentials - Probably should be inside anaml-server as secret_name arg
-    { secret_ref = { name = module.anaml-server.anaml_admin_api_kubernetes_secret_name } },
-
     # Inject the Postgres password
     { secret_ref = { name = kubernetes_secret.postgres_secret.metadata[0].name } }
   ]
@@ -134,11 +131,7 @@ module "spark-server" {
   spark_history_server_additional_env_values    = var.override_spark_history_server_additional_env_values
   spark_history_server_additional_volumes       = var.override_spark_history_server_additional_volumes
   spark_history_server_additional_volume_mounts = var.override_spark_history_server_additional_volume_mounts
-
-  spark_history_server_additional_env_from = [
-    # Inject the anaml-server API credentials - Probably should be inside anaml-server as secret_name arg
-    { secret_ref = { name = module.anaml-server.anaml_admin_api_kubernetes_secret_name } },
-  ]
+  # spark_history_server_additional_env_from      = var.override_spark_history_server_additional_env_from
 
 
   # Reference the API auth credentials from environment variables injected above

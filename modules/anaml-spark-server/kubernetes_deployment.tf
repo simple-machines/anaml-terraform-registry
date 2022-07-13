@@ -77,6 +77,13 @@ resource "kubernetes_deployment" "anaml_spark_server_deployment" {
             container_port = 4040
           }
 
+          # Mount the admin api auth tokens
+          env_from {
+            secret_ref {
+              name = var.anaml_admin_api_kubernetes_secret_name
+            }
+          }
+
           dynamic "env_from" {
             for_each = var.additional_env_from
             content {
@@ -292,6 +299,13 @@ resource "kubernetes_deployment" "spark_history_server_deployment" {
             content {
               name  = env.value.name
               value = env.value.value
+            }
+          }
+
+          # Mount the admin api auth tokens
+          env_from {
+            secret_ref {
+              name = var.anaml_admin_api_kubernetes_secret_name
             }
           }
 

@@ -57,6 +57,12 @@ variable "spark_config_overrides" {
   description = "Additional spark config / overrides to merge into spark conf. This is useful for AWS/GCP specfic values"
 }
 
+variable "spark_log_directory" {
+  type = string
+  nullable = false
+  description = "The log directory used for spark.eventLodDir and spark.history.fs.logDirectory"
+}
+
 variable "anaml_server_url" {
   type     = string
   default  = "http://anaml-server.anaml.svc.cluster.local:8080"

@@ -22,7 +22,7 @@ resource "kubernetes_config_map" "spark_defaults_conf" {
   metadata {
     name      = "anaml-spark-server-spark-defaults-conf"
     namespace = var.kubernetes_namespace
-    labels    = local.deployment_labels
+    labels    = local.anaml_spark_server_labels
   }
 
   data = {

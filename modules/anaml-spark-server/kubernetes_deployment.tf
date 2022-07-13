@@ -2,17 +2,17 @@ resource "kubernetes_deployment" "anaml_spark_server_deployment" {
   metadata {
     name      = var.kubernetes_deployment_name
     namespace = var.kubernetes_namespace
-    labels    = local.deployment_labels
+    labels    = local.anaml_spark_server_labels
   }
   spec {
     selector {
-      match_labels = local.deployment_labels
+      match_labels = local.anaml_spark_server_labels
     }
     template {
       metadata {
         name      = var.kubernetes_deployment_name
         namespace = var.kubernetes_namespace
-        labels    = local.deployment_labels
+        labels    = local.anaml_spark_server_labels
       }
       spec {
         service_account_name = local.service_account_name
@@ -204,6 +204,94 @@ resource "kubernetes_deployment" "anaml_spark_server_deployment" {
             }
 
           }
+        }
+      }
+    }
+  }
+}
+
+
+resource "kubernetes_deployment" "spark_history_server_deployment" {
+  metadata {
+    name      = "spark-history-server"
+    namespace = var.kubernetes_namespace
+    labels    = local.spark_history_server_labels
+  }
+  spec {
+    selector {
+      match_labels = local.spark_history_server_labels
+    }
+    template {
+      metadata {
+        name      = "spark-history-server"
+        namespace = "spark-history-server"
+        labels    = local.spark_history_server_labels
+      }
+      spec {
+        service_account_name = local.service_account_name
+
+        volume {
+          name = "config"
+          config_map {
+            name = kubernetes_config_map.anaml_spark_server_config.metadata.0.name
+          }
+        }
+
+        # volume {
+        #   name = "svc-anaml-credentials"
+        #   secret {
+        #     secret_name = "svc-anaml-credentials"
+        #   }
+        # }
+
+        node_selector = var.kubernetes_node_selector_app
+
+        container {
+          name              = "spark-history-server"
+          image             = local.image
+          command           = ["/opt/spark/bin/spark-class", "org.apache.spark.deploy.history.HistoryServer"]
+          image_pull_policy = var.kubernetes_image_pull_policy
+          port {
+            container_port = 18080
+          }
+          # env_from {
+          #   secret_ref {
+          #     name = kubernetes_secret.admin_server_credentials.metadata.0.name
+          #   }
+          # }
+          env {
+            name  = "JAVA_OPTS"
+            value = join(" ", [
+              "-Xmx2g -Dweb.host=0.0.0.0",
+              "-Dlog4j2.configurationFile=/config/log4j2.xml"
+            ])
+          }
+          # env {
+          #   name  = "GOOGLE_APPLICATION_CREDENTIALS"
+          #   value = "/etc/secrets/credentials.json"
+          # }
+
+          env {
+            name  = "SPARK_HISTORY_OPTS"
+            value = join(" ", [
+              "-Dspark.history.fs.logDirectory=${var.spark_log_directory}",
+              "-Dspark.ui.proxyBase=/spark-history",
+              "-Dspark.history.fs.cleaner.enabled=true"
+            ])
+          }
+
+          # Spark History Server re-uses log4j2.xml config from anaml-spark-server, it looks to
+          # ignore other files under /config
+          volume_mount {
+            name       = "config"
+            mount_path = "/config"
+            read_only  = true
+          }
+          # volume_mount {
+          #   name       = "svc-anaml-credentials"
+          #   mount_path = "/etc/secrets"
+          #   read_only  = true
+          # }
         }
       }
     }

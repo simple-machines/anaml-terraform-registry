@@ -115,6 +115,8 @@ module "spark-server" {
 
   spark_config_overrides = var.override_anaml_spark_server_spark_config_overrides
 
+  spark_log_directory = var.override_anaml_spark_server_spark_log_directory
+
 
   additional_env_from = [
     # Inject the anaml-server API credentials

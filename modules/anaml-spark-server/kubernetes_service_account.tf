@@ -2,7 +2,7 @@ resource "kubernetes_service_account" "spark" {
   metadata {
     name      = "spark"
     namespace = var.kubernetes_namespace
-    labels    = local.deployment_labels
+    labels    = local.anaml_spark_server_labels
   }
 }
 
@@ -10,7 +10,7 @@ resource "kubernetes_role" "spark" {
   metadata {
     name      = "spark"
     namespace = var.kubernetes_namespace
-    labels    = local.deployment_labels
+    labels    = local.anaml_spark_server_labels
   }
   rule {
     api_groups = [""]
@@ -23,7 +23,7 @@ resource "kubernetes_role_binding" "spark" {
   metadata {
     name      = "spark"
     namespace = var.kubernetes_namespace
-    labels    = local.deployment_labels
+    labels    = local.anaml_spark_server_labels
   }
   role_ref {
     api_group = "rbac.authorization.k8s.io"

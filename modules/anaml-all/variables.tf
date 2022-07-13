@@ -141,6 +141,11 @@ variable "override_anaml_spark_server_spark_config_overrides" {
   default = {}
 }
 
+variable "override_anaml_spark_server_spark_log_directory" {
+  type    = string
+  nullable = false
+}
+
 variable "override_anaml_server_anaml_database_schema_name" {
   type    = string
   default = null

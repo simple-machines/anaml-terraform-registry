@@ -1,11 +1,18 @@
 locals {
-  deployment_labels = merge({
-    "app.kubernetes.io/name"       = "anaml-spark-server"
+  base_deployment_labels = merge({
     "app.kubernetes.io/version"    = var.anaml_spark_server_version
     "app.kubernetes.io/component"  = "spark"
     "app.kubernetes.io/part-of"    = "anaml"
     "app.kubernetes.io/created-by" = "terraform"
   }, var.kubernetes_deployment_labels)
+
+  anaml_spark_server_labels = merge(local.base_deployment_labels, {
+    "app.kubernetes.io/name" = "anaml-spark-server"
+  })
+
+  spark_history_server_labels = merge(local.base_deployment_labels, {
+    "app.kubernetes.io/name" = "spark-history-server"
+  })
 
   service_account_name = "svc-anaml"
 
@@ -18,6 +25,7 @@ locals {
     "spark.dynamicAllocation.schedulerBacklogTimeout"                             = "2s"
     "spark.dynamicAllocation.shuffleTracking.enabled"                             = "true"
     "spark.eventLog.enabled"                                                      = "true"
+    "spark.eventLog.dir"                                                          = var.spark_log_directory
     "spark.executor.extraClassPath"                                               = "/opt/docker/lib/*"
     "spark.executorEnv.ANAML_HISTORICAL_CHUNK_SIZE"                               = "10"
     "spark.hadoop.fs.AbstractFileSystem.gs.impl"                                  = "com.google.cloud.hadoop.fs.gcs.GoogleHadoopFS"

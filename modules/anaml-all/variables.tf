@@ -146,6 +146,41 @@ variable "override_anaml_spark_server_spark_log_directory" {
   nullable = false
 }
 
+
+variable "override_anaml_spark_server_additional_volumes" {
+  type = list(object({
+    name = string
+
+    secret = optional(object({
+      secret_name = string
+    }))
+
+    config_map = optional(object({
+      name = string
+    }))
+  }))
+
+  default = []
+}
+
+variable "override_anaml_spark_server_additional_env_values" {
+  type = list(object({
+    name  = string
+    value = string
+  }))
+
+  default = []
+}
+
+variable "override_anaml_spark_server_additional_volume_mounts" {
+  type = list(object({
+    name       = string
+    mount_path = string
+    read_only  = bool
+  }))
+  default = []
+}
+
 variable "override_anaml_server_anaml_database_schema_name" {
   type    = string
   default = null

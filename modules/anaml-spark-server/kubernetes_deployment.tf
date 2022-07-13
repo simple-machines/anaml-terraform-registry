@@ -35,12 +35,12 @@ resource "kubernetes_deployment" "anaml_spark_server_deployment" {
         dynamic "volume" {
           for_each = var.additional_volumes
           content {
-            name = volume.name
+            name = volume.value.name
 
             dynamic "secret" {
               for_each = volume.value.secret != null ? [volume.value.secret] : []
               content {
-                secret_name = secret.name
+                secret_name = secret.value.secret_name
               }
             }
 
@@ -105,8 +105,8 @@ resource "kubernetes_deployment" "anaml_spark_server_deployment" {
           dynamic "env" {
             for_each = var.additional_env_values
             content {
-              name  = env.name
-              value = env.value
+              name  = env.value.name
+              value = env.value.value
             }
           }
 
@@ -126,9 +126,9 @@ resource "kubernetes_deployment" "anaml_spark_server_deployment" {
           dynamic "volume_mount" {
             for_each = var.additional_volume_mounts
             content {
-              name       = volume_mount.name
-              mount_path = volume_mount.mount_path
-              read_only  = volume_mount.read_only
+              name       = volume_mount.value.name
+              mount_path = volume_mount.value.mount_path
+              read_only  = volume_mount.value.read_only
             }
           }
 
@@ -237,13 +237,6 @@ resource "kubernetes_deployment" "spark_history_server_deployment" {
           }
         }
 
-        # volume {
-        #   name = "svc-anaml-credentials"
-        #   secret {
-        #     secret_name = "svc-anaml-credentials"
-        #   }
-        # }
-
         node_selector = var.kubernetes_node_selector_app
 
         container {
@@ -254,11 +247,7 @@ resource "kubernetes_deployment" "spark_history_server_deployment" {
           port {
             container_port = 18080
           }
-          # env_from {
-          #   secret_ref {
-          #     name = kubernetes_secret.admin_server_credentials.metadata.0.name
-          #   }
-          # }
+
           env {
             name  = "JAVA_OPTS"
             value = join(" ", [
@@ -266,10 +255,6 @@ resource "kubernetes_deployment" "spark_history_server_deployment" {
               "-Dlog4j2.configurationFile=/config/log4j2.xml"
             ])
           }
-          # env {
-          #   name  = "GOOGLE_APPLICATION_CREDENTIALS"
-          #   value = "/etc/secrets/credentials.json"
-          # }
 
           env {
             name  = "SPARK_HISTORY_OPTS"
@@ -287,11 +272,7 @@ resource "kubernetes_deployment" "spark_history_server_deployment" {
             mount_path = "/config"
             read_only  = true
           }
-          # volume_mount {
-          #   name       = "svc-anaml-credentials"
-          #   mount_path = "/etc/secrets"
-          #   read_only  = true
-          # }
+
         }
       }
     }

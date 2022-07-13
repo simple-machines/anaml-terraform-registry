@@ -126,6 +126,12 @@ module "spark-server" {
     { secret_ref = { name = kubernetes_secret.postgres_secret.metadata[0].name } }
   ]
 
+  additional_env_values = var.override_anaml_spark_server_additional_env_values
+
+  additional_volumes = var.override_anaml_spark_server_additional_volumes
+
+  additional_volume_mounts = var.override_anaml_spark_server_additional_volume_mounts
+
   # Reference the API auth credentials from environment variables injected above
   anaml_server_user     = "$${?ANAML_ADMIN_TOKEN}"
   anaml_server_password = "$${?ANAML_ADMIN_SECRET}"

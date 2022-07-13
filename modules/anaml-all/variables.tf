@@ -142,7 +142,7 @@ variable "override_anaml_spark_server_spark_config_overrides" {
 }
 
 variable "override_anaml_spark_server_spark_log_directory" {
-  type    = string
+  type     = string
   nullable = false
 }
 
@@ -181,10 +181,47 @@ variable "override_anaml_spark_server_additional_volume_mounts" {
   default = []
 }
 
+
+variable "override_spark_history_server_additional_volumes" {
+  type = list(object({
+    name = string
+
+    secret = optional(object({
+      secret_name = string
+    }))
+
+    config_map = optional(object({
+      name = string
+    }))
+  }))
+
+  default = []
+}
+
+variable "override_spark_history_server_additional_env_values" {
+  type = list(object({
+    name  = string
+    value = string
+  }))
+
+  default = []
+}
+
+variable "override_spark_history_server_additional_volume_mounts" {
+  type = list(object({
+    name       = string
+    mount_path = string
+    read_only  = bool
+  }))
+  default = []
+}
+
 variable "override_anaml_server_anaml_database_schema_name" {
   type    = string
   default = null
 }
+
+
 
 variable "override_anaml_ui_version" {
   type        = string

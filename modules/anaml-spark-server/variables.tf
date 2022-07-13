@@ -58,8 +58,8 @@ variable "spark_config_overrides" {
 }
 
 variable "spark_log_directory" {
-  type = string
-  nullable = false
+  type        = string
+  nullable    = false
   description = "The log directory used for spark.eventLodDir and spark.history.fs.logDirectory"
 }
 
@@ -120,6 +120,51 @@ variable "additional_env_from" {
 }
 
 variable "additional_volume_mounts" {
+  type = list(object({
+    name       = string
+    mount_path = string
+    read_only  = bool
+  }))
+  default = []
+}
+
+
+variable "spark_history_server_additional_env_values" {
+  type = list(object({
+    name  = string
+    value = string
+  }))
+
+  default = []
+}
+
+variable "spark_history_server_additional_volumes" {
+  type = list(object({
+    name = string
+
+    secret = optional(object({
+      secret_name = string
+    }))
+
+    config_map = optional(object({
+      name = string
+    }))
+  }))
+
+  default = []
+}
+
+variable "spark_history_server_additional_env_from" {
+  type = list(object({
+    secret_ref = object({
+      name = string
+    })
+  }))
+
+  default = []
+}
+
+variable "spark_history_server_additional_volume_mounts" {
   type = list(object({
     name       = string
     mount_path = string

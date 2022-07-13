@@ -281,7 +281,8 @@ resource "kubernetes_deployment" "spark_history_server_deployment" {
           env {
             name = "JAVA_OPTS"
             value = join(" ", [
-              "-Xmx2g -Dweb.host=0.0.0.0",
+              "-Xmx2g",
+              "-Dweb.host=0.0.0.0",
               "-Dlog4j2.configurationFile=/config/log4j2.xml"
             ])
           }

@@ -24,7 +24,7 @@ resource "google_compute_firewall" "default" {
 
   allow {
     protocol = "tcp"
-    ports    = ["80", "8080"] # Only allow HTTP services
+    ports    = ["80", "8080", "18080"] # Only allow HTTP services (18080 is spark-history-server ui)
   }
 }
 
@@ -46,6 +46,21 @@ resource "google_compute_health_check" "http_8080" {
   }
 }
 
+resource "google_compute_health_check" "http_18080" {
+  name        = "health-check-http-18080"
+  timeout_sec = 30
+  check_interval_sec = 60
+  healthy_threshold = 1
+
+  http_health_check {
+    port_specification = "USE_SERVING_PORT"
+  }
+
+  log_config {
+    enable = true
+  }
+}
+
 # TODO - replace with wildcard dns using Google Certificate Manager when https://github.com/hashicorp/terraform-provider-google/issues/11037 is resolved
 # This means we do not need to manually edit dns, we can create a wildcard record and certs will just work
 resource "google_compute_managed_ssl_certificate" "default" {
@@ -58,20 +73,19 @@ resource "google_compute_managed_ssl_certificate" "default" {
 }
 
 
+
 # For each deployment, create the matching docs, server and ui anaml loadbalancer backends
 resource "google_compute_backend_service" "backends" {
-  for_each = toset(
-    flatten([
-      formatlist("anaml-%s-docs", var.deployments),
-      formatlist("anaml-%s-server", var.deployments),
-      formatlist("anaml-%s-ui", var.deployments)
-    ])
+  for_each = merge (
+    { for deployment in var.deployments: "anaml-${deployment}-docs" => google_compute_health_check.http_80.id },
+    { for deployment in var.deployments: "anaml-${deployment}-ui" => google_compute_health_check.http_80.id },
+    { for deployment in var.deployments: "anaml-${deployment}-server" => google_compute_health_check.http_8080.id },
+    { for deployment in var.deployments: "${deployment}-spark-history-server" => google_compute_health_check.http_18080.id }
   )
 
+
   name = each.key
-  health_checks = [
-    try(regex("-server$", each.key) != "", false) ? google_compute_health_check.http_8080.id : google_compute_health_check.http_80.id
-  ]
+  health_checks = [each.value]
 
   backend {
     # TODO parameterise group zone/negs. Currently hardcoded for dev testing purposes
@@ -110,6 +124,15 @@ resource "google_compute_url_map" "urlmap" {
       path_rule {
         paths   = ["/auth/*"]
         service = "anaml-${path_matcher.key}-server"
+      }
+      path_rule {
+        paths   = ["/spark-history", "/spark-history/*"]
+        service = "${path_matcher.key}-spark-history-server"
+        route_action {
+          url_rewrite {
+            path_prefix_rewrite = "/"
+          }
+        }
       }
     }
   }

@@ -448,3 +448,22 @@ variable "kubernetes_service_account_annotations" {
   type    = map(string)
   default = {}
 }
+
+
+variable "kubernetes_service_annotations_anaml_spark_server" {
+  type        = map(string)
+  default     = null
+  description = "Kubernetes service annotations to set if any"
+}
+
+variable "kubernetes_service_annotations_spark_driver" {
+  type        = map(string)
+  default     = null
+  description = "Kubernetes service annotations to set if any"
+}
+
+variable "kubernetes_service_annotations_spark_history_service" {
+  type        = map(string)
+  default     = null
+  description = "Kubernetes service annotations to set if any"
+}

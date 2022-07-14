@@ -97,6 +97,27 @@ module "anaml-server" {
   depends_on = [kubernetes_namespace.anaml_namespace]
 }
 
+module "anaml-ui" {
+  source = "../anaml-ui"
+
+  anaml_ui_version               = var.override_anaml_ui_version != null ? var.override_anaml_ui_version : var.anaml_version
+  api_url                        = var.override_anaml_ui_api_url != null ? var.override_anaml_ui_api_url : join("", [var.https_urls ? "https" : "http", "://", var.hostname, "/api"])
+  container_registry             = var.container_registry
+  enable_new_functionality       = var.override_anaml_ui_enable_new_functionality
+  hostname                       = var.hostname
+  kubernetes_namespace           = var.kubernetes_namespace_name
+  kubernetes_node_selector       = var.kubernetes_pod_node_selector_app
+  kubernetes_service_annotations = var.kubernetes_service_annotations_anaml_ui
+  kubernetes_service_type        = var.kubernetes_service_type
+  skin                           = var.override_anaml_ui_skin
+
+  # TODO
+  docs_url                 = "http://example.com"
+  spark_history_server_url = "http://example.com"
+
+  depends_on = [kubernetes_namespace.anaml_namespace]
+}
+
 module "spark-server" {
   source                     = "../anaml-spark-server"
   kubernetes_namespace       = var.kubernetes_namespace_name
@@ -138,32 +159,11 @@ module "spark-server" {
   # spark_history_server_additional_env_from      = var.override_spark_history_server_additional_env_from
 
 
-  # Reference the API auth credentials from environment variables injected above
+  # Use creds from the pod environment - TODO (spark server module should set these as default)
   anaml_server_user     = "$${?ANAML_ADMIN_TOKEN}"
   anaml_server_password = "$${?ANAML_ADMIN_SECRET}"
 }
 
-
-module "anaml-ui" {
-  source = "../anaml-ui"
-
-  anaml_ui_version               = var.override_anaml_ui_version != null ? var.override_anaml_ui_version : var.anaml_version
-  api_url                        = var.override_anaml_ui_api_url != null ? var.override_anaml_ui_api_url : join("", [var.https_urls ? "https" : "http", "://", var.hostname, "/api"])
-  container_registry             = var.container_registry
-  enable_new_functionality       = var.override_anaml_ui_enable_new_functionality
-  hostname                       = var.hostname
-  kubernetes_namespace           = var.kubernetes_namespace_name
-  kubernetes_node_selector       = var.kubernetes_pod_node_selector_app
-  kubernetes_service_annotations = var.kubernetes_service_annotations_anaml_ui
-  kubernetes_service_type        = var.kubernetes_service_type
-  skin                           = var.override_anaml_ui_skin
-
-  # TODO
-  docs_url                 = "http://example.com"
-  spark_history_server_url = "http://example.com"
-
-  depends_on = [kubernetes_namespace.anaml_namespace]
-}
 
 module "ingress" {
   source = "../anaml-kubernetes-ingress"

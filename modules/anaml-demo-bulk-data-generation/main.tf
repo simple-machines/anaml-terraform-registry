@@ -95,8 +95,7 @@ resource "kubernetes_persistent_volume_claim" "data_generation_volume" {
     access_modes = ["ReadWriteOnce"]
     resources {
       requests = {
-        storage = "10Gi" # Reduced to 10Gi while testing to save on costs
-        # storage = "40Gi"
+        storage = "40Gi"
       }
     }
   }

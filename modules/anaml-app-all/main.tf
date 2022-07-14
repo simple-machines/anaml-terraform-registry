@@ -49,7 +49,7 @@ resource "kubernetes_service_account" "anaml" {
 }
 
 module "anaml-docs" {
-  source = "../anaml-docs"
+  source = "../anaml-app-docs"
 
   anaml_docs_version             = var.override_anaml_docs_version != null ? var.override_anaml_docs_version : var.anaml_version
   container_registry             = var.container_registry
@@ -63,7 +63,7 @@ module "anaml-docs" {
 }
 
 module "anaml-server" {
-  source = "../anaml-server"
+  source = "../anaml-app-server"
 
   anaml_admin_email              = var.anaml_admin_email
   anaml_admin_password           = var.anaml_admin_password
@@ -98,7 +98,7 @@ module "anaml-server" {
 }
 
 module "anaml-ui" {
-  source = "../anaml-ui"
+  source = "../anaml-app-ui"
 
   anaml_ui_version               = var.override_anaml_ui_version != null ? var.override_anaml_ui_version : var.anaml_version
   api_url                        = var.override_anaml_ui_api_url != null ? var.override_anaml_ui_api_url : join("", [var.https_urls ? "https" : "http", "://", var.hostname, "/api"])
@@ -119,7 +119,7 @@ module "anaml-ui" {
 }
 
 module "spark-server" {
-  source                     = "../anaml-spark-server"
+  source                     = "../anaml-app-spark-server"
   kubernetes_namespace       = var.kubernetes_namespace_name
   anaml_spark_server_version = var.override_anaml_spark_server_version != null ? var.override_anaml_spark_server_version : var.anaml_version
   container_registry         = var.container_registry

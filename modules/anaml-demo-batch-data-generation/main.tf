@@ -10,7 +10,7 @@ terraform {
 
 locals {
   deployment_labels = merge({
-    "app.kubernetes.io/name"       = "anaml-data-generation"
+    "app.kubernetes.io/name"       = "anaml-batch-data-generation"
     "app.kubernetes.io/version"    = var.anaml_demo_setup_version
     "app.kubernetes.io/component"  = "demo-data"
     "app.kubernetes.io/part-of"    = "anaml"
@@ -22,7 +22,7 @@ locals {
 
 resource "kubernetes_cron_job" "data-generation-daily" {
   metadata {
-    name      = "data-generation-daily"
+    name      = "anaml-batch-data-generation"
     namespace = var.kubernetes_namespace
     labels    = local.deployment_labels
   }
@@ -32,7 +32,7 @@ resource "kubernetes_cron_job" "data-generation-daily" {
 
     job_template {
       metadata {
-        name   = "data-generation-daily"
+        name   = "anaml-batch-data-generation"
         labels = local.deployment_labels
       }
       spec {
@@ -43,7 +43,7 @@ resource "kubernetes_cron_job" "data-generation-daily" {
             service_account_name = var.kubernetes_service_account_name
             node_selector        = var.kubernetes_node_selector
             container {
-              name              = "data-generation-daily"
+              name              = "anaml-batch-data-generation"
               image             = "${var.container_registry}/anaml-demo-setup:${var.anaml_demo_setup_version}"
               image_pull_policy = var.kubernetes_image_pull_policy
               env {
@@ -73,7 +73,7 @@ resource "kubernetes_cron_job" "data-generation-daily" {
               }
             }
             volume {
-              name = "data-generation-volume"
+              name = "anaml-batch-data-generation"
               persistent_volume_claim {
                 claim_name = kubernetes_persistent_volume_claim.data_generation_volume.metadata.0.name
               }
@@ -88,7 +88,7 @@ resource "kubernetes_cron_job" "data-generation-daily" {
 
 resource "kubernetes_persistent_volume_claim" "data_generation_volume" {
   metadata {
-    name      = "data-generation-volume"
+    name      = "anaml-batch-data-generation"
     namespace = var.kubernetes_namespace
   }
   spec {

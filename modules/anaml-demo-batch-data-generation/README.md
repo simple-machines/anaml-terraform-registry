@@ -1,4 +1,4 @@
-# anaml-demo-bulk-data-generation
+# anaml-demo-batch-data-generation
 
 This module installs a Kubernetes cron job generating testdata on the specfied schedule.
 

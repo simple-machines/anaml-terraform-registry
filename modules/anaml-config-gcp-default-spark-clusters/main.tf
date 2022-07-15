@@ -7,14 +7,6 @@ terraform {
   }
 }
 
-# TODO does this need lifting in to a module?
-# Currently it's hard to implment multiple envs as need a provider per env
-
-provider "anaml-operations" {
-  host     = var.anaml_api_host
-  username = var.anaml_api_username
-  password = var.anaml_api_password
-}
 
 resource "anaml-operations_cluster" "spark_on_k8s_preview_cluster" {
   name               = "spark_on_k8s_preview_cluster"
@@ -53,7 +45,7 @@ resource "anaml-operations_cluster" "spark_on_k8s_job_cluster" {
   is_preview_cluster = false
 
   spark_server {
-    spark_server_url = car.anaml_spark_server_url
+    spark_server_url = var.anaml_spark_server_url
   }
 
   spark_config {

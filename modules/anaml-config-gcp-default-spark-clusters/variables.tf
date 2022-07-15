@@ -1,18 +1,3 @@
-variable "anaml_api_hot" {
-  type = string
-  nullable = false
-}
-
-variable "anaml_api_username" {
-  type = string
-  nullable = false
-}
-
-variable "anaml_api_password" {
-  type = string
-  nullable = false
-}
-
 variable "anaml_spark_server_url" {
   type = string
   nullable = false

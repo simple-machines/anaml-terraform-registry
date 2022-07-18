@@ -68,7 +68,7 @@ resource "kubernetes_cron_job" "data-generation-daily" {
               }
               command = ["/work/runners/daily.sh"]
               volume_mount {
-                name       = "data-generation-volume"
+                name       = "anaml-demo-batch-data-generation"
                 mount_path = "/work/view"
               }
             }

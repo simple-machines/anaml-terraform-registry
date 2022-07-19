@@ -125,17 +125,7 @@ resource "kubernetes_job" "data_generation_init" {
             value = var.max_skus
           }
           command = ["/work/runners/bootstrap.sh"]
-          volume_mount {
-            name       = "anaml-demo-batch-data-generation"
-            mount_path = "/work/view"
-          }
           working_dir = "/work"
-        }
-        volume {
-          name = "anaml-demo-batch-data-generation"
-          persistent_volume_claim {
-            claim_name = kubernetes_persistent_volume_claim.data_generation_volume.metadata.0.name
-          }
         }
       }
     }

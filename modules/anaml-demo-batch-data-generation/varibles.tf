@@ -4,22 +4,22 @@ variable "kubernetes_namespace" {
 }
 
 variable "kubernetes_service_account_name" {
-  type     = string
+  type        = string
   description = "Kubernetes service account to run the job under. Ensure this service account has access to the `input_path` and `output_path` destinations"
 }
 
 variable "cron_schedule" {
-  type     = string
-  default  = "0 15 * * *"
+  type        = string
+  default     = "0 15 * * *"
   description = "The time to schedule test data generation job. Defaults to 02:00+11:00 (AEDT) and 01:00+10:00 (AEST)"
-  nullable = false
+  nullable    = false
 }
 
 variable "kubernetes_node_selector" {
-  type     = map(string)
-  default  = null
+  type        = map(string)
+  default     = null
   description = "(Optional) Kubernetes node selector to run the job from"
-  nullable = true
+  nullable    = true
 }
 
 variable "anaml_demo_setup_version" {
@@ -34,34 +34,34 @@ variable "kubernetes_image_pull_policy" {
 }
 
 variable "input_path" {
-  type     = string
+  type        = string
   description = "TODO"
-  nullable = false
+  nullable    = false
 }
 
 variable "output_path" {
-  type     = string
+  type        = string
   description = "TODO"
-  nullable = false
+  nullable    = false
 }
 
 variable "max_cust" {
-  type     = number
-  default  = 200000
+  type        = number
+  default     = 200000
   description = "TODO"
-  nullable = false
+  nullable    = false
 }
 
 variable "max_skus" {
-  type     = number
-  nullable = false
-  default  = 100000
+  type        = number
+  nullable    = false
+  default     = 100000
   description = "TODO"
 }
 
 variable "container_registry" {
   type        = string
-  default = "australia-southeast1-docker.pkg.dev/anaml-release-artifacts/docker"
+  default     = "australia-southeast1-docker.pkg.dev/anaml-release-artifacts/docker"
   description = "The container registry to use to fetch the anaml-docs container"
   nullable    = false
 }
@@ -73,6 +73,6 @@ variable "kubernetes_deployment_labels" {
 }
 
 variable "cluster" {
-  type = string
+  type    = string
   default = "anaml-dataproc-cluster-small"
 }

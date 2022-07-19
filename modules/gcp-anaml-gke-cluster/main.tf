@@ -12,7 +12,7 @@ resource "random_id" "name_suffix" {
 # look to use the `service_account` attribute, the next time this cluster is rebuilt.
 module "gke_cluster" {
   source                 = "terraform-google-modules/kubernetes-engine/google//modules/private-cluster"
-  version                = "21.1.0"
+  version                = "21.2.0"
   grant_registry_access  = true
   project_id             = var.gcp_project_id
   name                   = "${var.name_prefix}-${random_id.name_suffix.hex}"
@@ -36,6 +36,9 @@ module "gke_cluster" {
 
   master_ipv4_cidr_block   = var.master_ipv4_cidr_block
   remove_default_node_pool = true
+
+  maintenance_start_time = var.maintenance_start_time
+  maintenance_end_time = var.maintenance_end_time
 
 
   release_channel = "REGULAR"

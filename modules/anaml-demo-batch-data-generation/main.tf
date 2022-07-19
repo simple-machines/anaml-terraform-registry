@@ -89,6 +89,7 @@ resource "kubernetes_cron_job" "data_generation" {
 }
 
 resource "kubernetes_job" "data_generation_init" {
+  count = var.run_init_job ? 1 : 0
   metadata {
     name      = "anaml-demo-batch-data-generation-setup"
     namespace = var.kubernetes_namespace

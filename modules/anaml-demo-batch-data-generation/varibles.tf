@@ -76,3 +76,9 @@ variable "cluster" {
   type    = string
   default = "anaml-dataproc-cluster-small"
 }
+
+variable "run_init_job" {
+  type = bool
+  default = true
+  description = "Run the init job if the input_path is empty/first time running the data-generation. Defaults to true"
+}

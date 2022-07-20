@@ -3,7 +3,7 @@
 
 The following requirements are needed by this module:
 
-- <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (>= 0.14)
+- <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (>= 1.1)
 
 ## Providers
 

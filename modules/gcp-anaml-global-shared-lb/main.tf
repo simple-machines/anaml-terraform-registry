@@ -39,7 +39,7 @@ resource "google_compute_health_check" "default" {
   }
 
   log_config {
-    enable = true
+    enable = var.enable_health_check_logging
   }
 }
 
@@ -69,6 +69,10 @@ resource "google_compute_backend_service" "backends" {
   name          = each.key
   health_checks = each.value.health_checks
   timeout_sec   = try(each.value.timeout_sec, 30)
+
+  log_config {
+    enable = var.enable_backend_logging
+  }
 
   backend {
     # TODO parameterise group zone/negs. Currently hardcoded for dev testing purposes

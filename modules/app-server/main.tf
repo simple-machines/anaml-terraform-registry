@@ -196,10 +196,13 @@ resource "kubernetes_deployment" "anaml_server" {
           }
 
           dynamic "env_from" {
-            for_each = var.kubernetes_secret_refs
+            for_each = var.kubernetes_container_env_from
             content {
-              secret_ref {
-                name = env_from.value
+              dynamic "secret_ref" {
+                for_each = [env_from.value.secret_ref]
+                content {
+                  name = secret_ref.value.name
+                }
               }
             }
           }

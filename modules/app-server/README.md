@@ -59,6 +59,18 @@ Description: n/a
 
 Type: `string`
 
+### <a name="input_postgres_password"></a> [postgres\_password](#input\_postgres\_password)
+
+Description: n/a
+
+Type: `string`
+
+### <a name="input_postgres_user"></a> [postgres\_user](#input\_postgres\_user)
+
+Description: n/a
+
+Type: `string`
+
 ## Optional Inputs
 
 The following input variables are optional (have default values):
@@ -118,6 +130,22 @@ Description: Enable Login form
 Type: `bool`
 
 Default: `false`
+
+### <a name="input_kubernetes_container_env_from"></a> [kubernetes\_container\_env\_from](#input\_kubernetes\_container\_env\_from)
+
+Description: n/a
+
+Type:
+
+```hcl
+list(object({
+    secret_ref = object({
+      name = string
+    })
+  }))
+```
+
+Default: `[]`
 
 ### <a name="input_kubernetes_deployment_labels"></a> [kubernetes\_deployment\_labels](#input\_kubernetes\_deployment\_labels)
 
@@ -213,14 +241,6 @@ set(
 
 Default: `[]`
 
-### <a name="input_kubernetes_secret_refs"></a> [kubernetes\_secret\_refs](#input\_kubernetes\_secret\_refs)
-
-Description: n/a
-
-Type: `set(string)`
-
-Default: `[]`
-
 ### <a name="input_kubernetes_service_account_name"></a> [kubernetes\_service\_account\_name](#input\_kubernetes\_service\_account\_name)
 
 Description: n/a
@@ -235,7 +255,7 @@ Description: (Optional) An unstructured key value map stored with the service th
 
 Type: `map(string)`
 
-Default: `{}`
+Default: `null`
 
 ### <a name="input_kubernetes_service_type"></a> [kubernetes\_service\_type](#input\_kubernetes\_service\_type)
 
@@ -293,14 +313,6 @@ Type: `string`
 
 Default: `null`
 
-### <a name="input_postgres_password"></a> [postgres\_password](#input\_postgres\_password)
-
-Description: n/a
-
-Type: `string`
-
-Default: `null`
-
 ### <a name="input_postgres_port"></a> [postgres\_port](#input\_postgres\_port)
 
 Description: n/a
@@ -308,14 +320,6 @@ Description: n/a
 Type: `number`
 
 Default: `"5432"`
-
-### <a name="input_postgres_user"></a> [postgres\_user](#input\_postgres\_user)
-
-Description: n/a
-
-Type: `string`
-
-Default: `null`
 
 ## Outputs
 

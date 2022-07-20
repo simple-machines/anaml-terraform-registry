@@ -41,7 +41,7 @@ variable "kubernetes_image_pull_policy" {
 
 variable "kubernetes_service_annotations" {
   type        = map(string)
-  default     = {}
+  default     = null
   description = "(Optional) An unstructured key value map stored with the service that may be used to store arbitrary metadata."
 }
 
@@ -49,11 +49,6 @@ variable "kubernetes_deployment_labels" {
   type        = map(string)
   default     = {}
   description = "Additional labels to add to Kubernetes deployment"
-}
-
-variable "kubernetes_secret_refs" {
-  type    = set(string)
-  default = []
 }
 
 variable "kubernetes_service_type" {
@@ -112,6 +107,16 @@ variable "kubernetes_pod_sidecars" {
   )
   default     = []
   description = "Optional sidecars to provision i.e. Google Cloud SQL Auth Proxy if deploying in GCP"
+}
+
+variable "kubernetes_container_env_from" {
+  type = list(object({
+    secret_ref = object({
+      name = string
+    })
+  }))
+
+  default = []
 }
 
 variable "anaml_server_version" {
@@ -187,12 +192,10 @@ variable "postgres_port" {
 
 variable "postgres_user" {
   type    = string
-  default = null
 }
 
 variable "postgres_password" {
   type    = string
-  default = null
 }
 
 

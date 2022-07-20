@@ -76,7 +76,9 @@ module "anaml-server" {
   enable_form_client             = var.enable_form_client
   kubernetes_namespace           = var.kubernetes_namespace_name
   kubernetes_node_selector       = var.kubernetes_pod_node_selector_app
-  kubernetes_secret_refs         = ["postgres-secret"]
+  kubernetes_container_env_from  = [
+    { secret_ref = { name = "postgres-secret" } }
+  ]
   kubernetes_service_annotations = var.kubernetes_service_annotations_anaml_server
   kubernetes_service_type        = var.kubernetes_service_type
   oidc_additional_scopes         = var.oidc_additional_scopes

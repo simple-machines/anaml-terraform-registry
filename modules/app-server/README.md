@@ -206,7 +206,7 @@ set(
     object({
       name              = string,
       image             = string,
-      image_pull_policy = optional(string), # Optional
+      image_pull_policy = optional(string),
 
       command = optional(list(string))
 

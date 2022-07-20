@@ -194,12 +194,12 @@ variable "postgres_port" {
 
 variable "postgres_user" {
   type    = string
-  description = "The user to connect to Postgres as. If the password is stored as a Kubernetes secret you can use `kubernetes_container_env_from` to make the secret available in the POD as a `secret_ref` and then reference it using standard Kubernetes syntax, i.e. by setting this value to `$(PGUSER)`."
+  description = "The user to connect to Postgres as. If the password is stored as a Kubernetes secret you can use the `kubernetes_container_env_from` option to make the secret available in the POD as a `secret_ref` and then reference it using standard Kubernetes syntax, i.e. by setting this value to `$(PGUSER)`."
 }
 
 variable "postgres_password" {
   type    = string
-  description = "The password for the specified Postgres user. If the password is stored as a Kubernetes secret you can use `kubernetes_container_env_from` to make the secret available in the POD as a `secret_ref` and then reference it using standard Kubernetes syntax, i.e. by setting this value to `$(PGPASSWORD)`."
+  description = "The password for the specified Postgres user. If the password is stored as a Kubernetes secret you can use the `kubernetes_container_env_from` option to make the secret available in the POD as a `secret_ref` and then reference it using standard Kubernetes syntax, i.e. by setting this value to `$(PGPASSWORD)`."
 }
 
 

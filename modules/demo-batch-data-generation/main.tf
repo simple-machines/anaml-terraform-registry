@@ -1,3 +1,13 @@
+/**
+ * # demo-batch-data-generation
+ *
+ * This module
+ *   - Runs a one-off data initialization **job** creating seed data at the `output_path`
+ *   - installs a Kubernetes cron job generating new data on the specfied schedule
+ *
+ * The specified `service_account` will need access to the `input_path` and `output_path` locations.
+ */
+
 terraform {
   required_version = ">= 1.1"
   required_providers {

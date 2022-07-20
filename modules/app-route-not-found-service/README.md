@@ -57,7 +57,7 @@ Default: `"v0.3"`
 
 ### <a name="input_container_registry"></a> [container\_registry](#input\_container\_registry)
 
-Description: The container registry to use to fetch the anaml-docs container
+Description: The container registry to use to fetch the anaml\_route\_not\_found\_service\_version container
 
 Type: `string`
 
@@ -89,7 +89,7 @@ Default: `1`
 
 ### <a name="input_kubernetes_image_pull_policy"></a> [kubernetes\_image\_pull\_policy](#input\_kubernetes\_image\_pull\_policy)
 
-Description:  (Optional) Image pull policy. One of Always, Never, IfNotPresent. Defaults to Always if `anaml_docs_version` is set to`latest`, or IfNotPresent otherwise. Cannot be updated. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/images#updating-images)
+Description:  (Optional) Image pull policy. One of Always, Never, IfNotPresent. Defaults to Always if `anaml_route_not_found_service_version` is set to`latest`, or IfNotPresent otherwise. Cannot be updated. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/images#updating-images)
 
 Type: `string`
 

@@ -93,7 +93,7 @@ Default: `null`
 
 ### <a name="input_anaml_admin_secret"></a> [anaml\_admin\_secret](#input\_anaml\_admin\_secret)
 
-Description: n/a
+Description: The Anaml API service password. This is used internally by Anaml for service-to-service communication
 
 Type: `string`
 
@@ -101,7 +101,7 @@ Default: `null`
 
 ### <a name="input_anaml_admin_token"></a> [anaml\_admin\_token](#input\_anaml\_admin\_token)
 
-Description: n/a
+Description: The Anaml API service username. This is used internally by Anaml for service-to-service communication
 
 Type: `string`
 

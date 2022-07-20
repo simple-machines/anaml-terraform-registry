@@ -170,32 +170,37 @@ variable "oidc_additional_scopes" {
 variable "anaml_database_name" {
   type        = string
   default     = "anaml"
-  description = "The name of the PostgreSQL database to use for the Anaml Server."
+  description = "The name of the Postgres database to use for the Anaml Server."
   nullable    = false
 }
 
 variable "anaml_database_schema_name" {
   type        = string
   default     = "anaml"
-  description = "The name of the PostgreSQL schema to use for the Anaml server."
+  description = "The name of the Postgres schema to use for the Anaml server."
   nullable    = false
 }
 
 variable "postgres_host" {
   type = string
+  description = "The host name of the Postgres database to connecto to"
 }
 
 variable "postgres_port" {
   type    = number
+  description = "The Postgres database port to connect to, defaults to 5432"
   default = "5432"
 }
 
 variable "postgres_user" {
   type    = string
+  type    = string
+  description = "The user to connect to Postgres as. If the password is stored as a Kubernetes secret you can use `kubernetes_container_env_from` to make the secret available in the POD as a `secret_ref` and then reference it using standard Kubernetes syntax, i.e. by setting this value to \"$(PGUSER)\""
 }
 
 variable "postgres_password" {
   type    = string
+  description = "The password for the specified Postgres user. If the password is stored as a Kubernetes secret you can use `kubernetes_container_env_from` to make the secret available in the POD as a `secret_ref` and then reference it using standard Kubernetes syntax, i.e. by setting this value to \"$(PGPASSWORD)\""
 }
 
 

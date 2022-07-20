@@ -4,7 +4,7 @@
 > :warning: It's likely you do not want to deploy this!
 
 ## What is app-routing-not-found service?
-anaml-routing-not-found service is primarily used in a multi host hosting environment where we want to serve a branded "404 Page Not Found" when a route does not match.
+app-routing-not-found service is primarily used in a multi host hosting environment where we want to serve a branded "404 Page Not Found" when a route does not match.
 
 This is mainly used internally for deployments that use a shared Google Global Loadbalancer that requires a default service backend for route misses to server multiple Anaml deployments running off a single Kubernetes cluster.
 
@@ -81,11 +81,11 @@ Default: `"anaml-route-not-found-service"`
 
 ### <a name="input_kubernetes_deployment_replicas"></a> [kubernetes\_deployment\_replicas](#input\_kubernetes\_deployment\_replicas)
 
-Description: n/a
+Description: Optional) The number of desired replicas. This attribute is a string to be able to distinguish between explicit zero and not specified. Defaults to 1. For more info see [Kubernetes reference](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#scaling-a-deployment)
 
-Type: `number`
+Type: `string`
 
-Default: `1`
+Default: `"1"`
 
 ### <a name="input_kubernetes_image_pull_policy"></a> [kubernetes\_image\_pull\_policy](#input\_kubernetes\_image\_pull\_policy)
 

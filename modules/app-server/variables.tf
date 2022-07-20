@@ -20,8 +20,9 @@ variable "kubernetes_deployment_name" {
 }
 
 variable "kubernetes_deployment_replicas" {
-  type    = number
-  default = 1
+  type    = string
+  description = "Optional) The number of desired replicas. This attribute is a string to be able to distinguish between explicit zero and not specified. Defaults to 1. For more info see [Kubernetes reference](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#scaling-a-deployment)"
+  default = "1"
 }
 
 variable "kubernetes_image_pull_policy" {

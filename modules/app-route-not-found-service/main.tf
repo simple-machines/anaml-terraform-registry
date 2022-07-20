@@ -6,6 +6,8 @@
  * ## What is app-routing-not-found service?
  * app-routing-not-found service is used in a multi host hosting environment when using a single GCP Global Load Balancer serving multiple sites where you must provided a default backend and want to serve a branded "404 Page Not Found" when a route does not match.
  *
+ * This module deploys a Kubernetes Deployment and Service running an HTTP webserver that returns a static HTTP 404 page for every web request.
+ *
  */
 
 terraform {

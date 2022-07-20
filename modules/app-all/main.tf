@@ -70,10 +70,10 @@ module "anaml-server" {
   anaml_admin_secret             = var.anaml_admin_secret
   anaml_admin_token              = var.anaml_admin_token
   anaml_database_schema_name     = var.override_anaml_server_anaml_database_schema_name
-  anaml_external_domain          = var.hostname
   anaml_server_version           = var.override_anaml_server_version != null ? var.override_anaml_server_version : var.anaml_version
   container_registry             = var.container_registry
   enable_form_client             = var.enable_form_client
+  hostname                       = var.hostname
   kubernetes_namespace           = var.kubernetes_namespace_name
   kubernetes_node_selector       = var.kubernetes_pod_node_selector_app
   kubernetes_container_env_from  = [

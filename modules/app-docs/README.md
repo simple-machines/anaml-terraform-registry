@@ -46,7 +46,7 @@ Type: `string`
 
 ### <a name="input_hostname"></a> [hostname](#input\_hostname)
 
-Description: The hostname to use for UI links. I.E. "anaml.example.com"
+Description: The external/public hostname to use for UI links. I.E. "anaml.example.com"
 
 Type: `string`
 

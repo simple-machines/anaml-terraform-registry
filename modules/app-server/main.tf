@@ -46,7 +46,7 @@ resource "kubernetes_config_map" "anaml_server" {
     OIDC_CLIENT_SECRET = var.oidc_client_secret
 
     "application.conf" = templatefile("${path.module}/_templates/application.conf", {
-      anaml_external_domain   = var.anaml_external_domain
+      anaml_external_domain   = var.hostname
       enable_oidc_client      = var.oidc_enable
       enable_form_client      = var.enable_form_client
       discovery_uri           = var.oidc_discovery_uri != null ? var.oidc_discovery_uri : ""

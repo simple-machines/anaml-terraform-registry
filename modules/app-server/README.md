@@ -35,12 +35,6 @@ The following resources are used by this module:
 
 The following input variables are required:
 
-### <a name="input_anaml_external_domain"></a> [anaml\_external\_domain](#input\_anaml\_external\_domain)
-
-Description: The hostname to use for UI links
-
-Type: `string`
-
 ### <a name="input_anaml_server_version"></a> [anaml\_server\_version](#input\_anaml\_server\_version)
 
 Description: The version of anaml-server to deploy
@@ -50,6 +44,12 @@ Type: `string`
 ### <a name="input_container_registry"></a> [container\_registry](#input\_container\_registry)
 
 Description: The container registry to use to fetch the anaml-server container
+
+Type: `string`
+
+### <a name="input_hostname"></a> [hostname](#input\_hostname)
+
+Description: The external/public hostname to use for UI links. I.E. "anaml.example.com"
 
 Type: `string`
 
@@ -77,7 +77,7 @@ The following input variables are optional (have default values):
 
 ### <a name="input_anaml_admin_email"></a> [anaml\_admin\_email](#input\_anaml\_admin\_email)
 
-Description: If enable\_form\_client is true, the admin account email address for sign in
+Description: If `enable_form_client` is `true`, the admin account email address for sign in
 
 Type: `string`
 
@@ -85,7 +85,7 @@ Default: `null`
 
 ### <a name="input_anaml_admin_password"></a> [anaml\_admin\_password](#input\_anaml\_admin\_password)
 
-Description: If enable\_form\_client is true, the initial admin account password for sign in
+Description: If `enable_form_client` is `true`, the initial admin account password for sign in
 
 Type: `string`
 

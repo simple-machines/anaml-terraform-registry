@@ -4,10 +4,10 @@ variable "container_registry" {
   description = "The container registry to use to fetch the anaml-server container"
 }
 
-variable "anaml_external_domain" {
+variable "hostname" {
   type        = string
   nullable    = false
-  description = "The hostname to use for UI links"
+  description = "The external/public hostname to use for UI links. I.E. \"anaml.example.com\""
 }
 
 variable "kubernetes_namespace" {
@@ -202,13 +202,13 @@ variable "postgres_password" {
 variable "anaml_admin_email" {
   type        = string
   default     = null
-  description = "If enable_form_client is true, the admin account email address for sign in"
+  description = "If `enable_form_client` is `true`, the admin account email address for sign in"
 }
 
 variable "anaml_admin_password" {
   type        = string
   default     = null
-  description = "If enable_form_client is true, the initial admin account password for sign in"
+  description = "If `enable_form_client` is `true`, the initial admin account password for sign in"
   sensitive   = true
 }
 

@@ -13,7 +13,7 @@ variable "container_registry" {
 variable "hostname" {
   type        = string
   nullable    = false
-  description = "The hostname to use for UI links. I.E. \"anaml.example.com\""
+  description = "The external/public hostname to use for UI links. I.E. \"anaml.example.com\""
 }
 
 variable "kubernetes_deployment_name" {

@@ -1,13 +1,9 @@
 #! /usr/bin/env nix-shell
 #! nix-shell -i bash -p terraform-docs
 
-print_error() {
-  echo "ERROR: $1"
-}
-
 main() {
     [[ $# -eq 1 ]] || { echo "USAGE: $0 modules_directory"; exit 1; }
-    [[ -d "$1" ]] || { print_error "module_directory '$2' not found"; exit 1; }
+    [[ -d "$1" ]] || { echo "ERROR: module_directory '$2' not found"; exit 1; }
 
     local modules_dir="$1"
 

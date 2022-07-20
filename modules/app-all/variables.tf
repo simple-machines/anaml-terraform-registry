@@ -55,21 +55,21 @@ variable "kubernetes_namespace_name" {
 variable "kubernetes_pod_node_selector_app" {
   type        = map(string)
   default     = null
-  description = "Optional node_selector config to apply to application services"
+  description = "Optional) NodeSelector is a selector which must be true for the **apps** pod's to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/node-selection)."
   nullable    = true
 }
 
 variable "kubernetes_pod_node_selector_postgres" {
   type        = map(string)
   default     = null
-  description = "If deploy_postgres_pod is true, optionally set the node_selector for the postgres pod to target"
+  description = "Optional) NodeSelector is a selector which must be true for the **postgres** pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/node-selection)."
   nullable    = true
 }
 
 variable "kubernetes_pod_node_selector_spark_executor" {
   type        = map(string)
   default     = null
-  description = "Optional node_selector config to apply to Apache Spark executors"
+  description = "Optional) NodeSelector is a selector which must be true for the **spark_executor** pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/node-selection)."
   nullable    = true
 }
 

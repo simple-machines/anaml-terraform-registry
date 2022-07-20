@@ -14,6 +14,7 @@ variable "kubernetes_node_selector" {
   type     = map(string)
   default  = null
   nullable = true
+  description = "Optional) NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/node-selection)."
 }
 
 variable "kubernetes_service_annotations" {
@@ -25,7 +26,7 @@ variable "kubernetes_service_annotations" {
 variable "kubernetes_service_type" {
   type = string
   default = "ClusterIP"
-  description = "(Optional) Determines how the service is exposed. Defaults to `ClusterIP`. Valid options are `ExternalName`, `ClusterIP`, `NodePort`, and `LoadBalancer`. `ExternalName` maps to the specified external_name. For more info see [ Kubernetes reference](http://kubernetes.io/docs/user-guide/services#overview)"
+  description = "(Optional) Determines how the service is exposed. Defaults to `ClusterIP`. Valid options are `ExternalName`, `ClusterIP`, `NodePort`, and `LoadBalancer`. `ExternalName` maps to the specified external_name. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/services#overview)"
 
   validation {
     condition = contains(["ExternalName", "ClusterIP", "NodePort", "LoadBalancer"], var.kubernetes_service_type)

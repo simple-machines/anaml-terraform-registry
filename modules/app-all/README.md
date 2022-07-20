@@ -289,7 +289,7 @@ Default: `[]`
 
 ### <a name="input_kubernetes_pod_node_selector_app"></a> [kubernetes\_pod\_node\_selector\_app](#input\_kubernetes\_pod\_node\_selector\_app)
 
-Description: Optional node\_selector config to apply to application services
+Description: Optional) NodeSelector is a selector which must be true for the **apps** pod's to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/node-selection).
 
 Type: `map(string)`
 
@@ -297,7 +297,7 @@ Default: `null`
 
 ### <a name="input_kubernetes_pod_node_selector_postgres"></a> [kubernetes\_pod\_node\_selector\_postgres](#input\_kubernetes\_pod\_node\_selector\_postgres)
 
-Description: If deploy\_postgres\_pod is true, optionally set the node\_selector for the postgres pod to target
+Description: Optional) NodeSelector is a selector which must be true for the **postgres** pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/node-selection).
 
 Type: `map(string)`
 
@@ -305,7 +305,7 @@ Default: `null`
 
 ### <a name="input_kubernetes_pod_node_selector_spark_executor"></a> [kubernetes\_pod\_node\_selector\_spark\_executor](#input\_kubernetes\_pod\_node\_selector\_spark\_executor)
 
-Description: Optional node\_selector config to apply to Apache Spark executors
+Description: Optional) NodeSelector is a selector which must be true for the **spark\_executor** pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/node-selection).
 
 Type: `map(string)`
 

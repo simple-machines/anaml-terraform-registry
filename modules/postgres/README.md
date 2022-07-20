@@ -108,11 +108,11 @@ Default: `{}`
 
 ### <a name="input_kubernetes_service_type"></a> [kubernetes\_service\_type](#input\_kubernetes\_service\_type)
 
-Description: n/a
+Description: (Optional) Determines how the service is exposed. Defaults to `ClusterIP`. Valid options are `ExternalName`, `ClusterIP`, `NodePort`, and `LoadBalancer`. `ExternalName` maps to the specified external\_name. For more info see [ Kubernetes reference](http://kubernetes.io/docs/user-guide/services#overview)
 
 Type: `string`
 
-Default: `"NodePort"`
+Default: `"ClusterIP"`
 
 ## Outputs
 

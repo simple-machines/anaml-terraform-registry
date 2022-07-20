@@ -23,8 +23,14 @@ variable "kubernetes_service_annotations" {
 }
 
 variable "kubernetes_service_type" {
-  type    = string
-  default = "NodePort"
+  type = string
+  default = "ClusterIP"
+  description = "(Optional) Determines how the service is exposed. Defaults to `ClusterIP`. Valid options are `ExternalName`, `ClusterIP`, `NodePort`, and `LoadBalancer`. `ExternalName` maps to the specified external_name. For more info see [ Kubernetes reference](http://kubernetes.io/docs/user-guide/services#overview)"
+
+  validation {
+    condition = contains(["ExternalName", "ClusterIP", "NodePort", "LoadBalancer"], var.kubernetes_service_type)
+    error_message = "The kubernetes_service_type value must be one of ExternalName, ClusterIP, NodePort or LoadBalancer"
+  }
 }
 
 variable "kubernetes_persistent_volume_claim_storage_class_name" {

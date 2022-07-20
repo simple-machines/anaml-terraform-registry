@@ -1,5 +1,5 @@
 <!-- BEGIN_TF_DOCS -->
-# app-routing-not-found service Terraform module
+# app-routing-not-found-service Terraform module
 
 :warning: It's likely you do not want to deploy this!
 

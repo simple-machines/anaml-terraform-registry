@@ -27,6 +27,7 @@ variable "kubernetes_node_selector" {
 variable "kubernetes_deployment_name" {
   type    = string
   default = "anaml-route-not-found-service"
+  description = "(Optional) Name of the deployment, must be unique. Cannot be updated. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/identifiers#names)"
 }
 
 variable "container_registry" {

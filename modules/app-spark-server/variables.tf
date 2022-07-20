@@ -29,6 +29,7 @@ variable "kubernetes_node_selector_spark_executor" {
 variable "kubernetes_deployment_name" {
   type    = string
   default = "anaml-spark-server"
+  description = "(Optional) Name of the deployment, must be unique. Cannot be updated. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/identifiers#names)"
 }
 
 variable "kubernetes_image_pull_policy" {

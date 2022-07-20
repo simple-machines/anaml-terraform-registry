@@ -6,6 +6,7 @@ variable "gcp_cloudsql_proxy_version" {
 variable "kubernetes_deployment_name" {
   type    = string
   default = "cloudsql-proxy"
+  description = "(Optional) Name of the deployment, must be unique. Cannot be updated. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/identifiers#names)"
 }
 
 variable "kubernetes_deployment_replicas" {

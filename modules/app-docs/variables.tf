@@ -18,6 +18,7 @@ variable "hostname" {
 
 variable "kubernetes_deployment_name" {
   type    = string
+  description = "(Optional) Name of the deployment, must be unique. Cannot be updated. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/identifiers#names)"
   default = "anaml-docs"
 }
 

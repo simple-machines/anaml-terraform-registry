@@ -61,13 +61,13 @@ Type: `string`
 
 ### <a name="input_postgres_password"></a> [postgres\_password](#input\_postgres\_password)
 
-Description: The password for the specified Postgres user. If the password is stored as a Kubernetes secret you can use `kubernetes_container_env_from` to make the secret available in the POD as a `secret_ref` and then reference it using standard Kubernetes syntax, i.e. by setting this value to "$(PGPASSWORD)"
+Description: The password for the specified Postgres user. If the password is stored as a Kubernetes secret you can use `kubernetes_container_env_from` to make the secret available in the POD as a `secret_ref` and then reference it using standard Kubernetes syntax, i.e. by setting this value to `$(PGPASSWORD)`.
 
 Type: `string`
 
 ### <a name="input_postgres_user"></a> [postgres\_user](#input\_postgres\_user)
 
-Description: The user to connect to Postgres as. If the password is stored as a Kubernetes secret you can use `kubernetes_container_env_from` to make the secret available in the POD as a `secret_ref` and then reference it using standard Kubernetes syntax, i.e. by setting this value to "$(PGUSER)"
+Description: The user to connect to Postgres as. If the password is stored as a Kubernetes secret you can use `kubernetes_container_env_from` to make the secret available in the POD as a `secret_ref` and then reference it using standard Kubernetes syntax, i.e. by setting this value to `$(PGUSER)`.
 
 Type: `string`
 

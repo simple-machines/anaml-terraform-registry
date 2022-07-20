@@ -37,7 +37,7 @@ locals {
     "spark.kubernetes.allocation.batch.size"                                      = "2"
     "spark.kubernetes.authenticate.driver.serviceAccountName"                     = local.service_account_name
     "spark.kubernetes.container.image"                                            = local.image
-    "spark.kubernetes.container.image.pullPolicy"                                 = var.kubernetes_image_pull_policy
+    "spark.kubernetes.container.image.pullPolicy"                                 = var.kubernetes_image_pull_policy == null ? (var.anaml_spark_server_version == "latest" ? "Always" : "IfNotPresent") : var.kubernetes_image_pull_policy
     "spark.kubernetes.executor.podTemplateFile"                                   = "/config/spark-executor-template.yaml"
     "spark.kubernetes.executor.secrets.${local.service_account_name}-credentials" = "/etc/secrets"
     "spark.kubernetes.executor.volumes.emptyDir.spark-local-dir-1.mount.path"     = "/spark-work-dir-1"

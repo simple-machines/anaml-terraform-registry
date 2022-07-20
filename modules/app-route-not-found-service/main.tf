@@ -54,7 +54,7 @@ resource "kubernetes_deployment" "anaml_route_not_found_service" {
         container {
           name              = var.kubernetes_deployment_name
           image             = "${var.container_registry}/anaml-route-not-found-service:${var.anaml_route_not_found_service_version}"
-          image_pull_policy = var.kubernetes_image_pull_policy
+          image_pull_policy = var.kubernetes_image_pull_policy == null ? (var.anaml_route_not_found_service_version == "latest" ? "Always" : "IfNotPresent") : var.kubernetes_image_pull_policy
           port {
             container_port = 8080
             name           = "http-web-svc"

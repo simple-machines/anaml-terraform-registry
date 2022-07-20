@@ -26,7 +26,13 @@ variable "kubernetes_deployment_replicas" {
 
 variable "kubernetes_image_pull_policy" {
   type    = string
-  default = "IfNotPresent"
+  description = " (Optional) Image pull policy. One of Always, Never, IfNotPresent. Defaults to Always if `anaml_server_version` is set to`latest`, or IfNotPresent otherwise. Cannot be updated. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/images#updating-images)"
+  default = null
+
+  validation {
+    condition = var.kubernetes_image_pull_policy == null ? true : contains(["Always", "Never", "IfNotPresent"], var.kubernetes_image_pull_policy)
+    error_message = "The kubernetes_image_pull_policy value must be one of Always, Nerver or IfNotPresent"
+  }
 }
 
 variable "kubernetes_service_annotations" {

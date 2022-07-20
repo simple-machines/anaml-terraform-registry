@@ -59,7 +59,7 @@ resource "kubernetes_deployment" "anaml_spark_server_deployment" {
           name              = "anaml-spark-server"
           image             = local.image
           command           = ["/opt/docker/bin/anaml-spark-server.sh"]
-          image_pull_policy = var.kubernetes_image_pull_policy
+          image_pull_policy = var.kubernetes_image_pull_policy == null ? (var.anaml_spark_server_version == "latest" ? "Always" : "IfNotPresent") : var.kubernetes_image_pull_policy
 
           port {
             container_port = 8762
@@ -272,7 +272,7 @@ resource "kubernetes_deployment" "spark_history_server_deployment" {
           name              = "spark-history-server"
           image             = local.image
           command           = ["/opt/spark/bin/spark-class", "org.apache.spark.deploy.history.HistoryServer"]
-          image_pull_policy = var.kubernetes_image_pull_policy
+          image_pull_policy = var.kubernetes_image_pull_policy == null ? (var.anaml_spark_server_version == "latest" ? "Always" : "IfNotPresent") : var.kubernetes_image_pull_policy
 
           port {
             container_port = 18080

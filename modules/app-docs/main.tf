@@ -43,7 +43,7 @@ resource "kubernetes_deployment" "anaml_docs" {
         container {
           name              = var.kubernetes_deployment_name
           image             = "${var.container_registry}/anaml-docs:${var.anaml_docs_version}"
-          image_pull_policy = var.kubernetes_image_pull_policy
+          image_pull_policy = var.kubernetes_image_pull_policy == null ? (var.anaml_docs_version == "latest" ? "Always" : "IfNotPresent") : var.kubernetes_image_pull_policy
           port {
             container_port = 80
             name           = "http-web-svc"

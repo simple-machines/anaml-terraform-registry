@@ -116,7 +116,7 @@ resource "kubernetes_deployment" "anaml_server" {
         container {
           name              = var.kubernetes_deployment_name
           image             = "${var.container_registry}/anaml-server:${var.anaml_server_version}"
-          image_pull_policy = var.kubernetes_image_pull_policy
+          image_pull_policy = var.kubernetes_image_pull_policy == null ? (var.anaml_server_version == "latest" ? "Always" : "IfNotPresent") : var.kubernetes_image_pull_policy
 
           port {
             container_port = 8080

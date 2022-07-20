@@ -57,6 +57,7 @@ resource "kubernetes_deployment" "default" {
         container {
           name  = var.kubernetes_deployment_name
           image = "${var.gcp_cloudsql_image_repository}:${var.gcp_cloudsql_proxy_version}"
+          image_pull_policy = var.kubernetes_image_pull_policy == null ? (var.gcp_cloudsql_proxy_version == "latest" ? "Always" : "IfNotPresent") : var.kubernetes_image_pull_policy
           command = flatten([
             ["/cloud_sql_proxy"],
             ["-dir=/cloudsql"],

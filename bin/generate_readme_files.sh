@@ -14,7 +14,7 @@ main() {
 
     while IFS= read -r -d '' module
     do
-        terraform-docs markdown --output-file "README.md" "$module"
+        terraform-docs markdown document --output-file "README.md" "$module"
     done < <(find "$modules_dir" -maxdepth 1 ! -path "$modules_dir" -type d -print0)
 }
 

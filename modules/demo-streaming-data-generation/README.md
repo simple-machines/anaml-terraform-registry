@@ -15,9 +15,13 @@ No modules.
 
 No resources.
 
-## Inputs
+## Required Inputs
 
-No inputs.
+No required inputs.
+
+## Optional Inputs
+
+No optional inputs.
 
 ## Outputs
 

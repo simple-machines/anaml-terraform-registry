@@ -55,19 +55,19 @@ Type: `string`
 
 ### <a name="input_postgres_host"></a> [postgres\_host](#input\_postgres\_host)
 
-Description: n/a
+Description: The host name of the Postgres database to connecto to
 
 Type: `string`
 
 ### <a name="input_postgres_password"></a> [postgres\_password](#input\_postgres\_password)
 
-Description: n/a
+Description: The password for the specified Postgres user. If the password is stored as a Kubernetes secret you can use `kubernetes_container_env_from` to make the secret available in the POD as a `secret_ref` and then reference it using standard Kubernetes syntax, i.e. by setting this value to "$(PGPASSWORD)"
 
 Type: `string`
 
 ### <a name="input_postgres_user"></a> [postgres\_user](#input\_postgres\_user)
 
-Description: n/a
+Description: The user to connect to Postgres as. If the password is stored as a Kubernetes secret you can use `kubernetes_container_env_from` to make the secret available in the POD as a `secret_ref` and then reference it using standard Kubernetes syntax, i.e. by setting this value to "$(PGUSER)"
 
 Type: `string`
 
@@ -109,7 +109,7 @@ Default: `null`
 
 ### <a name="input_anaml_database_name"></a> [anaml\_database\_name](#input\_anaml\_database\_name)
 
-Description: The name of the PostgreSQL database to use for the Anaml Server.
+Description: The name of the Postgres database to use for the Anaml Server.
 
 Type: `string`
 
@@ -117,7 +117,7 @@ Default: `"anaml"`
 
 ### <a name="input_anaml_database_schema_name"></a> [anaml\_database\_schema\_name](#input\_anaml\_database\_schema\_name)
 
-Description: The name of the PostgreSQL schema to use for the Anaml server.
+Description: The name of the Postgres schema to use for the Anaml server.
 
 Type: `string`
 
@@ -315,7 +315,7 @@ Default: `null`
 
 ### <a name="input_postgres_port"></a> [postgres\_port](#input\_postgres\_port)
 
-Description: n/a
+Description: The Postgres database port to connect to, defaults to 5432
 
 Type: `number`
 

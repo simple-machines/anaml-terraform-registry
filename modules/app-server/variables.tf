@@ -115,7 +115,7 @@ variable "kubernetes_container_env_from" {
       name = string
     })
   }))
-
+  description = "Inject additional `env_from` values in to the deployment. This is useful for example if you want to mount the Postgres credentials from a secret_ref to use in the `postgres_user` and `postgres_password` values"
   default = []
 }
 

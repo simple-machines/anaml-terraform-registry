@@ -133,7 +133,7 @@ Default: `false`
 
 ### <a name="input_kubernetes_container_env_from"></a> [kubernetes\_container\_env\_from](#input\_kubernetes\_container\_env\_from)
 
-Description: n/a
+Description: Inject additional `env_from` values in to the deployment. This is useful for example if you want to mount the Postgres credentials from a secret\_ref to use in the `postgres_user` and `postgres_password` values
 
 Type:
 

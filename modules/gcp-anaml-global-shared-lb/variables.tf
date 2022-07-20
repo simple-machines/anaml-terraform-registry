@@ -57,3 +57,27 @@ variable "enable_backend_logging" {
   description = "(Optional) This field denotes the logging options for the load balancer traffic served by this backend service. If logging is enabled, logs will be exported to Stackdriver"
 
 }
+
+variable "anaml_docs_security_policy" {
+  type = string
+  default = null
+  description = "(Optional) The security policy associated with this backend service."
+}
+
+variable "anaml_ui_security_policy" {
+  type = string
+  default = null
+  description = "(Optional) The security policy associated with this backend service."
+}
+
+variable "anaml_server_security_policy" {
+  type = string
+  default = null
+  description = "(Optional) The security policy associated with this backend service."
+}
+
+variable "spark_history_server_security_policy" {
+  type = string
+  default = null
+  description = "(Optional) The security policy associated with this backend service."
+}

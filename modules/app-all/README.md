@@ -289,7 +289,7 @@ Default: `[]`
 
 ### <a name="input_kubernetes_pod_node_selector_app"></a> [kubernetes\_pod\_node\_selector\_app](#input\_kubernetes\_pod\_node\_selector\_app)
 
-Description: Optional) NodeSelector is a selector which must be true for the **apps** pod's to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/node-selection).
+Description: (Optional) NodeSelector is a selector which must be true for the **apps** pod's to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/node-selection).
 
 Type: `map(string)`
 
@@ -297,7 +297,7 @@ Default: `null`
 
 ### <a name="input_kubernetes_pod_node_selector_postgres"></a> [kubernetes\_pod\_node\_selector\_postgres](#input\_kubernetes\_pod\_node\_selector\_postgres)
 
-Description: Optional) NodeSelector is a selector which must be true for the **postgres** pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/node-selection).
+Description: (Optional) NodeSelector is a selector which must be true for the **postgres** pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/node-selection).
 
 Type: `map(string)`
 
@@ -305,7 +305,7 @@ Default: `null`
 
 ### <a name="input_kubernetes_pod_node_selector_spark_executor"></a> [kubernetes\_pod\_node\_selector\_spark\_executor](#input\_kubernetes\_pod\_node\_selector\_spark\_executor)
 
-Description: Optional) NodeSelector is a selector which must be true for the **spark\_executor** pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/node-selection).
+Description: (Optional) NodeSelector is a selector which must be true for the **spark\_executor** pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/node-selection).
 
 Type: `map(string)`
 

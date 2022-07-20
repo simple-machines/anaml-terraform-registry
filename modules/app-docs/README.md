@@ -1,4 +1,8 @@
 <!-- BEGIN_TF_DOCS -->
+# app-docs
+
+This Terraform module deploys a Kubernetes Deployment and Service exposing the Anaml help documentation website.
+
 ## Requirements
 
 The following requirements are needed by this module:
@@ -30,19 +34,19 @@ The following input variables are required:
 
 ### <a name="input_anaml_docs_version"></a> [anaml\_docs\_version](#input\_anaml\_docs\_version)
 
-Description: The version of anaml-docs to deploy
+Description: The version of anaml-docs to deploy. I.E. "v0.6" or "latest".
 
 Type: `string`
 
 ### <a name="input_container_registry"></a> [container\_registry](#input\_container\_registry)
 
-Description: The container registry to use to fetch the anaml-docs container
+Description: The container registry to use to fetch the anaml-docs container. I.E. "australia-southeast1-docker.pkg.dev/anaml-release-artifacts/docker"
 
 Type: `string`
 
 ### <a name="input_hostname"></a> [hostname](#input\_hostname)
 
-Description: The hostname to use for UI links
+Description: The hostname to use for UI links. I.E. "anaml.example.com"
 
 Type: `string`
 

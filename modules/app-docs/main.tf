@@ -1,3 +1,9 @@
+/**
+ * # app-docs
+ *
+ * This Terraform module deploys a Kubernetes Deployment and Service exposing the Anaml help documentation website.
+ */
+
 terraform {
   required_version = ">= 1.1"
   required_providers {

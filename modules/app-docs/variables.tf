@@ -1,19 +1,19 @@
 variable "anaml_docs_version" {
   type        = string
   nullable    = false
-  description = "The version of anaml-docs to deploy"
+  description = "The version of anaml-docs to deploy. I.E. \"v0.6\" or \"latest\"."
 }
 
 variable "container_registry" {
   type        = string
   nullable    = false
-  description = "The container registry to use to fetch the anaml-docs container"
+  description = "The container registry to use to fetch the anaml-docs container. I.E. \"australia-southeast1-docker.pkg.dev/anaml-release-artifacts/docker\""
 }
 
 variable "hostname" {
   type        = string
   nullable    = false
-  description = "The hostname to use for UI links"
+  description = "The hostname to use for UI links. I.E. \"anaml.example.com\""
 }
 
 variable "kubernetes_deployment_name" {

@@ -1,7 +1,7 @@
 /**
  * # gcp-global-shared-lb
  *
- * It's likely you do not want to deploy this!
+ * > :warning: It's likely you do not want to deploy this!
  *
  * ## What is it?
  *

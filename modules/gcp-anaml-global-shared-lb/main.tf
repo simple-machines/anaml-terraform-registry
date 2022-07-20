@@ -28,29 +28,11 @@ resource "google_compute_firewall" "default" {
   }
 }
 
-resource "google_compute_health_check" "http_80" {
-  name        = "health-check"
-  timeout_sec = 5
-
-  http_health_check {
-    port = 80
-  }
-}
-
-resource "google_compute_health_check" "http_8080" {
-  name        = "health-check-http-8080"
-  timeout_sec = 5
-
-  http_health_check {
-    port = 8080
-  }
-}
-
-resource "google_compute_health_check" "http_18080" {
-  name        = "health-check-http-18080"
-  timeout_sec = 30
-  check_interval_sec = 60
-  healthy_threshold = 1
+resource "google_compute_health_check" "default" {
+  name               = "health-check-gke-http-serving-port"
+  timeout_sec        = 10
+  check_interval_sec = 30
+  healthy_threshold  = 1
 
   http_health_check {
     port_specification = "USE_SERVING_PORT"
@@ -76,17 +58,17 @@ resource "google_compute_managed_ssl_certificate" "default" {
 
 # For each deployment, create the matching docs, server and ui anaml loadbalancer backends
 resource "google_compute_backend_service" "backends" {
-  for_each = merge (
-    { for deployment in var.deployments: "anaml-${deployment}-docs" => { health_check = google_compute_health_check.http_80.id } },
-    { for deployment in var.deployments: "anaml-${deployment}-ui" =>  { health_check = google_compute_health_check.http_80.id } },
-    { for deployment in var.deployments: "anaml-${deployment}-server" => {health_check = google_compute_health_check.http_8080.id, timeout_sec = 1800 } },
-    { for deployment in var.deployments: "${deployment}-spark-history-server" => { health_check = google_compute_health_check.http_18080.id} }
+  for_each = merge(
+    { for deployment in var.deployments : "anaml-${deployment}-docs" => { health_checks = [google_compute_health_check.default.id] } },
+    { for deployment in var.deployments : "anaml-${deployment}-ui" => { health_checks = [google_compute_health_check.default.id] } },
+    { for deployment in var.deployments : "anaml-${deployment}-server" => { health_checks = [google_compute_health_check.default.id], timeout_sec = 1800 } },
+    { for deployment in var.deployments : "${deployment}-spark-history-server" => { health_checks = [google_compute_health_check.default.id] } }
   )
 
 
-  name = each.key
-  health_checks = [each.value.health_check]
-  timeout_sec = try(each.value.timeout_sec, 30)
+  name          = each.key
+  health_checks = each.value.health_checks
+  timeout_sec   = try(each.value.timeout_sec, 30)
 
   backend {
     # TODO parameterise group zone/negs. Currently hardcoded for dev testing purposes

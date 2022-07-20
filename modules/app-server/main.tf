@@ -1,3 +1,9 @@
+/**
+ * # app-server Terraform module
+ *
+ * This module deploys a Kubernetes Deployment and Service running the Anaml backend server application
+ */
+
 terraform {
   required_version = ">= 1.1"
   required_providers {

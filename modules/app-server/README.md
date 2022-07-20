@@ -1,4 +1,8 @@
 <!-- BEGIN_TF_DOCS -->
+# app-server Terraform module
+
+This module deploys a Kubernetes Deployment and Service running the Anaml backend server application
+
 ## Requirements
 
 The following requirements are needed by this module:

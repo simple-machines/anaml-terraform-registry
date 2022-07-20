@@ -77,15 +77,16 @@ resource "google_compute_managed_ssl_certificate" "default" {
 # For each deployment, create the matching docs, server and ui anaml loadbalancer backends
 resource "google_compute_backend_service" "backends" {
   for_each = merge (
-    { for deployment in var.deployments: "anaml-${deployment}-docs" => google_compute_health_check.http_80.id },
-    { for deployment in var.deployments: "anaml-${deployment}-ui" => google_compute_health_check.http_80.id },
-    { for deployment in var.deployments: "anaml-${deployment}-server" => google_compute_health_check.http_8080.id },
-    { for deployment in var.deployments: "${deployment}-spark-history-server" => google_compute_health_check.http_18080.id }
+    { for deployment in var.deployments: "anaml-${deployment}-docs" => { health_check = google_compute_health_check.http_80.id } },
+    { for deployment in var.deployments: "anaml-${deployment}-ui" =>  { health_check = google_compute_health_check.http_80.id } },
+    { for deployment in var.deployments: "anaml-${deployment}-server" => {health_check = google_compute_health_check.http_8080.id, timeout_sec = 1800 } },
+    { for deployment in var.deployments: "${deployment}-spark-history-server" => { health_check = google_compute_health_check.http_18080.id} }
   )
 
 
   name = each.key
-  health_checks = [each.value]
+  health_checks = [each.value.health_check]
+  timeout_sec = try(each.value.timeout_sec, 30)
 
   backend {
     # TODO parameterise group zone/negs. Currently hardcoded for dev testing purposes

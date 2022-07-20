@@ -36,12 +36,6 @@ The following resources are used by this module:
 
 The following input variables are required:
 
-### <a name="input_kubernetes_namespace"></a> [kubernetes\_namespace](#input\_kubernetes\_namespace)
-
-Description: Kubernetes namespace to deploy to
-
-Type: `string`
-
 ### <a name="input_password"></a> [password](#input\_password)
 
 Description: n/a
@@ -71,6 +65,14 @@ Default: `false`
 Description: n/a
 
 Type: `map(string)`
+
+Default: `null`
+
+### <a name="input_kubernetes_namespace"></a> [kubernetes\_namespace](#input\_kubernetes\_namespace)
+
+Description: (Optional) Namespace defines the space within which name of the deployment must be unique.
+
+Type: `string`
 
 Default: `null`
 

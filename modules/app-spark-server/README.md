@@ -66,12 +66,6 @@ Description: n/a
 
 Type: `string`
 
-### <a name="input_kubernetes_namespace"></a> [kubernetes\_namespace](#input\_kubernetes\_namespace)
-
-Description: n/a
-
-Type: `string`
-
 ### <a name="input_postgres_host"></a> [postgres\_host](#input\_postgres\_host)
 
 Description: n/a
@@ -214,6 +208,14 @@ Default: `"anaml-spark-server"`
 ### <a name="input_kubernetes_image_pull_policy"></a> [kubernetes\_image\_pull\_policy](#input\_kubernetes\_image\_pull\_policy)
 
 Description:  (Optional) Image pull policy. One of Always, Never, IfNotPresent. Defaults to Always if `anaml_spark_server_version` is set to`latest`, or IfNotPresent otherwise. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/images#updating-images)
+
+Type: `string`
+
+Default: `null`
+
+### <a name="input_kubernetes_namespace"></a> [kubernetes\_namespace](#input\_kubernetes\_namespace)
+
+Description: (Optional) Namespace defines the space within which name of the deployment must be unique.
 
 Type: `string`
 

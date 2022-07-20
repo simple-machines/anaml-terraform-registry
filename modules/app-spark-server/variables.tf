@@ -1,5 +1,7 @@
 variable "kubernetes_namespace" {
   type = string
+  description = "(Optional) Namespace defines the space within which name of the deployment must be unique."
+  default = null
 }
 
 variable "kubernetes_deployment_labels" {

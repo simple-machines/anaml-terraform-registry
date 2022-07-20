@@ -37,10 +37,10 @@ variable "container_registry" {
   nullable    = false
 }
 
-variable "kubernetes_namespace_name" {
+variable "kubernetes_namespace" {
   type        = string
-  description = "Kubernetes namespace to deploy to. This should be set if create_anaml_namespace is false"
-  nullable    = false
+  description = "(Optional) Namespace defines the space within which name of the deployment must be unique."
+  default = null
 }
 
 variable "kubernetes_image_pull_policy" {

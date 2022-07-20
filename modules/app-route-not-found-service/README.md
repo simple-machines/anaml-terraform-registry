@@ -35,13 +35,7 @@ The following resources are used by this module:
 
 ## Required Inputs
 
-The following input variables are required:
-
-### <a name="input_kubernetes_namespace_name"></a> [kubernetes\_namespace\_name](#input\_kubernetes\_namespace\_name)
-
-Description: Kubernetes namespace to deploy to. This should be set if create\_anaml\_namespace is false
-
-Type: `string`
+No required inputs.
 
 ## Optional Inputs
 
@@ -90,6 +84,14 @@ Default: `"1"`
 ### <a name="input_kubernetes_image_pull_policy"></a> [kubernetes\_image\_pull\_policy](#input\_kubernetes\_image\_pull\_policy)
 
 Description:  (Optional) Image pull policy. One of Always, Never, IfNotPresent. Defaults to Always if `anaml_route_not_found_service_version` is set to`latest`, or IfNotPresent otherwise. Cannot be updated. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/images#updating-images)
+
+Type: `string`
+
+Default: `null`
+
+### <a name="input_kubernetes_namespace"></a> [kubernetes\_namespace](#input\_kubernetes\_namespace)
+
+Description: (Optional) Namespace defines the space within which name of the deployment must be unique.
 
 Type: `string`
 

@@ -6,8 +6,8 @@ variable "kubernetes_deployment_labels" {
 
 variable "kubernetes_namespace" {
   type        = string
-  nullable    = false
-  description = "Kubernetes namespace to deploy to"
+  description = "(Optional) Namespace defines the space within which name of the deployment must be unique."
+  default = null
 }
 
 variable "kubernetes_node_selector" {

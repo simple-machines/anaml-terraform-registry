@@ -32,7 +32,7 @@ locals {
 resource "kubernetes_deployment" "anaml_route_not_found_service" {
   metadata {
     name      = var.kubernetes_deployment_name
-    namespace = var.kubernetes_namespace_name
+    namespace = var.kubernetes_namespace
     labels    = local.deployment_labels
   }
 
@@ -79,7 +79,7 @@ resource "kubernetes_service" "anaml_route_not_found_service" {
     annotations = var.kubernetes_service_annotations
     labels      = local.deployment_labels
     name        = var.kubernetes_deployment_name
-    namespace   = var.kubernetes_namespace_name
+    namespace   = var.kubernetes_namespace
   }
 
   spec {

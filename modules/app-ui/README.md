@@ -58,12 +58,6 @@ Description: The hostname to use for UI links
 
 Type: `string`
 
-### <a name="input_kubernetes_namespace"></a> [kubernetes\_namespace](#input\_kubernetes\_namespace)
-
-Description: n/a
-
-Type: `string`
-
 ### <a name="input_spark_history_server_url"></a> [spark\_history\_server\_url](#input\_spark\_history\_server\_url)
 
 Description: n/a
@@ -92,7 +86,7 @@ Default: `{}`
 
 ### <a name="input_kubernetes_deployment_name"></a> [kubernetes\_deployment\_name](#input\_kubernetes\_deployment\_name)
 
-Description: n/a
+Description: (Optional) Name of the deployment, must be unique. Cannot be updated. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/identifiers#names)
 
 Type: `string`
 
@@ -109,6 +103,14 @@ Default: `"1"`
 ### <a name="input_kubernetes_image_pull_policy"></a> [kubernetes\_image\_pull\_policy](#input\_kubernetes\_image\_pull\_policy)
 
 Description:  (Optional) Image pull policy. One of Always, Never, IfNotPresent. Defaults to Always if `anaml_ui_version` is set to`latest`, or IfNotPresent otherwise. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/images#updating-images)
+
+Type: `string`
+
+Default: `null`
+
+### <a name="input_kubernetes_namespace"></a> [kubernetes\_namespace](#input\_kubernetes\_namespace)
+
+Description: (Optional) Namespace defines the space within which name of the deployment must be unique.
 
 Type: `string`
 

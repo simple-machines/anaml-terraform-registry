@@ -56,7 +56,7 @@ variable "kubernetes_deployment_labels" {
 variable "kubernetes_service_annotations" {
   type        = map(string)
   default     = null
-  description = "Kubernetes service annotations to set if any"
+  description = "(Optional) An unstructured key value map stored with the service that may be used to store arbitrary metadata."
 }
 
 variable "kubernetes_service_type" {

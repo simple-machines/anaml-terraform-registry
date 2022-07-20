@@ -19,7 +19,7 @@ variable "kubernetes_node_selector" {
 variable "kubernetes_service_annotations" {
   type        = map(string)
   default     = {}
-  description = "Additional annotations to add to Kubernetes Postgres service definition"
+  description = "(Optional) An unstructured key value map stored with the service that may be used to store arbitrary metadata."
 }
 
 variable "kubernetes_service_type" {

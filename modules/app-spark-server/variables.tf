@@ -217,19 +217,19 @@ variable "anaml_database_schema_name" {
 variable "kubernetes_service_annotations_anaml_spark_server" {
   type        = map(string)
   default     = null
-  description = "Kubernetes service annotations to set if any"
+  description = "(Optional) An unstructured key value map stored with the **anaml_spark_server** service that may be used to store arbitrary metadata."
 }
 
 variable "kubernetes_service_annotations_spark_driver" {
   type        = map(string)
   default     = null
-  description = "Kubernetes service annotations to set if any"
+  description = "(Optional) An unstructured key value map stored with the **anaml_spark_driver** service that may be used to store arbitrary metadata."
 }
 
 variable "kubernetes_service_annotations_spark_history_service" {
   type        = map(string)
   default     = null
-  description = "Kubernetes service annotations to set if any"
+  description = "(Optional) An unstructured key value map stored with the **anaml_spark_history** service that may be used to store arbitrary metadata."
 }
 
 variable "kubernetes_pod_sidecars" {

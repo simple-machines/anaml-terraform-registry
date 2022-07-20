@@ -295,7 +295,7 @@ Default: `[]`
 
 ### <a name="input_kubernetes_service_annotations_anaml_spark_server"></a> [kubernetes\_service\_annotations\_anaml\_spark\_server](#input\_kubernetes\_service\_annotations\_anaml\_spark\_server)
 
-Description: Kubernetes service annotations to set if any
+Description: (Optional) An unstructured key value map stored with the **anaml\_spark\_server** service that may be used to store arbitrary metadata.
 
 Type: `map(string)`
 
@@ -303,7 +303,7 @@ Default: `null`
 
 ### <a name="input_kubernetes_service_annotations_spark_driver"></a> [kubernetes\_service\_annotations\_spark\_driver](#input\_kubernetes\_service\_annotations\_spark\_driver)
 
-Description: Kubernetes service annotations to set if any
+Description: (Optional) An unstructured key value map stored with the **anaml\_spark\_driver** service that may be used to store arbitrary metadata.
 
 Type: `map(string)`
 
@@ -311,7 +311,7 @@ Default: `null`
 
 ### <a name="input_kubernetes_service_annotations_spark_history_service"></a> [kubernetes\_service\_annotations\_spark\_history\_service](#input\_kubernetes\_service\_annotations\_spark\_history\_service)
 
-Description: Kubernetes service annotations to set if any
+Description: (Optional) An unstructured key value map stored with the **anaml\_spark\_history** service that may be used to store arbitrary metadata.
 
 Type: `map(string)`
 
@@ -319,7 +319,7 @@ Default: `null`
 
 ### <a name="input_kubernetes_service_type"></a> [kubernetes\_service\_type](#input\_kubernetes\_service\_type)
 
-Description: n/a
+Description: (Optional) Determines how the service is exposed. Defaults to `ClusterIP`. Valid options are `ExternalName`, `ClusterIP`, `NodePort`, and `LoadBalancer`. `ExternalName` maps to the specified external\_name. For more info see [ Kubernetes reference](http://kubernetes.io/docs/user-guide/services#overview)
 
 Type: `string`
 

@@ -417,6 +417,14 @@ Type: `string`
 
 Default: `"ClusterIP"`
 
+### <a name="input_license_key"></a> [license\_key](#input\_license\_key)
+
+Description: Your ANAML license key. If the license key is stored as a Kubernetes secret you can use the `kubernetes_container_env_from` option to make the secret available in the POD as a `secret_ref` and then reference it using standard Kubernetes syntax, i.e. by setting this value to `$(ANAML_LICENSE_KEY)`.
+
+Type: `string`
+
+Default: `null`
+
 ### <a name="input_oidc_additional_scopes"></a> [oidc\_additional\_scopes](#input\_oidc\_additional\_scopes)
 
 Description: OpenID Connect scopes to request from the provider. Optional when using OIDC authentication method.

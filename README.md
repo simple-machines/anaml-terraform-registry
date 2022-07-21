@@ -18,4 +18,9 @@ For most cases you will likely want to use [anaml-all](./anaml-all) which combin
   - [anaml-ui](./anaml-ui)
   - [postgres](./postgres) - (Optional) PostgreSQL stateful set primarily for non-production environments. We recommend managed AWS Azure or Google Cloud SQL for production environments.
   
-  
+## Container registries
+
+Some modules require you to specify the container registry to use to fetch container Images.
+We provide the below region specific container registries:
+
+  - australia-southeast1-docker.pkg.dev/anaml-release-artifacts/docker

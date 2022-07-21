@@ -1,4 +1,14 @@
 <!-- BEGIN_TF_DOCS -->
+# app-all Terraform module
+
+The app-docs Terraform module deploys the full suite of Anaml applications to Kubernetes.
+ - [anaml-docs](../app-docs)
+ - [anaml-server](../app-server)
+ - [anaml-ui](../app-ui)
+ - [ingress](../kubernetes-ingress) - Optional Kubernetes Ingress setup. See the [kubernetes\_ingress\_enable](#kubernetes\_ingress\_enable) option below
+ - [local-postgres](../postgres) - Optional Postgres Kubernetes stateful set. This is only recommended for dev/test. See the [kubernetes\_service\_enable\_postgres](#kubernetes\_service\_enable\_postgres) option below
+ - [spark-server](../app-spark-server)
+
 ## Requirements
 
 The following requirements are needed by this module:

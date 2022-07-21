@@ -1,7 +1,7 @@
 /**
  * # app-docs Terraform module
  *
- * Th app-docs Terraform module deploys a Kubernetes Deployment and Service exposing the Anaml help documentation website.
+ * The app-docs Terraform module deploys a Kubernetes Deployment and Service exposing the Anaml help documentation website.
  */
 
 terraform {

@@ -13,6 +13,9 @@ resource "kubernetes_deployment" "anaml_spark_server_deployment" {
         name      = var.kubernetes_deployment_name
         namespace = var.kubernetes_namespace
         labels    = local.anaml_spark_server_labels
+        annotations = {
+          "checksum/configmap_${kubernetes_config_map.anaml_spark_server_config.metadata[0].name}" = sha256(jsonencode(kubernetes_config_map.anaml_spark_server_config.data))
+        }
       }
       spec {
         service_account_name = local.service_account_name

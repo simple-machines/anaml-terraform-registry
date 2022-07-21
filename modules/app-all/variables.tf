@@ -467,3 +467,9 @@ variable "kubernetes_service_annotations_spark_history_service" {
   default     = null
   description = "Kubernetes service annotations to set if any"
 }
+
+variable "license_key" {
+  type    = string
+  description = "Your ANAML license key. If the license key is stored as a Kubernetes secret you can use the `kubernetes_container_env_from` option to make the secret available in the POD as a `secret_ref` and then reference it using standard Kubernetes syntax, i.e. by setting this value to `$(ANAML_LICENSE_KEY)`."
+  default = null
+}

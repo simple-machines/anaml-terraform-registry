@@ -109,6 +109,8 @@ module "anaml-server" {
 
   kubernetes_pod_sidecars = var.kubernetes_pod_anaml_server_sidecars
 
+  license_key = var.license_key
+
   depends_on = [kubernetes_namespace.anaml_namespace]
 }
 

@@ -45,12 +45,17 @@ resource "kubernetes_config_map" "anaml_server" {
     OIDC_CLIENT_SECRET = var.oidc_client_secret
 
     "application.conf" = templatefile("${path.module}/_templates/application.conf", {
-      anaml_external_domain   = var.hostname
-      enable_oidc_client      = var.oidc_enable
-      enable_form_client      = var.enable_form_client
-      discovery_uri           = var.oidc_discovery_uri != null ? var.oidc_discovery_uri : ""
-      permitted_user_group_id = var.oidc_permitted_users_group_id != null ? var.oidc_permitted_users_group_id : ""
       additional_scopes       = var.oidc_additional_scopes != null ? var.oidc_additional_scopes : []
+      anaml_external_domain   = var.hostname
+      discovery_uri           = var.oidc_discovery_uri != null ? var.oidc_discovery_uri : ""
+      enable_form_client      = var.enable_form_client
+      enable_oidc_client      = var.oidc_enable
+
+      # If we get a kubernetes style environment variable, i.e. "$(ANAML_LICENSE_KEY)", convert it to the config expected format "${?ANAML_LICENSE_KEY}" otherwise use the value as given.
+      # We do this so the terraform modules a more consistent rather than mixing the different ways to access environment variables
+      license_key             = try(format("$${?%s}", one(regex("^\\$\\((\\w+)\\)", var.license_key))), var.license_key)
+
+      permitted_user_group_id = var.oidc_permitted_users_group_id != null ? var.oidc_permitted_users_group_id : ""
     })
 
     "log4j2.xml" = file("${path.module}/_templates/log4j2.xml")

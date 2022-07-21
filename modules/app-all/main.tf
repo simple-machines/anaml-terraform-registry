@@ -5,8 +5,8 @@
  *  - [anaml-docs](../app-docs)
  *  - [anaml-server](../app-server)
  *  - [anaml-ui](../app-ui)
- *  - [ingress](../kubernetes-ingress) - Optional Kubernetes Ingress setup. See the [kubernetes_ingress_enable](#kubernetes_ingress_enable) option below
- *  - [local-postgres](../postgres) - Optional Postgres Kubernetes stateful set. This is only recommended for dev/test. See the [kubernetes_service_enable_postgres](#kubernetes_service_enable_postgres) option below
+ *  - [ingress](../kubernetes-ingress) - Optional Kubernetes Ingress setup. See the [kubernetes_ingress_enable](#input_kubernetes_ingress_enable) option below
+ *  - [local-postgres](../postgres) - Optional Postgres Kubernetes stateful set. This is only recommended for dev/test. See the [kubernetes_service_enable_postgres](#input_kubernetes_service_enable_postgres) option below
  *  - [spark-server](../app-spark-server)
  */
 

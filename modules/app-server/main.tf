@@ -24,16 +24,9 @@ locals {
     "app.kubernetes.io/part-of"    = "anaml"
     "app.kubernetes.io/created-by" = "terraform"
   }, var.kubernetes_deployment_labels)
-}
 
-resource "kubernetes_config_map" "anaml_server" {
-  metadata {
-    name      = var.kubernetes_deployment_name
-    namespace = var.kubernetes_namespace
-    labels    = local.deployment_labels
-  }
-
-  data = {
+  # We create this as a local var so we can content hash it to trigger server redeploy on config updates
+  kubernetes_config_map-anaml_server = {
     ANAML_POSTGRES_DATABASE_NAME   = var.anaml_database_name
     ANAML_POSTGRES_DATABASE_SCHEMA = var.anaml_database_schema_name
     ANAML_POSTGRES_HOST            = var.postgres_host
@@ -56,6 +49,24 @@ resource "kubernetes_config_map" "anaml_server" {
 
     "log4j2.xml" = file("${path.module}/_templates/log4j2.xml")
   }
+
+  kubernetes_secret-anaml_server_admin_password = {
+    ANAML_ADMIN_PASSWORD = var.anaml_admin_password
+  }
+
+  kubernetes_secret-anaml_server_admin_api_auth = {
+    ANAML_ADMIN_SECRET   = var.anaml_admin_secret
+    ANAML_ADMIN_TOKEN    = var.anaml_admin_token
+  }
+}
+
+resource "kubernetes_config_map" "anaml_server" {
+  metadata {
+    name      = var.kubernetes_deployment_name
+    namespace = var.kubernetes_namespace
+    labels    = local.deployment_labels
+  }
+  data = local.kubernetes_config_map-anaml_server
 }
 
 resource "kubernetes_secret" "anaml_server_admin_password" {
@@ -64,11 +75,7 @@ resource "kubernetes_secret" "anaml_server_admin_password" {
     namespace = var.kubernetes_namespace
     labels = local.deployment_labels
   }
-
-  data = {
-    ANAML_ADMIN_PASSWORD = var.anaml_admin_password
-  }
-
+  data = local.kubernetes_secret-anaml_server_admin_password
   type = "Opaque"
 }
 
@@ -78,12 +85,7 @@ resource "kubernetes_secret" "anaml_server_admin_api_auth" {
     namespace = var.kubernetes_namespace
     labels = local.deployment_labels
   }
-
-  data = {
-    ANAML_ADMIN_SECRET   = var.anaml_admin_secret
-    ANAML_ADMIN_TOKEN    = var.anaml_admin_token
-  }
-
+  data = local.kubernetes_secret-anaml_server_admin_api_auth
   type = "Opaque"
 }
 
@@ -105,6 +107,12 @@ resource "kubernetes_deployment" "anaml_server" {
     template {
       metadata {
         labels = local.deployment_labels
+        annotations = {
+          # Trigger POD restart on config/secret changes by hashing contents
+          "checksum/configmap_${kubernetes_config_map.anaml_server.metadata[0].name}" = sha256(jsonencode(local.kubernetes_config_map-anaml_server))
+          "checksum/secret_${kubernetes_secret.anaml_server_admin_password.metadata[0].name}" = sha256(jsonencode(local.kubernetes_secret-anaml_server_admin_password))
+          "checksum/secret_${kubernetes_secret.anaml_server_admin_api_auth.metadata[0].name}" = sha256(jsonencode(local.kubernetes_secret-anaml_server_admin_api_auth))
+        }
       }
 
       spec {

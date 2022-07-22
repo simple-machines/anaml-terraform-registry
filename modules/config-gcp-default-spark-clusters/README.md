@@ -75,6 +75,14 @@ Type: `map(string)`
 
 Default: `{}`
 
+### <a name="input_kubernetes_service_account"></a> [kubernetes\_service\_account](#input\_kubernetes\_service\_account)
+
+Description: n/a
+
+Type: `string`
+
+Default: `null`
+
 ### <a name="input_preview_cluster_hive_metastore_url"></a> [preview\_cluster\_hive\_metastore\_url](#input\_preview\_cluster\_hive\_metastore\_url)
 
 Description: n/a

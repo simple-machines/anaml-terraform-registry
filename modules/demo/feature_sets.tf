@@ -64,7 +64,6 @@ resource "anaml_feature_set" "sports_marketing_campaign" {
 }
 
 resource "anaml_feature_set" "vegetarian_model" {
-  provider    = anaml.model_predict
   name        = "vegetarian_model"
   description = "Features used to predict if a customer is a vegetarian or not"
   entity      = anaml_entity.customer.id

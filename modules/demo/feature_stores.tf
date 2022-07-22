@@ -140,7 +140,7 @@ resource "anaml-operations_feature_store" "vegetarian_model_training" {
     value = "High"
   }
   enabled       = true
-  branch_target = "model_predict"
+  branch_target = "official"
   feature_set   = anaml_feature_set.vegetarian_model.id
   cluster       = var.cluster_id
 
@@ -180,7 +180,7 @@ resource "anaml-operations_feature_store" "vegetarian_model_scoring" {
     value = "High"
   }
   enabled       = true
-  branch_target = "model_predict"
+  branch_target = "official"
   feature_set   = anaml_feature_set.vegetarian_model.id
   cluster       = var.cluster_id
 

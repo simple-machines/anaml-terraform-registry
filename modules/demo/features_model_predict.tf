@@ -1,5 +1,5 @@
 resource "anaml_feature" "cooked_meats_spend_sum_28_days" {
-  provider    = anaml.model_predict
+  # provider    = anaml.model_predict
   name        = "cooked_meats_spend_sum_28_days"
   description = "Sum of spend of products categorized as Cooked Meats over the last 28 days"
   labels      = ["Spend"]
@@ -10,7 +10,7 @@ resource "anaml_feature" "cooked_meats_spend_sum_28_days" {
 }
 
 resource "anaml_feature" "fruitveg_spend_sum_28_days" {
-  provider    = anaml.model_predict
+  # provider    = anaml.model_predict
   name        = "fruitveg_spend_sum_28_days"
   description = "Sum of spend of products categorized as Fruit of Vegetables over the last 28 days"
   labels      = ["Spend"]
@@ -21,7 +21,7 @@ resource "anaml_feature" "fruitveg_spend_sum_28_days" {
 }
 
 resource "anaml_feature" "meat_spend_sum_28_days" {
-  provider    = anaml.model_predict
+  # provider    = anaml.model_predict
   name        = "meat_spend_sum_28_days"
   description = "Sum of spend of products categorized as Meats over the last 28 days"
   labels      = ["Spend"]
@@ -32,7 +32,7 @@ resource "anaml_feature" "meat_spend_sum_28_days" {
 }
 
 resource "anaml_feature" "seafood_spend_sum_28_days" {
-  provider    = anaml.model_predict
+  # provider    = anaml.model_predict
   name        = "seafood_spend_sum_28_days"
   description = "Sum of spend of products categorized as Seafood over the last 28 days"
   labels      = ["Spend"]

@@ -1,45 +1,50 @@
 variable "anaml_spark_server_url" {
-  type = string
+  type     = string
   nullable = false
 }
 
 variable "spark_driver_host" {
-  type = string
+  type     = string
   nullable = false
 }
 
 variable "spark_driver_port" {
-  type = string
+  type     = string
   nullable = false
-  default = 7078
+  default  = 7078
+}
+
+variable "kubernetes_service_account" {
+  type    = string
+  default = null
 }
 
 variable "preview_cluster_spark_config_overrides" {
-  type = map(string)
+  type    = map(string)
   default = {}
 }
 
 variable "preview_cluster_hive_metastore_url" {
-  type = string
+  type    = string
   default = null
 }
 
 variable "job_cluster_hive_metastore_url" {
-  type = string
+  type    = string
   default = null
 }
 
 variable "job_cluster_spark_config_overrides" {
-  type = map(string)
+  type    = map(string)
   default = {}
 }
 
 variable "event_store_cluster_hive_metastore_url" {
-  type = string
+  type    = string
   default = null
 }
 
 variable "event_store_cluster_spark_config_overrides" {
-  type = map(string)
+  type    = map(string)
   default = {}
 }

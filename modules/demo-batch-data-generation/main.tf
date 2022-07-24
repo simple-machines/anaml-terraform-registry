@@ -47,6 +47,7 @@ resource "kubernetes_cron_job" "data_generation" {
       }
       spec {
         backoff_limit = 1
+        ttl_seconds_after_finished = 60 * 60 * 24 * 7
         template {
           metadata {
             labels = local.deployment_labels

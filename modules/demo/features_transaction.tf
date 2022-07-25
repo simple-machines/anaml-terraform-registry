@@ -56,16 +56,18 @@ resource "anaml_feature" "shopping_basket_big_spender_last_30_days" {
   description = "Decides if this customer is classed as a big spender\n\n**True** if they have spend over $500 in a single transaction in the last 30 days. **False** otherwise."
   labels      = ["Behaviour", "Customer"]
   attribute {
-    key   = "Quality Ratings"
-    value = "Gold"
-  }
-  attribute {
     key   = "Country"
     value = "NZ"
   }
+
   attribute {
     key   = "Source System"
     value = "GDH"
+  }
+
+  attribute {
+    key   = "Quality Ratings"
+    value = "Gold"
   }
   over   = [anaml_feature.shopping_basket_max_spend_30_days.id]
   entity = anaml_entity.customer.id

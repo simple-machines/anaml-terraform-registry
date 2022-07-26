@@ -48,26 +48,37 @@ resource "kubernetes_deployment" "anaml_ui" {
             container_port = 80
             name           = "http-web-svc"
           }
-          env {
-            name  = "ANAML_EXTERNAL_DOMAIN"
-            value = var.hostname
-          }
-          env {
-            name  = "REACT_APP_API_URL"
-            value = var.api_url
-          }
-          env {
-            name  = "REACT_APP_ENABLE_POLICY"
-            value = var.enable_new_functionality
-          }
-          env {
-            name  = "REACT_APP_FRONTEND_SKIN"
-            value = var.skin
-          }
+
           env {
             name  = "ANAML_DOCS_URL"
             value = var.docs_url
           }
+
+          env {
+            name  = "ANAML_EXTERNAL_DOMAIN"
+            value = var.hostname
+          }
+
+          env {
+            name  = "ANAML_SERVER_URL"
+            value = var.anaml_server_url
+          }
+
+          env {
+            name  = "REACT_APP_API_URL"
+            value = var.api_url
+          }
+
+          env {
+            name  = "REACT_APP_ENABLE_POLICY"
+            value = var.enable_new_functionality
+          }
+
+          env {
+            name  = "REACT_APP_FRONTEND_SKIN"
+            value = var.skin
+          }
+
           env {
             name  = "SPARK_HISTORY_SERVER"
             value = var.spark_history_server_url

@@ -1,3 +1,7 @@
+variable "anaml_server_url" {
+  type = string
+}
+
 variable "container_registry" {
   type        = string
   nullable    = false

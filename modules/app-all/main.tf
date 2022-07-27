@@ -40,14 +40,12 @@ resource "kubernetes_namespace" "anaml_namespace" {
 resource "kubernetes_secret" "postgres_secret" {
   metadata {
     name      = "postgres-secret"
-    namespace = var.kubernetes_namespace_name
+    namespace = var.kubernetes_namespace_create ? kubernetes_namespace.anaml_namespace[0].metadata.0.name : var.kubernetes_namespace_name
   }
 
   data = {
     PGPASSWORD = var.postgres_password
   }
-
-  depends_on = [kubernetes_namespace.anaml_namespace]
 }
 
 
@@ -55,10 +53,9 @@ resource "kubernetes_service_account" "anaml" {
   count = var.kubernetes_service_account_create && var.kubernetes_service_account_name != null ? 1 : 0
   metadata {
     name        = var.kubernetes_service_account_name
-    namespace   = var.kubernetes_namespace_name
+    namespace   = var.kubernetes_namespace_create ? kubernetes_namespace.anaml_namespace[0].metadata.0.name : var.kubernetes_namespace_name
     annotations = var.kubernetes_service_account_annotations
   }
-
 }
 
 module "anaml-docs" {
@@ -67,29 +64,27 @@ module "anaml-docs" {
   anaml_docs_version             = var.override_anaml_docs_version != null ? var.override_anaml_docs_version : var.anaml_version
   container_registry             = var.container_registry
   hostname                       = var.hostname
-  kubernetes_namespace           = var.kubernetes_namespace_name
+  kubernetes_namespace           = var.kubernetes_namespace_create ? kubernetes_namespace.anaml_namespace[0].metadata.0.name : var.kubernetes_namespace_name
   kubernetes_node_selector       = var.kubernetes_pod_node_selector_app
   kubernetes_service_annotations = var.kubernetes_service_annotations_anaml_docs
   kubernetes_service_type        = var.kubernetes_service_type
-
-  depends_on = [kubernetes_namespace.anaml_namespace]
 }
 
 module "anaml-server" {
   source = "../app-server"
 
-  anaml_admin_email              = var.anaml_admin_email
-  anaml_admin_password           = var.anaml_admin_password
-  anaml_admin_secret             = var.anaml_admin_secret
-  anaml_admin_token              = var.anaml_admin_token
-  anaml_database_schema_name     = var.override_anaml_server_anaml_database_schema_name
-  anaml_server_version           = var.override_anaml_server_version != null ? var.override_anaml_server_version : var.anaml_version
-  container_registry             = var.container_registry
-  enable_form_client             = var.enable_form_client
-  hostname                       = var.hostname
-  kubernetes_namespace           = var.kubernetes_namespace_name
-  kubernetes_node_selector       = var.kubernetes_pod_node_selector_app
-  kubernetes_container_env_from  = [
+  anaml_admin_email          = var.anaml_admin_email
+  anaml_admin_password       = var.anaml_admin_password
+  anaml_admin_secret         = var.anaml_admin_secret
+  anaml_admin_token          = var.anaml_admin_token
+  anaml_database_schema_name = var.override_anaml_server_anaml_database_schema_name
+  anaml_server_version       = var.override_anaml_server_version != null ? var.override_anaml_server_version : var.anaml_version
+  container_registry         = var.container_registry
+  enable_form_client         = var.enable_form_client
+  hostname                   = var.hostname
+  kubernetes_namespace       = var.kubernetes_namespace_create ? kubernetes_namespace.anaml_namespace[0].metadata.0.name : var.kubernetes_namespace_name
+  kubernetes_node_selector   = var.kubernetes_pod_node_selector_app
+  kubernetes_container_env_from = [
     { secret_ref = { name = "postgres-secret" } }
   ]
   kubernetes_service_annotations = var.kubernetes_service_annotations_anaml_server
@@ -110,8 +105,6 @@ module "anaml-server" {
   kubernetes_pod_sidecars = var.kubernetes_pod_anaml_server_sidecars
 
   license_key = var.license_key
-
-  depends_on = [kubernetes_namespace.anaml_namespace]
 }
 
 module "anaml-ui" {
@@ -122,7 +115,7 @@ module "anaml-ui" {
   container_registry             = var.container_registry
   enable_new_functionality       = var.override_anaml_ui_enable_new_functionality
   hostname                       = var.hostname
-  kubernetes_namespace           = var.kubernetes_namespace_name
+  kubernetes_namespace           = var.kubernetes_namespace_create ? kubernetes_namespace.anaml_namespace[0].metadata.0.name : var.kubernetes_namespace_name
   kubernetes_node_selector       = var.kubernetes_pod_node_selector_app
   kubernetes_service_annotations = var.kubernetes_service_annotations_anaml_ui
   kubernetes_service_type        = var.kubernetes_service_type
@@ -132,13 +125,11 @@ module "anaml-ui" {
   docs_url                 = module.anaml-docs.internal_url
   spark_history_server_url = "http://example.com"
   anaml_server_url         = "http://anaml-server.${var.kubernetes_namespace_name}.svc.cluster.local:8080"
-
-  depends_on = [kubernetes_namespace.anaml_namespace]
 }
 
 module "spark-server" {
   source                     = "../app-spark-server"
-  kubernetes_namespace       = var.kubernetes_namespace_name
+  kubernetes_namespace       = var.kubernetes_namespace_create ? kubernetes_namespace.anaml_namespace[0].metadata.0.name : var.kubernetes_namespace_name
   anaml_spark_server_version = var.override_anaml_spark_server_version != null ? var.override_anaml_spark_server_version : var.anaml_version
   container_registry         = var.container_registry
 
@@ -180,8 +171,6 @@ module "spark-server" {
   # Use creds from the pod environment - TODO (spark server module should set these as default)
   anaml_server_user     = "$${?ANAML_ADMIN_TOKEN}"
   anaml_server_password = "$${?ANAML_ADMIN_SECRET}"
-
-  depends_on = [kubernetes_namespace.anaml_namespace]
 }
 
 
@@ -191,22 +180,18 @@ module "ingress" {
 
   host                    = var.kubernetes_ingress_hostname
   kubernetes_ingress_name = var.kubernetes_ingress_name
-  kubernetes_namespace    = var.kubernetes_namespace_name
-
-  depends_on = [kubernetes_namespace.anaml_namespace]
+  kubernetes_namespace    = var.kubernetes_namespace_create ? kubernetes_namespace.anaml_namespace[0].metadata.0.name : var.kubernetes_namespace_name
 }
 
 module "local-postgres" {
   source = "../postgres"
   count  = var.kubernetes_service_enable_postgres ? 1 : 0
 
-  kubernetes_namespace                                  = var.kubernetes_namespace_name
+  kubernetes_namespace                                  = var.kubernetes_namespace_create ? kubernetes_namespace.anaml_namespace[0].metadata.0.name : var.kubernetes_namespace_name
   kubernetes_node_selector                              = var.kubernetes_pod_node_selector_postgres
   kubernetes_service_annotations                        = var.kubernetes_service_annotations_postgres
   kubernetes_service_type                               = var.kubernetes_service_type
   password                                              = var.postgres_password
   user                                                  = var.postgres_user
   kubernetes_persistent_volume_claim_storage_class_name = var.kubernetes_persistent_volume_claim_storage_class_name_postgres
-
-  depends_on = [kubernetes_namespace.anaml_namespace]
 }

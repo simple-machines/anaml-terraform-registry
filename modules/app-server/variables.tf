@@ -11,30 +11,30 @@ variable "hostname" {
 }
 
 variable "kubernetes_namespace" {
-  type = string
+  type        = string
   description = "(Optional) Namespace defines the space within which name of the deployment must be unique."
-  default = null
+  default     = null
 }
 
 variable "kubernetes_deployment_name" {
-  type    = string
-  default = "anaml-server"
+  type        = string
+  default     = "anaml-server"
   description = "(Optional) Name of the deployment, must be unique. Cannot be updated. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/identifiers#names)"
 }
 
 variable "kubernetes_deployment_replicas" {
-  type    = string
+  type        = string
   description = "(Optional) The number of desired replicas. This attribute is a string to be able to distinguish between explicit zero and not specified. Defaults to 1. For more info see [Kubernetes reference](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#scaling-a-deployment)"
-  default = "1"
+  default     = "1"
 }
 
 variable "kubernetes_image_pull_policy" {
-  type    = string
+  type        = string
   description = " (Optional) Image pull policy. One of Always, Never, IfNotPresent. Defaults to Always if `anaml_server_version` is set to`latest`, or IfNotPresent otherwise. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/images#updating-images)"
-  default = null
+  default     = null
 
   validation {
-    condition = var.kubernetes_image_pull_policy == null ? true : contains(["Always", "Never", "IfNotPresent"], var.kubernetes_image_pull_policy)
+    condition     = var.kubernetes_image_pull_policy == null ? true : contains(["Always", "Never", "IfNotPresent"], var.kubernetes_image_pull_policy)
     error_message = "The kubernetes_image_pull_policy value must be one of Always, Nerver or IfNotPresent"
   }
 }
@@ -52,21 +52,21 @@ variable "kubernetes_deployment_labels" {
 }
 
 variable "kubernetes_service_type" {
-  type = string
-  default = "ClusterIP"
+  type        = string
+  default     = "ClusterIP"
   description = "(Optional) Determines how the service is exposed. Defaults to `ClusterIP`. Valid options are `ExternalName`, `ClusterIP`, `NodePort`, and `LoadBalancer`. `ExternalName` maps to the specified external_name. For more info see [ Kubernetes reference](http://kubernetes.io/docs/user-guide/services#overview)"
 
   validation {
-    condition = contains(["ExternalName", "ClusterIP", "NodePort", "LoadBalancer"], var.kubernetes_service_type)
+    condition     = contains(["ExternalName", "ClusterIP", "NodePort", "LoadBalancer"], var.kubernetes_service_type)
     error_message = "The kubernetes_service_type value must be one of ExternalName, ClusterIP, NodePort or LoadBalancer"
   }
 }
 
 variable "kubernetes_node_selector" {
-  type     = map(string)
-  default  = null
+  type        = map(string)
+  default     = null
   description = "(Optional) NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/node-selection)."
-  nullable = true
+  nullable    = true
 }
 
 variable "kubernetes_pod_sidecars" {
@@ -116,7 +116,7 @@ variable "kubernetes_container_env_from" {
     })
   }))
   description = "Inject additional `env_from` values in to the deployment. This is useful for example if you want to mount the Postgres credentials from a secret_ref to use in the `postgres_user` and `postgres_password` values"
-  default = []
+  default     = []
 }
 
 variable "anaml_server_version" {
@@ -182,23 +182,23 @@ variable "anaml_database_schema_name" {
 }
 
 variable "postgres_host" {
-  type = string
+  type        = string
   description = "The host name of the Postgres database to connecto to"
 }
 
 variable "postgres_port" {
-  type    = number
+  type        = number
   description = "The Postgres database port to connect to, defaults to 5432"
-  default = "5432"
+  default     = "5432"
 }
 
 variable "postgres_user" {
-  type    = string
+  type        = string
   description = "The user to connect to Postgres as. If the password is stored as a Kubernetes secret you can use the `kubernetes_container_env_from` option to make the secret available in the POD as a `secret_ref` and then reference it using standard Kubernetes syntax, i.e. by setting this value to `$(PGUSER)`."
 }
 
 variable "postgres_password" {
-  type    = string
+  type        = string
   description = "The password for the specified Postgres user. If the password is stored as a Kubernetes secret you can use the `kubernetes_container_env_from` option to make the secret available in the POD as a `secret_ref` and then reference it using standard Kubernetes syntax, i.e. by setting this value to `$(PGPASSWORD)`."
 }
 
@@ -217,27 +217,39 @@ variable "anaml_admin_password" {
 }
 
 variable "anaml_admin_secret" {
-  type      = string
-  default   = null
+  type        = string
+  default     = null
   description = "The Anaml API service password. This is used internally by Anaml for service-to-service communication"
-  sensitive = true
+  sensitive   = true
 }
 
 variable "anaml_admin_token" {
-  type      = string
-  default   = null
+  type        = string
+  default     = null
   description = "The Anaml API service username. This is used internally by Anaml for service-to-service communication"
-  sensitive = true
+  sensitive   = true
 }
 
 
 variable "kubernetes_service_account_name" {
-  type = string
+  type    = string
   default = null
 }
 
 variable "license_key" {
-  type    = string
+  type        = string
   description = "Your ANAML license key. If the license key is stored as a Kubernetes secret you can use the `kubernetes_container_env_from` option to make the secret available in the POD as a `secret_ref` and then reference it using standard Kubernetes syntax, i.e. by setting this value to `$(ANAML_LICENSE_KEY)`."
-  default = null
+  default     = null
+}
+
+variable "license_activation_data" {
+  type        = string
+  description = "License activation data for offline activation"
+  default     = null
+}
+
+variable "license_offline_activation" {
+  type        = bool
+  description = "If to use offline license activation"
+  default     = false
 }

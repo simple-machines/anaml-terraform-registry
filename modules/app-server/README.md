@@ -29,6 +29,7 @@ The following resources are used by this module:
 - [kubernetes_deployment.anaml_server](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/deployment) (resource)
 - [kubernetes_secret.anaml_server_admin_api_auth](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/secret) (resource)
 - [kubernetes_secret.anaml_server_admin_password](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/secret) (resource)
+- [kubernetes_secret.offline_license_response](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/secret) (resource)
 - [kubernetes_service.anaml_server](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/service) (resource)
 
 ## Required Inputs
@@ -265,6 +266,14 @@ Type: `string`
 
 Default: `"ClusterIP"`
 
+### <a name="input_license_activation_data"></a> [license\_activation\_data](#input\_license\_activation\_data)
+
+Description: License activation data for offline activation
+
+Type: `string`
+
+Default: `null`
+
 ### <a name="input_license_key"></a> [license\_key](#input\_license\_key)
 
 Description: Your ANAML license key. If the license key is stored as a Kubernetes secret you can use the `kubernetes_container_env_from` option to make the secret available in the POD as a `secret_ref` and then reference it using standard Kubernetes syntax, i.e. by setting this value to `$(ANAML_LICENSE_KEY)`.
@@ -272,6 +281,14 @@ Description: Your ANAML license key. If the license key is stored as a Kubernete
 Type: `string`
 
 Default: `null`
+
+### <a name="input_license_offline_activation"></a> [license\_offline\_activation](#input\_license\_offline\_activation)
+
+Description: If to use offline license activation
+
+Type: `bool`
+
+Default: `false`
 
 ### <a name="input_oidc_additional_scopes"></a> [oidc\_additional\_scopes](#input\_oidc\_additional\_scopes)
 
@@ -337,7 +354,7 @@ The following outputs are exported:
 
 Description: n/a
 
-### <a name="output_anaml_api_url"></a> [anaml\_api\_url](#output\_anaml\_api\_url)
+### <a name="output_internal_url"></a> [internal\_url](#output\_internal\_url)
 
 Description: n/a
 <!-- END_TF_DOCS -->

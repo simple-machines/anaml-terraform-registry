@@ -39,21 +39,25 @@ resource "kubernetes_config_map" "anaml_server" {
     ANAML_POSTGRES_PORT            = var.postgres_port
     ANAML_POSTGRES_USER            = var.postgres_user
 
-    ANAML_ADMIN_EMAIL    = var.anaml_admin_email
+    ANAML_ADMIN_EMAIL = var.anaml_admin_email
 
     OIDC_CLIENT_ID     = var.oidc_client_id
     OIDC_CLIENT_SECRET = var.oidc_client_secret
 
     "application.conf" = templatefile("${path.module}/_templates/application.conf", {
-      additional_scopes       = var.oidc_additional_scopes != null ? var.oidc_additional_scopes : []
-      anaml_external_domain   = var.hostname
-      discovery_uri           = var.oidc_discovery_uri != null ? var.oidc_discovery_uri : ""
-      enable_form_client      = var.enable_form_client
-      enable_oidc_client      = var.oidc_enable
+      additional_scopes     = var.oidc_additional_scopes != null ? var.oidc_additional_scopes : []
+      anaml_external_domain = var.hostname
+      discovery_uri         = var.oidc_discovery_uri != null ? var.oidc_discovery_uri : ""
+      enable_form_client    = var.enable_form_client
+      enable_oidc_client    = var.oidc_enable
 
       # If we get a kubernetes style environment variable, i.e. "$(ANAML_LICENSE_KEY)", convert it to the config expected format "${?ANAML_LICENSE_KEY}" otherwise use the value as given.
       # We do this so the terraform modules a more consistent rather than mixing the different ways to access environment variables
-      license_key             = try(format("$${?%s}", one(regex("^\\$\\((\\w+)\\)", var.license_key))), var.license_key)
+      license_key = try(format("$${?%s}", one(regex("^\\$\\((\\w+)\\)", var.license_key))), var.license_key)
+
+      license_offline_activation = var.license_offline_activation
+
+      license_offline_response_file_path = var.license_activation_data == null ? null : "/license/ls_activation.lic"
 
       permitted_user_group_id = var.oidc_permitted_users_group_id != null ? var.oidc_permitted_users_group_id : ""
     })
@@ -64,9 +68,9 @@ resource "kubernetes_config_map" "anaml_server" {
 
 resource "kubernetes_secret" "anaml_server_admin_password" {
   metadata {
-    name = "${var.kubernetes_deployment_name}-admin-password"
+    name      = "${var.kubernetes_deployment_name}-admin-password"
     namespace = var.kubernetes_namespace
-    labels = local.deployment_labels
+    labels    = local.deployment_labels
   }
   data = {
     ANAML_ADMIN_PASSWORD = var.anaml_admin_password
@@ -76,15 +80,28 @@ resource "kubernetes_secret" "anaml_server_admin_password" {
 
 resource "kubernetes_secret" "anaml_server_admin_api_auth" {
   metadata {
-    name = "${var.kubernetes_deployment_name}-admin-api-auth"
+    name      = "${var.kubernetes_deployment_name}-admin-api-auth"
     namespace = var.kubernetes_namespace
-    labels = local.deployment_labels
+    labels    = local.deployment_labels
   }
   data = {
-    ANAML_ADMIN_SECRET   = var.anaml_admin_secret
-    ANAML_ADMIN_TOKEN    = var.anaml_admin_token
+    ANAML_ADMIN_SECRET = var.anaml_admin_secret
+    ANAML_ADMIN_TOKEN  = var.anaml_admin_token
   }
   type = "Opaque"
+}
+
+resource "kubernetes_secret" "offline_license_response" {
+  count = var.license_activation_data == null ? 0 : 1
+  metadata {
+    name      = "${var.kubernetes_deployment_name}-offline-license-response"
+    namespace = var.kubernetes_namespace
+    labels    = local.deployment_labels
+  }
+
+  data = {
+    "ls_activation.lic" = var.license_activation_data
+  }
 }
 
 
@@ -107,7 +124,7 @@ resource "kubernetes_deployment" "anaml_server" {
         labels = local.deployment_labels
         annotations = {
           # Trigger POD restart on config/secret changes by hashing contents
-          "checksum/configmap_${kubernetes_config_map.anaml_server.metadata[0].name}" = sha256(jsonencode(kubernetes_config_map.anaml_server.data))
+          "checksum/configmap_${kubernetes_config_map.anaml_server.metadata[0].name}"         = sha256(jsonencode(kubernetes_config_map.anaml_server.data))
           "checksum/secret_${kubernetes_secret.anaml_server_admin_password.metadata[0].name}" = sha256(jsonencode(kubernetes_secret.anaml_server_admin_password.data))
           "checksum/secret_${kubernetes_secret.anaml_server_admin_api_auth.metadata[0].name}" = sha256(jsonencode(kubernetes_secret.anaml_server_admin_api_auth.data))
         }
@@ -120,6 +137,16 @@ resource "kubernetes_deployment" "anaml_server" {
           name = "config"
           config_map {
             name = kubernetes_config_map.anaml_server.metadata.0.name
+          }
+        }
+
+        dynamic "volume" {
+          for_each = kubernetes_secret.offline_license_response
+          content {
+            name = "license"
+            secret {
+              secret_name = volume.value.metadata.0.name
+            }
           }
         }
 
@@ -166,16 +193,25 @@ resource "kubernetes_deployment" "anaml_server" {
               port = 8080
             }
 
-            period_seconds  = 10
+            period_seconds        = 10
             initial_delay_seconds = 10
-            timeout_seconds = 5
-            failure_threshold = 18
+            timeout_seconds       = 5
+            failure_threshold     = 18
           }
 
           volume_mount {
             name       = "config"
             mount_path = "/config"
             read_only  = true
+          }
+
+          dynamic "volume_mount" {
+            for_each = kubernetes_secret.offline_license_response
+            content {
+              name       = "license"
+              mount_path = "/license"
+              read_only  = true
+            }
           }
 
           env {
@@ -228,15 +264,15 @@ resource "kubernetes_deployment" "anaml_server" {
           for_each = var.kubernetes_pod_sidecars == null ? [] : var.kubernetes_pod_sidecars
 
           content {
-            name = container.value.name
-            image = container.value.image
+            name              = container.value.name
+            image             = container.value.image
             image_pull_policy = container.value.image_pull_policy
-            command = container.value.command == null ? [] : container.value.command
+            command           = container.value.command == null ? [] : container.value.command
 
             dynamic "env" {
               for_each = container.value.env == null ? [] : container.value.env
               content {
-                name = env.name
+                name  = env.name
                 value = env.value
               }
             }
@@ -263,7 +299,7 @@ resource "kubernetes_deployment" "anaml_server" {
             dynamic "volume_mount" {
               for_each = container.value.volume_mount == null ? [] : container.value.volume_mount
               content {
-                name = volume_mount.name
+                name       = volume_mount.name
                 mount_path = volume_mount.mount_path
                 read_only  = volume_mount.read_only
               }

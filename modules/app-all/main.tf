@@ -123,7 +123,7 @@ module "anaml-ui" {
 
   # TODO
   docs_url                 = module.anaml-docs.internal_url
-  spark_history_server_url = "http://example.com"
+  spark_history_server_url = module.spark-server.spark_history_server_internal_url
   anaml_server_url         = "http://anaml-server.${var.kubernetes_namespace_name}.svc.cluster.local:8080"
 }
 

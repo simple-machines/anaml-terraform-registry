@@ -120,5 +120,9 @@ Default: `"ClusterIP"`
 
 ## Outputs
 
-No outputs.
+The following outputs are exported:
+
+### <a name="output_internal_url"></a> [internal\_url](#output\_internal\_url)
+
+Description: n/a
 <!-- END_TF_DOCS -->

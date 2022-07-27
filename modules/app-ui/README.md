@@ -28,6 +28,12 @@ The following resources are used by this module:
 
 The following input variables are required:
 
+### <a name="input_anaml_server_url"></a> [anaml\_server\_url](#input\_anaml\_server\_url)
+
+Description: n/a
+
+Type: `string`
+
 ### <a name="input_anaml_ui_version"></a> [anaml\_ui\_version](#input\_anaml\_ui\_version)
 
 Description: The version of anaml-ui to deploy

@@ -15,8 +15,6 @@ The following providers are used by this module:
 
 - <a name="provider_anaml"></a> [anaml](#provider\_anaml)
 
-- <a name="provider_anaml.model_predict"></a> [anaml.model\_predict](#provider\_anaml.model\_predict)
-
 - <a name="provider_anaml-operations"></a> [anaml-operations](#provider\_anaml-operations)
 
 ## Modules

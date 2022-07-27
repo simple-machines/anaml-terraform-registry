@@ -131,6 +131,7 @@ module "anaml-ui" {
   # TODO
   docs_url                 = "http://example.com"
   spark_history_server_url = "http://example.com"
+  anaml_server_url         = "http://anaml-server.${var.kubernetes_namespace_name}.svc.cluster.local:8080"
 
   depends_on = [kubernetes_namespace.anaml_namespace]
 }
@@ -179,6 +180,8 @@ module "spark-server" {
   # Use creds from the pod environment - TODO (spark server module should set these as default)
   anaml_server_user     = "$${?ANAML_ADMIN_TOKEN}"
   anaml_server_password = "$${?ANAML_ADMIN_SECRET}"
+
+  depends_on = [kubernetes_namespace.anaml_namespace]
 }
 
 

@@ -129,7 +129,7 @@ module "anaml-ui" {
   skin                           = var.override_anaml_ui_skin
 
   # TODO
-  docs_url                 = "http://example.com"
+  docs_url                 = module.anaml-docs.internal_url
   spark_history_server_url = "http://example.com"
   anaml_server_url         = "http://anaml-server.${var.kubernetes_namespace_name}.svc.cluster.local:8080"
 

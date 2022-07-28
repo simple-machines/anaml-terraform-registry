@@ -18,7 +18,7 @@ resource "kubernetes_deployment" "anaml_spark_server_deployment" {
         }
       }
       spec {
-        service_account_name = local.service_account_name
+        service_account_name = var.kubernetes_service_account
 
         volume {
           name = "config"
@@ -238,7 +238,7 @@ resource "kubernetes_deployment" "spark_history_server_deployment" {
         labels    = local.spark_history_server_labels
       }
       spec {
-        service_account_name = local.service_account_name
+        service_account_name = var.kubernetes_service_account
 
         volume {
           name = "config"

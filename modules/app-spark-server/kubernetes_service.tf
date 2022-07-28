@@ -59,7 +59,7 @@ resource "kubernetes_service" "anaml_spark_driver" {
 
 resource "kubernetes_service" "spark_history_server_service" {
   metadata {
-    name      = "spark-history-server"
+    name        = "spark-history-server"
     namespace   = var.kubernetes_namespace
     labels      = local.spark_history_server_labels
     annotations = var.kubernetes_service_annotations_spark_history_service

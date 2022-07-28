@@ -53,7 +53,7 @@ resource "kubernetes_config_map" "anaml_server" {
 
       # If we get a kubernetes style environment variable, i.e. "$(ANAML_LICENSE_KEY)", convert it to the config expected format "${?ANAML_LICENSE_KEY}" otherwise use the value as given.
       # We do this so the terraform modules a more consistent rather than mixing the different ways to access environment variables
-      license_key = try(format("$${%s}", one(regex("^\\$\\((\\w+)\\)", var.license_key))), var.license_key)
+      license_key = try(format("$${?%s}", one(regex("^\\$\\((\\w+)\\)", var.license_key))), var.license_key)
 
       license_offline_activation = var.license_offline_activation
 

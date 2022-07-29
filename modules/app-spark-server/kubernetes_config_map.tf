@@ -2,6 +2,7 @@ resource "kubernetes_config_map" "anaml_spark_server_config" {
   metadata {
     name      = "anaml-spark-server-config"
     namespace = var.kubernetes_namespace
+    labels    = { for k, v in local.anaml_spark_server_labels : k => v if !(k == "app.kubernetes.io/version") }
   }
 
   data = {
@@ -48,7 +49,7 @@ resource "kubernetes_config_map" "spark_defaults_conf" {
   metadata {
     name      = "anaml-spark-server-spark-defaults-conf"
     namespace = var.kubernetes_namespace
-    labels    = local.anaml_spark_server_labels
+    labels    = { for k, v in local.anaml_spark_server_labels : k => v if !(k == "app.kubernetes.io/version") }
   }
 
   data = {

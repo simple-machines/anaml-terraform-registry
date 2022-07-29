@@ -119,14 +119,14 @@ resource "kubernetes_service" "anaml_ui" {
   metadata {
     name        = var.kubernetes_deployment_name
     namespace   = var.kubernetes_namespace
-    labels      = local.deployment_labels
+    labels      = { for k, v in local.deployment_labels : k => v if !(k == "app.kubernetes.io/version") }
     annotations = var.kubernetes_service_annotations
   }
 
   spec {
     type = var.kubernetes_service_type
     selector = {
-      "app.kubernetes.io/name" = "anaml-ui"
+      "app.kubernetes.io/name" = local.deployment_labels["app.kubernetes.io/name"]
     }
     port {
       name        = "http"

@@ -154,7 +154,7 @@ module "spark-server" {
   spark_log_directory = var.override_anaml_spark_server_spark_log_directory
 
 
-  additional_env_from = [
+  kubernetes_container_spark_server_env_from = [
     # Inject the Postgres password
     { secret_ref = { name = kubernetes_secret.postgres_secret.metadata[0].name } }
   ]

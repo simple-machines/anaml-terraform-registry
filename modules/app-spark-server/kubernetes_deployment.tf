@@ -88,7 +88,7 @@ resource "kubernetes_deployment" "anaml_spark_server_deployment" {
           }
 
           dynamic "env_from" {
-            for_each = var.additional_env_from
+            for_each = var.kubernetes_container_spark_server_env_from
             content {
               dynamic "secret_ref" {
                 for_each = [env_from.value.secret_ref]

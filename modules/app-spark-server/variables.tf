@@ -34,6 +34,16 @@ variable "kubernetes_deployment_name" {
   description = "(Optional) Name of the deployment, must be unique. Cannot be updated. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/identifiers#names)"
 }
 
+variable "kubernetes_container_spark_server_env_from" {
+  type = list(object({
+    secret_ref = object({
+      name = string
+    })
+  }))
+  description = "Inject additional `env_from` values in to the deployment. This is useful for example if you want to mount the Postgres credentials from a secret_ref to use in the `postgres_user` and `postgres_password` values"
+  default     = []
+}
+
 variable "kubernetes_image_pull_policy" {
   type        = string
   description = " (Optional) Image pull policy. One of Always, Never, IfNotPresent. Defaults to Always if `anaml_spark_server_version` is set to`latest`, or IfNotPresent otherwise. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/images#updating-images)"
@@ -124,16 +134,6 @@ variable "additional_volumes" {
     config_map = optional(object({
       name = string
     }))
-  }))
-
-  default = []
-}
-
-variable "additional_env_from" {
-  type = list(object({
-    secret_ref = object({
-      name = string
-    })
   }))
 
   default = []

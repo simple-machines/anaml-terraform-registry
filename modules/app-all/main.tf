@@ -135,8 +135,9 @@ module "spark-server" {
 
   checkpoint_location = var.override_anaml_spark_server_checkpoint_location
   postgres_host       = local.postgres_host
-  postgres_port       = var.postgres_port
   postgres_password   = "$(PGPASSWORD)"
+  postgres_port       = var.postgres_port
+  postgres_user       = var.postgres_user
 
 
   kubernetes_pod_sidecars                 = var.kubernetes_pod_anaml_spark_server_sidecars

@@ -286,8 +286,3 @@ variable "kubernetes_pod_sidecars" {
 }
 
 
-variable "anaml_admin_api_kubernetes_secret_name" {
-  type     = string
-  nullable = false
-  default  = "anaml-server-admin-api-auth"
-}

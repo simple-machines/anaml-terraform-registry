@@ -94,14 +94,6 @@ Type: `string`
 
 The following input variables are optional (have default values):
 
-### <a name="input_anaml_admin_api_kubernetes_secret_name"></a> [anaml\_admin\_api\_kubernetes\_secret\_name](#input\_anaml\_admin\_api\_kubernetes\_secret\_name)
-
-Description: n/a
-
-Type: `string`
-
-Default: `"anaml-server-admin-api-auth"`
-
 ### <a name="input_anaml_database_name"></a> [anaml\_database\_name](#input\_anaml\_database\_name)
 
 Description: n/a

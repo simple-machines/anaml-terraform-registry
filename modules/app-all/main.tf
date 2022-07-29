@@ -161,8 +161,8 @@ module "spark-server" {
 
   additional_env_values = var.override_anaml_spark_server_additional_env_values
 
-  kubernetes_container_spark_server_volumes = var.override_anaml_spark_server_additional_volumes
-  additional_volume_mounts = var.override_anaml_spark_server_additional_volume_mounts
+  kubernetes_container_spark_server_volumes       = var.override_anaml_spark_server_additional_volumes
+  kubernetes_container_spark_server_volume_mounts = var.override_anaml_spark_server_additional_volume_mounts
 
   spark_history_server_additional_env_values    = var.override_spark_history_server_additional_env_values
   spark_history_server_additional_volumes       = var.override_spark_history_server_additional_volumes

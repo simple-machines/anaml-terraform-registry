@@ -134,7 +134,7 @@ resource "kubernetes_deployment" "anaml_spark_server_deployment" {
 
           # User injected volume mounts - decouples AWS/GCP implementations
           dynamic "volume_mount" {
-            for_each = var.additional_volume_mounts
+            for_each = var.kubernetes_container_spark_server_volume_mounts
             content {
               name       = volume_mount.value.name
               mount_path = volume_mount.value.mount_path

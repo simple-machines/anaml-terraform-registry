@@ -149,7 +149,7 @@ variable "kubernetes_container_spark_server_volumes" {
   default = []
 }
 
-variable "additional_volume_mounts" {
+variable "kubernetes_container_spark_server_volume_mounts" {
   type = list(object({
     name       = string
     mount_path = string

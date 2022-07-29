@@ -78,6 +78,12 @@ Description: n/a
 
 Type: `string`
 
+### <a name="input_postgres_user"></a> [postgres\_user](#input\_postgres\_user)
+
+Description: The user to connect to Postgres as. If the password is stored as a Kubernetes secret you can use the `kubernetes_container_env_from` option to make the secret available in the POD as a `secret_ref` and then reference it using standard Kubernetes syntax, i.e. by setting this value to `$(PGUSER)`.
+
+Type: `string`
+
 ### <a name="input_spark_log_directory"></a> [spark\_log\_directory](#input\_spark\_log\_directory)
 
 Description: The log directory used for spark.eventLodDir and spark.history.fs.logDirectory
@@ -87,75 +93,6 @@ Type: `string`
 ## Optional Inputs
 
 The following input variables are optional (have default values):
-
-### <a name="input_additional_env_from"></a> [additional\_env\_from](#input\_additional\_env\_from)
-
-Description: n/a
-
-Type:
-
-```hcl
-list(object({
-    secret_ref = object({
-      name = string
-    })
-  }))
-```
-
-Default: `[]`
-
-### <a name="input_additional_env_values"></a> [additional\_env\_values](#input\_additional\_env\_values)
-
-Description: n/a
-
-Type:
-
-```hcl
-list(object({
-    name  = string
-    value = string
-  }))
-```
-
-Default: `[]`
-
-### <a name="input_additional_volume_mounts"></a> [additional\_volume\_mounts](#input\_additional\_volume\_mounts)
-
-Description: n/a
-
-Type:
-
-```hcl
-list(object({
-    name       = string
-    mount_path = string
-    read_only  = bool
-  }))
-```
-
-Default: `[]`
-
-### <a name="input_additional_volumes"></a> [additional\_volumes](#input\_additional\_volumes)
-
-Description: n/a
-
-Type:
-
-```hcl
-list(object({
-    name = string
-
-    secret = optional(object({
-      secret_name = string
-    }))
-
-    config_map = optional(object({
-      name = string
-    }))
-  }))
-```
-
-Default: `[]`
 
 ### <a name="input_anaml_admin_api_kubernetes_secret_name"></a> [anaml\_admin\_api\_kubernetes\_secret\_name](#input\_anaml\_admin\_api\_kubernetes\_secret\_name)
 
@@ -188,6 +125,91 @@ Description: n/a
 Type: `string`
 
 Default: `"http://anaml-server.anaml.svc.cluster.local:8080"`
+
+### <a name="input_kubernetes_container_spark_history_server_env_from"></a> [kubernetes\_container\_spark\_history\_server\_env\_from](#input\_kubernetes\_container\_spark\_history\_server\_env\_from)
+
+Description: Inject additional `env_from` values in to the deployment. This is useful for example if you want to mount the Postgres credentials from a secret\_ref to use in the `postgres_user` and `postgres_password` values
+
+Type:
+
+```hcl
+list(object({
+    secret_ref = object({
+      name = string
+    })
+  }))
+```
+
+Default: `[]`
+
+### <a name="input_kubernetes_container_spark_server_env"></a> [kubernetes\_container\_spark\_server\_env](#input\_kubernetes\_container\_spark\_server\_env)
+
+Description: n/a
+
+Type:
+
+```hcl
+list(object({
+    name  = string
+    value = string
+  }))
+```
+
+Default: `[]`
+
+### <a name="input_kubernetes_container_spark_server_env_from"></a> [kubernetes\_container\_spark\_server\_env\_from](#input\_kubernetes\_container\_spark\_server\_env\_from)
+
+Description: Inject additional `env_from` values in to the deployment. This is useful for example if you want to mount the Postgres credentials from a secret\_ref to use in the `postgres_user` and `postgres_password` values
+
+Type:
+
+```hcl
+list(object({
+    secret_ref = object({
+      name = string
+    })
+  }))
+```
+
+Default: `[]`
+
+### <a name="input_kubernetes_container_spark_server_volume_mounts"></a> [kubernetes\_container\_spark\_server\_volume\_mounts](#input\_kubernetes\_container\_spark\_server\_volume\_mounts)
+
+Description: n/a
+
+Type:
+
+```hcl
+list(object({
+    name       = string
+    mount_path = string
+    read_only  = bool
+  }))
+```
+
+Default: `[]`
+
+### <a name="input_kubernetes_container_spark_server_volumes"></a> [kubernetes\_container\_spark\_server\_volumes](#input\_kubernetes\_container\_spark\_server\_volumes)
+
+Description: n/a
+
+Type:
+
+```hcl
+list(object({
+    name = string
+
+    secret = optional(object({
+      secret_name = string
+    }))
+
+    config_map = optional(object({
+      name = string
+    }))
+  }))
+```
+
+Default: `[]`
 
 ### <a name="input_kubernetes_deployment_labels"></a> [kubernetes\_deployment\_labels](#input\_kubernetes\_deployment\_labels)
 
@@ -295,6 +317,14 @@ set(
 
 Default: `[]`
 
+### <a name="input_kubernetes_service_account"></a> [kubernetes\_service\_account](#input\_kubernetes\_service\_account)
+
+Description: n/a
+
+Type: `string`
+
+Default: `null`
+
 ### <a name="input_kubernetes_service_annotations_anaml_spark_server"></a> [kubernetes\_service\_annotations\_anaml\_spark\_server](#input\_kubernetes\_service\_annotations\_anaml\_spark\_server)
 
 Description: (Optional) An unstructured key value map stored with the **anaml\_spark\_server** service that may be used to store arbitrary metadata.
@@ -342,22 +372,6 @@ Description: Additional spark config / overrides to merge into spark conf. This 
 Type: `map(string)`
 
 Default: `{}`
-
-### <a name="input_spark_history_server_additional_env_from"></a> [spark\_history\_server\_additional\_env\_from](#input\_spark\_history\_server\_additional\_env\_from)
-
-Description: n/a
-
-Type:
-
-```hcl
-list(object({
-    secret_ref = object({
-      name = string
-    })
-  }))
-```
-
-Default: `[]`
 
 ### <a name="input_spark_history_server_additional_env_values"></a> [spark\_history\_server\_additional\_env\_values](#input\_spark\_history\_server\_additional\_env\_values)
 

@@ -146,6 +146,7 @@ resource "kubernetes_deployment" "anaml_spark_server_deployment" {
             "--databaseServerName=${var.postgres_host}",
             "--databasePortNumber=${var.postgres_port}",
             "--databaseName=${var.anaml_database_name}",
+            "--databaseUser=${var.postgres_user}",
             "--databasePassword=${var.postgres_password}",
             "--databaseSchema=${var.anaml_database_schema_name}",
           ]

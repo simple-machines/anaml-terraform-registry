@@ -36,7 +36,7 @@ resource "kubernetes_deployment" "anaml_spark_server_deployment" {
 
         # Allow users to inject additional secret / config volumes.
         dynamic "volume" {
-          for_each = var.additional_volumes
+          for_each = var.kubernetes_container_spark_server_volumes
           content {
             name = volume.value.name
 

@@ -133,7 +133,7 @@ variable "additional_env_values" {
   default = []
 }
 
-variable "additional_volumes" {
+variable "kubernetes_container_spark_server_volumes" {
   type = list(object({
     name = string
 

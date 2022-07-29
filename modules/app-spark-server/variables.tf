@@ -124,7 +124,7 @@ variable "checkpoint_location" {
   nullable = false
 }
 
-variable "additional_env_values" {
+variable "kubernetes_container_spark_server_env" {
   type = list(object({
     name  = string
     value = string

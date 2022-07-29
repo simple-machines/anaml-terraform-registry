@@ -113,7 +113,7 @@ resource "kubernetes_deployment" "anaml_spark_server_deployment" {
           }
 
           dynamic "env" {
-            for_each = var.additional_env_values
+            for_each = var.kubernetes_container_spark_server_env
             content {
               name  = env.value.name
               value = env.value.value

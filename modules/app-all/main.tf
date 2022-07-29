@@ -159,7 +159,7 @@ module "spark-server" {
     { secret_ref = { name = kubernetes_secret.postgres_secret.metadata[0].name } }
   ]
 
-  additional_env_values = var.override_anaml_spark_server_additional_env_values
+  kubernetes_container_spark_server_env = var.override_anaml_spark_server_additional_env_values
 
   kubernetes_container_spark_server_volumes       = var.override_anaml_spark_server_additional_volumes
   kubernetes_container_spark_server_volume_mounts = var.override_anaml_spark_server_additional_volume_mounts

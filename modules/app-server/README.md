@@ -338,6 +338,14 @@ Type: `string`
 
 Default: `null`
 
+### <a name="input_override_java_opts"></a> [override\_java\_opts](#input\_override\_java\_opts)
+
+Description: A list of JAVA\_OPT options to pass to anaml-server, i.e. `-XX:ActiveProcessorCount=8`
+
+Type: `list(string)`
+
+Default: `[]`
+
 ### <a name="input_postgres_port"></a> [postgres\_port](#input\_postgres\_port)
 
 Description: The Postgres database port to connect to, defaults to 5432

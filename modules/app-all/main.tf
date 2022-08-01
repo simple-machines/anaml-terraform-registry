@@ -156,7 +156,8 @@ module "spark-server" {
 
   kubernetes_container_spark_server_env_from = [
     # Inject the Postgres password
-    { secret_ref = { name = kubernetes_secret.postgres_secret.metadata[0].name } }
+    { secret_ref = { name = kubernetes_secret.postgres_secret.metadata[0].name } },
+    { secret_ref = { name = module.anaml-server.anaml_admin_api_kubernetes_secret_name }}
   ]
 
   kubernetes_container_spark_server_env = var.override_anaml_spark_server_additional_env_values
@@ -171,8 +172,8 @@ module "spark-server" {
 
 
   # Use creds from the pod environment - TODO (spark server module should set these as default)
-  anaml_server_user     = "$${?ANAML_ADMIN_TOKEN}"
-  anaml_server_password = "$${?ANAML_ADMIN_SECRET}"
+  anaml_server_user     = "$(ANAML_ADMIN_TOKEN)"
+  anaml_server_password = "$(ANAML_ADMIN_SECRET)"
 }
 
 

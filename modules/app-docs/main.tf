@@ -35,7 +35,9 @@ resource "kubernetes_deployment" "anaml_docs" {
     replicas = var.kubernetes_deployment_replicas
 
     selector {
-      match_labels = local.deployment_labels
+      match_labels = {
+        "app.kubernetes.io/name" = local.deployment_labels["app.kubernetes.io/name"]
+      }
     }
 
     template {

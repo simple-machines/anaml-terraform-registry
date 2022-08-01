@@ -6,7 +6,9 @@ resource "kubernetes_deployment" "anaml_spark_server_deployment" {
   }
   spec {
     selector {
-      match_labels = local.anaml_spark_server_labels
+      match_labels = {
+        "app.kubernetes.io/name" = local.anaml_spark_server_labels["app.kubernetes.io/name"]
+      }
     }
     template {
       metadata {
@@ -223,7 +225,9 @@ resource "kubernetes_deployment" "spark_history_server_deployment" {
   }
   spec {
     selector {
-      match_labels = local.spark_history_server_labels
+      match_labels = {
+        "app.kubernetes.io/name" = local.spark_history_server_labels["app.kubernetes.io/name"]
+      }
     }
     template {
       metadata {

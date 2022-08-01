@@ -27,7 +27,7 @@ terraform {
 
 locals {
   deployment_labels = merge({
-    "app.kubernetes.io/name"       = "cloudsql-proxy"
+    "app.kubernetes.io/name"       = var.kubernetes_deployment_name
     "app.kubernetes.io/version"    = var.gcp_cloudsql_proxy_version
     "app.kubernetes.io/component"  = "database"
     "app.kubernetes.io/part-of"    = "anaml"
@@ -43,7 +43,9 @@ resource "kubernetes_deployment" "default" {
   }
   spec {
     selector {
-      match_labels = local.deployment_labels
+      match_labels = {
+        "app.kubernetes.io/name" = local.deployment_labels["app.kubernetes.io/name"]
+      }
     }
     template {
       metadata {
@@ -94,7 +96,9 @@ resource "kubernetes_service" "default" {
 
   spec {
     type     = var.kubernetes_service_type
-    selector = local.deployment_labels
+    selector = {
+        "app.kubernetes.io/name" = local.deployment_labels["app.kubernetes.io/name"]
+    }
     port {
       name        = "postgres"
       port        = 5432

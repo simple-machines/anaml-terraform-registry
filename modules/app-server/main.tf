@@ -230,7 +230,7 @@ resource "kubernetes_deployment" "anaml_server" {
 
           env {
             name  = "JAVA_OPTS"
-            value = "-Dconfig.file=/config/application.conf -Dlog4j2.configurationFile=/config/log4j2.xml"
+            value = join(" ", concat(["-Dconfig.file=/config/application.conf", "-Dlog4j2.configurationFile=/config/log4j2.xml"], var.override_java_opts))
           }
 
           env_from {

@@ -253,3 +253,9 @@ variable "license_offline_activation" {
   description = "If to use offline license activation"
   default     = false
 }
+
+variable "override_java_opts" {
+  type = list(string)
+  description = "A list of JAVA_OPT options to pass to anaml-server, i.e. `-XX:ActiveProcessorCount=8`"
+  default = []
+}

@@ -124,7 +124,7 @@ variable "kubernetes_service_type" {
 
   validation {
     condition     = contains(["ClusterIP", "ExternalName", "LoadBalancer", "NodeIP"], var.kubernetes_service_type)
-    error_message = "The kubernetes_service_type value must be one of ClusterIP, ExternalName, LoadBalancer or NodeIP"
+    error_message = "The kubernetes_service_type value must be one of ClusterIP, ExternalName, LoadBalancer or NodeIP."
   }
 }
 

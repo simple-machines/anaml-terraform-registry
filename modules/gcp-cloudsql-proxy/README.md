@@ -168,5 +168,9 @@ Default: `"ClusterIP"`
 
 ## Outputs
 
-No outputs.
+The following outputs are exported:
+
+### <a name="output_host"></a> [host](#output\_host)
+
+Description: n/a
 <!-- END_TF_DOCS -->

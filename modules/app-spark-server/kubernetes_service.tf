@@ -2,7 +2,7 @@ resource "kubernetes_service" "anaml_spark_server_service" {
   metadata {
     name        = "anaml-spark-server"
     namespace   = var.kubernetes_namespace
-    labels      = { for k, v in local.anaml_spark_server_labels : k => v if !(k == "app.kubernetes.io/version") }
+    labels      = { for k, v in local.anaml_spark_server_labels : k => v if k != "app.kubernetes.io/version" }
     annotations = var.kubernetes_service_annotations_anaml_spark_server
   }
 
@@ -28,7 +28,7 @@ resource "kubernetes_service" "anaml_spark_driver" {
   metadata {
     name        = "anaml-spark-driver"
     namespace   = var.kubernetes_namespace
-    labels      = { for k, v in local.anaml_spark_server_labels : k => v if !(k == "app.kubernetes.io/version") }
+    labels      = { for k, v in local.anaml_spark_server_labels : k => v if k != "app.kubernetes.io/version" }
     annotations = var.kubernetes_service_annotations_spark_driver
   }
   spec {
@@ -65,7 +65,7 @@ resource "kubernetes_service" "spark_history_server_service" {
   metadata {
     name        = "spark-history-server"
     namespace   = var.kubernetes_namespace
-    labels      = { for k, v in local.spark_history_server_labels : k => v if !(k == "app.kubernetes.io/version") }
+    labels      = { for k, v in local.spark_history_server_labels : k => v if k != "app.kubernetes.io/version" }
     annotations = var.kubernetes_service_annotations_spark_history_service
   }
   spec {

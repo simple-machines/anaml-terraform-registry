@@ -92,7 +92,7 @@ resource "kubernetes_deployment" "anaml_docs" {
 resource "kubernetes_service" "anaml_docs" {
   metadata {
     annotations = var.kubernetes_service_annotations
-    labels      = { for k, v in local.deployment_labels : k => v if !(k == "app.kubernetes.io/version") }
+    labels      = { for k, v in local.deployment_labels : k => v if k != "app.kubernetes.io/version" }
     name        = var.kubernetes_deployment_name
     namespace   = var.kubernetes_namespace
   }

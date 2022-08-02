@@ -30,7 +30,7 @@ resource "kubernetes_config_map" "anaml_server" {
   metadata {
     name      = var.kubernetes_deployment_name
     namespace = var.kubernetes_namespace
-    labels    = { for k, v in local.deployment_labels : k => v if !(k == "app.kubernetes.io/version") }
+    labels    = { for k, v in local.deployment_labels : k => v if k != "app.kubernetes.io/version" }
   }
   data = {
     ANAML_POSTGRES_DATABASE_NAME   = var.anaml_database_name
@@ -82,7 +82,7 @@ resource "kubernetes_secret" "anaml_server_admin_password" {
   metadata {
     name      = "${var.kubernetes_deployment_name}-admin-password"
     namespace = var.kubernetes_namespace
-    labels    = { for k, v in local.deployment_labels : k => v if !(k == "app.kubernetes.io/version") }
+    labels    = { for k, v in local.deployment_labels : k => v if k != "app.kubernetes.io/version" }
   }
   data = {
     ANAML_ADMIN_PASSWORD = var.anaml_admin_password
@@ -94,7 +94,7 @@ resource "kubernetes_secret" "anaml_server_admin_api_auth" {
   metadata {
     name      = "${var.kubernetes_deployment_name}-admin-api-auth"
     namespace = var.kubernetes_namespace
-    labels    = { for k, v in local.deployment_labels : k => v if !(k == "app.kubernetes.io/version") }
+    labels    = { for k, v in local.deployment_labels : k => v if k != "app.kubernetes.io/version" }
   }
   data = {
     ANAML_ADMIN_SECRET = var.anaml_admin_secret
@@ -108,7 +108,7 @@ resource "kubernetes_secret" "offline_license_response" {
   metadata {
     name      = "${var.kubernetes_deployment_name}-offline-license-response"
     namespace = var.kubernetes_namespace
-    labels    = { for k, v in local.deployment_labels : k => v if !(k == "app.kubernetes.io/version") }
+    labels    = { for k, v in local.deployment_labels : k => v if k != "app.kubernetes.io/version" }
   }
 
   data = {
@@ -350,7 +350,7 @@ resource "kubernetes_service" "anaml_server" {
   metadata {
     name        = var.kubernetes_deployment_name
     namespace   = var.kubernetes_namespace
-    labels      = { for k, v in local.deployment_labels : k => v if !(k == "app.kubernetes.io/version") }
+    labels      = { for k, v in local.deployment_labels : k => v if k != "app.kubernetes.io/version"}
     annotations = var.kubernetes_service_annotations
   }
 

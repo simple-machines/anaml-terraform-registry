@@ -3,7 +3,7 @@ variable "anaml_api_key" {
 }
 
 variable "anaml_api_secret" {
-  type = string
+  type      = string
   sensitive = true
 }
 
@@ -69,6 +69,11 @@ variable "kubernetes_deployment_labels" {
   description = "Kubernetes labels to set if any. These values will be merged with the defaults"
 }
 
+variable "kubernetes_service_account_name" {
+  type    = string
+  default = null
+}
+
 variable "kubernetes_service_annotations" {
   type        = map(string)
   default     = null
@@ -93,11 +98,11 @@ variable "webhook_server_version" {
 }
 
 variable "webhook_cloud_functions_svc_credentials" {
-  type = string
+  type      = string
   sensitive = true
 }
 
 variable "webhook_vertex_svc_credentials" {
-  type = string
+  type      = string
   sensitive = true
 }

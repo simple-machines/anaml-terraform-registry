@@ -46,7 +46,8 @@ resource "kubernetes_deployment" "webhook_server" {
       }
 
       spec {
-        node_selector = var.kubernetes_node_selector
+        service_account_name = var.kubernetes_service_account_name
+        node_selector        = var.kubernetes_node_selector
 
         volume {
           name = "cloud-function-svc-credentials"
@@ -145,7 +146,7 @@ resource "kubernetes_secret" "webhook_cloud_functions_svc_credentials" {
   metadata {
     name      = "webhook-server-cloud-functions-svc-credentials"
     namespace = var.kubernetes_namespace
-    labels = { for k, v in local.deployment_labels : k => v if k != "app.kubernetes.io/version" }
+    labels    = { for k, v in local.deployment_labels : k => v if k != "app.kubernetes.io/version" }
   }
   data = {
     "credentials.json" = var.webhook_cloud_functions_svc_credentials
@@ -156,7 +157,7 @@ resource "kubernetes_secret" "webhook_vertex_svc_credentials" {
   metadata {
     name      = "webhook-server-vertex-svc-credentials"
     namespace = var.kubernetes_namespace
-    labels = { for k, v in local.deployment_labels : k => v if k != "app.kubernetes.io/version" }
+    labels    = { for k, v in local.deployment_labels : k => v if k != "app.kubernetes.io/version" }
   }
   data = {
     "credentials.json" = var.webhook_vertex_svc_credentials
@@ -167,7 +168,7 @@ resource "kubernetes_secret" "webhook_anaml_api_credentials" {
   metadata {
     name      = "webhook-server-anaml-api-credentials"
     namespace = var.kubernetes_namespace
-    labels = { for k, v in local.deployment_labels : k => v if k != "app.kubernetes.io/version" }
+    labels    = { for k, v in local.deployment_labels : k => v if k != "app.kubernetes.io/version" }
   }
   data = {
     ANAML_APIKEY = var.anaml_api_key

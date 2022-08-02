@@ -15,5 +15,10 @@ output "kubernetes_service_port_number" {
 }
 
 output "internal_url" {
-  value = "http://anaml-server.${var.kubernetes_namespace}.svc.cluster.local:8080"
+  value = format(
+    "http://%s.%s.svc.cluster.local:%s",
+    kubernetes_service.anaml_server.metadata.0.name,
+    kubernetes_service.anaml_server.metadata.0.namespace,
+    kubernetes_service.anaml_server.spec[0].port[0].port
+  )
 }

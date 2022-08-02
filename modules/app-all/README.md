@@ -165,6 +165,22 @@ Type: `bool`
 
 Default: `true`
 
+### <a name="input_kubernetes_container_env_from_anaml_server"></a> [kubernetes\_container\_env\_from\_anaml\_server](#input\_kubernetes\_container\_env\_from\_anaml\_server)
+
+Description: Inject additional `env_from` values in to the anaml\_server deployment
+
+Type:
+
+```hcl
+list(object({
+    secret_ref = object({
+      name = string
+    })
+  }))
+```
+
+Default: `[]`
+
 ### <a name="input_kubernetes_ingress_enable"></a> [kubernetes\_ingress\_enable](#input\_kubernetes\_ingress\_enable)
 
 Description: If true, deploy an ingress for Anaml

@@ -84,9 +84,12 @@ module "anaml-server" {
   hostname                   = var.hostname
   kubernetes_namespace       = var.kubernetes_namespace_create ? kubernetes_namespace.anaml_namespace[0].metadata.0.name : var.kubernetes_namespace_name
   kubernetes_node_selector   = var.kubernetes_pod_node_selector_app
-  kubernetes_container_env_from = [
-    { secret_ref = { name = "postgres-secret" } }
-  ]
+
+  kubernetes_container_env_from = concat(
+    [{ secret_ref = { name = "postgres-secret" } }],
+    var.kubernetes_container_env_from_anaml_server
+  )
+
   kubernetes_service_annotations = var.kubernetes_service_annotations_anaml_server
   kubernetes_service_type        = var.kubernetes_service_type
   oidc_additional_scopes         = var.oidc_additional_scopes
@@ -156,10 +159,10 @@ module "spark-server" {
 
   kubernetes_container_spark_server_env_from = [
     # Inject the Postgres password
-    { secret_ref = { name = kubernetes_secret.postgres_secret.metadata[0].name }},
+    { secret_ref = { name = kubernetes_secret.postgres_secret.metadata[0].name } },
 
     # Inject the API credentials (ANAML_ADMIN_TOKEN/ANAML_ADMIN_SECRET)
-    { secret_ref = { name = module.anaml-server.anaml_admin_api_kubernetes_secret_name }}
+    { secret_ref = { name = module.anaml-server.anaml_admin_api_kubernetes_secret_name } }
   ]
 
   kubernetes_container_spark_server_env = var.override_anaml_spark_server_additional_env_values

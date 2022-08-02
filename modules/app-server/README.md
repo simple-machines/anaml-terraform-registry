@@ -365,4 +365,16 @@ Description: n/a
 ### <a name="output_internal_url"></a> [internal\_url](#output\_internal\_url)
 
 Description: n/a
+
+### <a name="output_kubernetes_service_name"></a> [kubernetes\_service\_name](#output\_kubernetes\_service\_name)
+
+Description: n/a
+
+### <a name="output_kubernetes_service_port_name"></a> [kubernetes\_service\_port\_name](#output\_kubernetes\_service\_port\_name)
+
+Description: n/a
+
+### <a name="output_kubernetes_service_port_number"></a> [kubernetes\_service\_port\_number](#output\_kubernetes\_service\_port\_number)
+
+Description: n/a
 <!-- END_TF_DOCS -->

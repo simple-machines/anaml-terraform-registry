@@ -513,6 +513,14 @@ Type: `string`
 
 Default: `null`
 
+### <a name="input_override_anaml_server_java_opts"></a> [override\_anaml\_server\_java\_opts](#input\_override\_anaml\_server\_java\_opts)
+
+Description: anaml\_server override\_java\_opts value. Provide additional JAVA\_OPTS values to anaml\_server
+
+Type: `list(string)`
+
+Default: `[]`
+
 ### <a name="input_override_anaml_server_version"></a> [override\_anaml\_server\_version](#input\_override\_anaml\_server\_version)
 
 Description: anaml-server version override. This value should contain the container tag to deploy
@@ -718,4 +726,8 @@ Description: n/a
 ### <a name="output_kubernetes_service_account"></a> [kubernetes\_service\_account](#output\_kubernetes\_service\_account)
 
 Description: The Kubernetes service account used for deployments
+
+### <a name="output_kubernetes_service_name_anaml_server"></a> [kubernetes\_service\_name\_anaml\_server](#output\_kubernetes\_service\_name\_anaml\_server)
+
+Description: n/a
 <!-- END_TF_DOCS -->

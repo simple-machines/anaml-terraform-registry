@@ -140,6 +140,12 @@ variable "override_anaml_server_version" {
   description = "anaml-server version override. This value should contain the container tag to deploy"
 }
 
+variable "override_anaml_server_java_opts" {
+  type        = list(string)
+  default     = []
+  description = "anaml_server override_java_opts value. Provide additional JAVA_OPTS values to anaml_server"
+}
+
 variable "override_anaml_spark_server_version" {
   type        = string
   default     = null

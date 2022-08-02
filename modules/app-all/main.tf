@@ -98,6 +98,7 @@ module "anaml-server" {
   oidc_discovery_uri             = var.oidc_discovery_uri
   oidc_enable                    = var.oidc_enable
   oidc_permitted_users_group_id  = var.oidc_permitted_users_group_id
+  override_java_opts             = var.override_anaml_server_java_opts
   postgres_host                  = local.postgres_host
   postgres_password              = "$(PGPASSWORD)"
   postgres_port                  = var.postgres_port
@@ -124,7 +125,6 @@ module "anaml-ui" {
   kubernetes_service_type        = var.kubernetes_service_type
   skin                           = var.override_anaml_ui_skin
 
-  # TODO
   docs_url                 = module.anaml-docs.internal_url
   spark_history_server_url = module.spark-server.spark_history_server_internal_url
   anaml_server_url         = module.anaml-server.internal_url

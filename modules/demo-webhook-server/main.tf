@@ -143,7 +143,7 @@ resource "kubernetes_deployment" "webhook_server" {
 
 resource "kubernetes_secret" "webhook_cloud_functions_svc_credentials" {
   metadata {
-    name      = "webhook-cloud-functions-svc-credentials"
+    name      = "webhook-server-cloud-functions-svc-credentials"
     namespace = var.kubernetes_namespace
     labels = { for k, v in local.deployment_labels : k => v if k != "app.kubernetes.io/version" }
   }
@@ -154,7 +154,7 @@ resource "kubernetes_secret" "webhook_cloud_functions_svc_credentials" {
 
 resource "kubernetes_secret" "webhook_vertex_svc_credentials" {
   metadata {
-    name      = "webhook-vertex-svc-credentials"
+    name      = "webhook-server-vertex-svc-credentials"
     namespace = var.kubernetes_namespace
     labels = { for k, v in local.deployment_labels : k => v if k != "app.kubernetes.io/version" }
   }
@@ -165,7 +165,7 @@ resource "kubernetes_secret" "webhook_vertex_svc_credentials" {
 
 resource "kubernetes_secret" "webhook_anaml_api_credentials" {
   metadata {
-    name      = "webhook-anaml-api-credentials"
+    name      = "webhook-server-anaml-api-credentials"
     namespace = var.kubernetes_namespace
     labels = { for k, v in local.deployment_labels : k => v if k != "app.kubernetes.io/version" }
   }

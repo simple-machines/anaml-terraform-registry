@@ -6,6 +6,14 @@ output "kubernetes_service_name" {
   value = kubernetes_service.anaml_server.metadata.0.name
 }
 
+output "kubernetes_service_port_name" {
+  value = kubernetes_service.anaml_server.spec.0.port.0.name
+}
+
+output "kubernetes_service_port_number" {
+  value = kubernetes_service.anaml_server.spec.0.port.0.port
+}
+
 output "internal_url" {
   value = "http://anaml-server.${var.kubernetes_namespace}.svc.cluster.local:8080"
 }

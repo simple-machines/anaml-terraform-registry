@@ -28,7 +28,7 @@ variable "kafka_bootstrap_servers" {
 }
 
 variable "kafka_additional_config" {
-  type = map(string)
+  type    = map(string)
   default = {}
 }
 

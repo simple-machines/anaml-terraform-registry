@@ -1,4 +1,4 @@
-variable "anaml_demo_setup_version" {
+variable "anaml_producer_demo_version" {
   type        = string
   description = "The version of anaml-demo-setup container image to deploy"
   nullable    = false

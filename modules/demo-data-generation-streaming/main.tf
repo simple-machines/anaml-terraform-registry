@@ -15,7 +15,7 @@ terraform {
 locals {
   deployment_labels = merge({
     "app.kubernetes.io/name"       = "anaml-demo-batch-data-generation"
-    "app.kubernetes.io/version"    = var.anaml_demo_setup_version
+    "app.kubernetes.io/version"    = var.anaml_producer_demo_version
     "app.kubernetes.io/component"  = "demo-data"
     "app.kubernetes.io/part-of"    = "anaml"
     "app.kubernetes.io/created-by" = "terraform"

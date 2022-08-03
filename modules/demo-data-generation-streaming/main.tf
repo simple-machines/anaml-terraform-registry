@@ -49,7 +49,7 @@ resource "kubernetes_deployment" "kafka_data_generator" {
         labels    = local.deployment_labels
       }
       spec {
-        service_account_name = "svc-data-generator"
+        service_account_name = var.kubernetes_service_account_name
 
         volume {
           name = "config"

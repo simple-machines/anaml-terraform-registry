@@ -64,3 +64,8 @@ variable "kubernetes_image_pull_policy" {
     error_message = "The kubernetes_image_pull_policy value must be one of Always, Nerver or IfNotPresent."
   }
 }
+
+variable "kubernetes_service_account_name" {
+  type    = string
+  default = null
+}

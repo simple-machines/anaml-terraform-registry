@@ -149,7 +149,7 @@ resource "kubernetes_config_map" "producer_demo_config" {
   }
 
   data = {
-    "application.properties" = join("\n", [ for k,v in local.kafka_config : "${k}=${v}" ])
+    "application.properties" = join("\n", sort([ for k,v in local.kafka_config : "${k}=${v}" ]))
   }
 }
 

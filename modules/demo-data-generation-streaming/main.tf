@@ -69,8 +69,8 @@ resource "kubernetes_deployment" "kafka_data_generator" {
 
         container {
           name              = "anaml-producer-demo"
-          image             = "${var.container_registry}/anaml-producer-demo:${anaml_producer_demo_version}"
-          image_pull_policy = var.kubernetes_image_pull_policy == null ? (var.anaml_server_version == "latest" ? "Always" : "IfNotPresent") : var.kubernetes_image_pull_policy
+          image             = "${var.container_registry}/anaml-producer-demo:${var.anaml_producer_demo_version}"
+          image_pull_policy = var.kubernetes_image_pull_policy == null ? (var.anaml_producer_demo_version == "latest" ? "Always" : "IfNotPresent") : var.kubernetes_image_pull_policy
 
           env {
             name  = "ANAML_GS_PROJECT_ID"

@@ -151,7 +151,7 @@ resource "kubernetes_persistent_volume_claim" "data_generation_volume" {
   metadata {
     name      = "anaml-demo-batch-data-generation"
     namespace = var.kubernetes_namespace
-    labels    = local.deployment_labels
+    labels    = { for k, v in local.deployment_labels : k => v if k != "app.kubernetes.io/version" }
   }
   spec {
     access_modes = ["ReadWriteOnce"]

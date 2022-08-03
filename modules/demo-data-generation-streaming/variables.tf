@@ -29,6 +29,7 @@ variable "kafka_bootstrap_servers" {
 
 variable "kafka_additional_config" {
   type = map(string)
+  default = {}
 }
 
 variable "kafka_schema_registry_url" {

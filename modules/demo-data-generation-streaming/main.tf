@@ -148,7 +148,9 @@ resource "kubernetes_config_map" "producer_demo_config" {
     labels    = { for k, v in local.deployment_labels : k => v if k != "app.kubernetes.io/version" }
   }
 
-  data = join("\n", [ for k,v in local.kafka_config : "${k}=${v}" ])
+  data = {
+    "application.properties" = join("\n", [ for k,v in local.kafka_config : "${k}=${v}" ])
+  }
 }
 
 

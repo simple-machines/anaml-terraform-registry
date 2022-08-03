@@ -1,6 +1,26 @@
-# TODO - file created as a note to seld
-# See: https://github.com/simple-machines/anaml-devops/blob/master/terraform/gcp/4_demo_data/modules/data_generation/kubernetes.tf
+/**
+ * # demo-streaming-data-generation
+ */
 
+terraform {
+  required_version = ">= 1.1"
+  required_providers {
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "~> 2.11"
+    }
+  }
+}
+
+locals {
+  deployment_labels = merge({
+    "app.kubernetes.io/name"       = "anaml-demo-batch-data-generation"
+    "app.kubernetes.io/version"    = var.anaml_demo_setup_version
+    "app.kubernetes.io/component"  = "demo-data"
+    "app.kubernetes.io/part-of"    = "anaml"
+    "app.kubernetes.io/created-by" = "terraform"
+  }, var.kubernetes_deployment_labels)
+}
 # resource "kubernetes_deployment" "kafka_data_generator" {
 #   metadata {
 #     name      = "anaml-producer-demo"
@@ -84,6 +104,22 @@
 #     }
 #   }
 # }
+
+resource "kubernetes_persistent_volume_claim" "data_generation_volume" {
+  metadata {
+    name      = "anaml-demo-streaming-data-generation"
+    namespace = var.kubernetes_namespace
+    labels    = { for k, v in local.deployment_labels : k => v if k != "app.kubernetes.io/version" }
+  }
+  spec {
+    access_modes = ["ReadWriteOnce"]
+    resources {
+      requests = {
+        storage = "40Gi"
+      }
+    }
+  }
+}
 
 # resource "kubernetes_config_map" "producer_demo_config" {
 #   metadata {

@@ -143,6 +143,14 @@ Type: `map(string)`
 
 Default: `null`
 
+### <a name="input_kubernetes_service_account_name"></a> [kubernetes\_service\_account\_name](#input\_kubernetes\_service\_account\_name)
+
+Description: n/a
+
+Type: `string`
+
+Default: `null`
+
 ### <a name="input_kubernetes_service_annotations"></a> [kubernetes\_service\_annotations](#input\_kubernetes\_service\_annotations)
 
 Description: (Optional) An unstructured key value map stored with the service that may be used to store arbitrary metadata.

@@ -14,7 +14,7 @@ terraform {
 
 locals {
   deployment_labels = merge({
-    "app.kubernetes.io/name"       = "anaml-demo-batch-data-generation"
+    "app.kubernetes.io/name"       = "anaml-demo-data-generation-streaming"
     "app.kubernetes.io/version"    = var.anaml_producer_demo_version
     "app.kubernetes.io/component"  = "demo-data"
     "app.kubernetes.io/part-of"    = "anaml"
@@ -33,7 +33,7 @@ locals {
 
 resource "kubernetes_deployment" "kafka_data_generator" {
   metadata {
-    name      = "anaml-producer-demo"
+    name      = "anaml-demo-data-generation-streaming"
     namespace = var.kubernetes_namespace
     labels    = local.deployment_labels
   }
@@ -45,7 +45,7 @@ resource "kubernetes_deployment" "kafka_data_generator" {
     }
     template {
       metadata {
-        name      = "anaml-producer-demo"
+        name      = "anaml-demo-data-generation-streaming"
         namespace = "anaml"
         labels    = local.deployment_labels
       }
@@ -98,11 +98,6 @@ resource "kubernetes_deployment" "kafka_data_generator" {
             value = "-Dconfig.file=/config/application.properties"
           }
 
-          # env {
-          #   name  = "GOOGLE_APPLICATION_CREDENTIALS"
-          #   value = "/config/gcloud.json"
-          # }
-
           command = ["/app/start.sh"]
 
           volume_mount {
@@ -124,7 +119,7 @@ resource "kubernetes_deployment" "kafka_data_generator" {
 
 resource "kubernetes_persistent_volume_claim" "data_generation_volume" {
   metadata {
-    name      = "anaml-demo-streaming-data-generation"
+    name      = "anaml-demo-data-generation-streaming"
     namespace = var.kubernetes_namespace
     labels    = { for k, v in local.deployment_labels : k => v if k != "app.kubernetes.io/version" }
   }
@@ -141,7 +136,7 @@ resource "kubernetes_persistent_volume_claim" "data_generation_volume" {
 
 resource "kubernetes_config_map" "producer_demo_config" {
   metadata {
-    name      = "anaml-demo-streaming-data-generation"
+    name      = "anaml-demo-data-generation-streaming"
     namespace = var.kubernetes_namespace
     labels    = { for k, v in local.deployment_labels : k => v if k != "app.kubernetes.io/version" }
   }

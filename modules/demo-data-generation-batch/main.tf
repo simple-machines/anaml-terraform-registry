@@ -20,7 +20,7 @@ terraform {
 
 locals {
   deployment_labels = merge({
-    "app.kubernetes.io/name"       = "anaml-demo-batch-data-generation"
+    "app.kubernetes.io/name"       = "anaml-demo-data-generation-batch"
     "app.kubernetes.io/version"    = var.anaml_demo_setup_version
     "app.kubernetes.io/component"  = "demo-data"
     "app.kubernetes.io/part-of"    = "anaml"
@@ -32,7 +32,7 @@ locals {
 
 resource "kubernetes_cron_job" "data_generation" {
   metadata {
-    name      = "anaml-demo-batch-data-generation"
+    name      = "anaml-demo-data-generation-batcj"
     namespace = var.kubernetes_namespace
     labels    = local.deployment_labels
   }
@@ -42,7 +42,7 @@ resource "kubernetes_cron_job" "data_generation" {
 
     job_template {
       metadata {
-        name   = "anaml-demo-batch-data-generation"
+        name   = "anaml-demo-data-generation-batch"
         labels = local.deployment_labels
       }
       spec {
@@ -56,7 +56,7 @@ resource "kubernetes_cron_job" "data_generation" {
             service_account_name = var.kubernetes_service_account_name
             node_selector        = var.kubernetes_node_selector
             container {
-              name              = "anaml-demo-batch-data-generation"
+              name              = "anaml-demo-data-generation-batch"
               image             = "${var.container_registry}/anaml-demo-setup:${var.anaml_demo_setup_version}"
               image_pull_policy = var.kubernetes_image_pull_policy
               env {
@@ -81,13 +81,13 @@ resource "kubernetes_cron_job" "data_generation" {
               }
               command = ["/work/runners/daily.sh"]
               volume_mount {
-                name       = "anaml-demo-batch-data-generation"
+                name       = "data"
                 mount_path = "/work/view"
               }
               working_dir = "/work"
             }
             volume {
-              name = "anaml-demo-batch-data-generation"
+              name = "data"
               persistent_volume_claim {
                 claim_name = kubernetes_persistent_volume_claim.data_generation_volume.metadata.0.name
               }
@@ -102,10 +102,10 @@ resource "kubernetes_cron_job" "data_generation" {
 resource "kubernetes_job" "data_generation_init" {
   count = var.run_init_job ? 1 : 0
   metadata {
-    name      = "anaml-demo-batch-data-generation-setup"
+    name      = "anaml-demo-data-generation-batch-setup"
     namespace = var.kubernetes_namespace
     labels = merge(local.deployment_labels, {
-      "app.kubernetes.io/name" = "anaml-demo-batch-data-generation-setup"
+      "app.kubernetes.io/name" = "anaml-demo-data-generation-batch-setup"
     })
   }
 
@@ -113,7 +113,7 @@ resource "kubernetes_job" "data_generation_init" {
     template {
       metadata {
         labels = merge(local.deployment_labels, {
-          "app.kubernetes.io/name" = "anaml-demo-batch-data-generation-setup"
+          "app.kubernetes.io/name" = "anaml-demo-data-generation-batch-setup"
         })
       }
       spec {
@@ -149,7 +149,7 @@ resource "kubernetes_job" "data_generation_init" {
 
 resource "kubernetes_persistent_volume_claim" "data_generation_volume" {
   metadata {
-    name      = "anaml-demo-batch-data-generation"
+    name      = "anaml-demo-data-generation-batch"
     namespace = var.kubernetes_namespace
     labels    = { for k, v in local.deployment_labels : k => v if k != "app.kubernetes.io/version" }
   }

@@ -32,7 +32,7 @@ locals {
 
 resource "kubernetes_cron_job" "data_generation" {
   metadata {
-    name      = "anaml-demo-data-generation-batcj"
+    name      = "anaml-demo-data-generation-batch"
     namespace = var.kubernetes_namespace
     labels    = local.deployment_labels
   }

@@ -103,7 +103,7 @@ resource "kubernetes_service" "default" {
       name        = "postgres"
       port        = 5432
       protocol    = "TCP"
-      target_port = "postgress"
+      target_port = "postgres"
     }
   }
 

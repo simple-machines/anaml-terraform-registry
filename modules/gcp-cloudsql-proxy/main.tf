@@ -63,7 +63,7 @@ resource "kubernetes_deployment" "default" {
           command = flatten([
             ["/cloud_sql_proxy"],
             ["-dir=/cloudsql"],
-            ["-instances=${join(",", var.gcp_cloudsql_instances)}=tcp:5432"],
+            ["-instances=${join(",", var.gcp_cloudsql_instances)}=tcp:0.0.0.0:5432"],
             ["-log_debug_stdout"],
             ["-use_http_health_check"],
             var.gcp_cloudsql_structured_logs ? ["-structured_logs"] : [],

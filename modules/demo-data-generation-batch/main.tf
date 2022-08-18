@@ -46,7 +46,7 @@ resource "kubernetes_cron_job" "data_generation" {
         labels = local.deployment_labels
       }
       spec {
-        backoff_limit = 1
+        backoff_limit              = 1
         ttl_seconds_after_finished = 60 * 60 * 24 * 7
         template {
           metadata {
@@ -56,9 +56,16 @@ resource "kubernetes_cron_job" "data_generation" {
             service_account_name = var.kubernetes_service_account_name
             node_selector        = var.kubernetes_node_selector
             container {
-              name              = "anaml-demo-data-generation-batch"
-              image             = "${var.container_registry}/anaml-demo-setup:${var.anaml_demo_setup_version}"
+              name = "anaml-demo-data-generation-batch"
+
+              image = (
+                can(regex("^sha256:[0-9A-Za-z]+$", var.anaml_demo_setup_version))
+                  ? "${var.container_registry}/oniomania@${var.anaml_demo_setup_version}"
+                  : "${var.container_registry}/oniomania:${var.anaml_demo_setup_version}"
+              )
+
               image_pull_policy = var.kubernetes_image_pull_policy
+
               env {
                 name  = "INPUT"
                 value = var.input_path
@@ -135,7 +142,7 @@ resource "kubernetes_job" "data_generation_init" {
             name  = "MAX_SKUS"
             value = var.max_skus
           }
-          command = ["/work/runners/bootstrap.sh"]
+          command     = ["/work/runners/bootstrap.sh"]
           working_dir = "/work"
         }
       }

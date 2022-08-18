@@ -78,7 +78,7 @@ variable "cluster" {
 }
 
 variable "run_init_job" {
-  type = bool
-  default = true
+  type        = bool
+  default     = true
   description = "Run the init job if the input_path is empty/first time running the data-generation. Defaults to true"
 }

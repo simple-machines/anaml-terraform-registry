@@ -5,18 +5,26 @@ terraform {
       source  = "hashicorp/kubernetes"
       version = "~> 2.11"
     }
+    random = {
+      source  = "hashicorp/random"
+      version = ">= 2.2.1"
+    }
   }
 }
 
 locals {
   deployment_labels = merge({
-    "app.kubernetes.io/name"       = "anaml-ui"
-    "app.kubernetes.io/version"    = var.anaml_ui_version
-    "app.kubernetes.io/component"  = "frontend"
-    "app.kubernetes.io/part-of"    = "anaml"
-    "app.kubernetes.io/created-by" = "terraform"
+    "app.kubernetes.io/name"        = "anaml-ui"
+    "app.kubernetes.io/version"     = var.anaml_ui_version
+    "app.kubernetes.io/component"   = "frontend"
+    "app.kubernetes.io/part-of"     = "anaml"
+    "app.kubernetes.io/created-by"  = "terraform"
+    "terraform/deployment-instance" = random_uuid.deployment_instance.result
   }, var.kubernetes_deployment_labels)
 }
+
+# Added to allow running multiple independent instances (useful for test/development)
+resource "random_uuid" "deployment_instance" {}
 
 resource "kubernetes_deployment" "anaml_ui" {
   metadata {
@@ -30,7 +38,8 @@ resource "kubernetes_deployment" "anaml_ui" {
 
     selector {
       match_labels = {
-        "app.kubernetes.io/name" = local.deployment_labels["app.kubernetes.io/name"]
+        "app.kubernetes.io/name"        = local.deployment_labels["app.kubernetes.io/name"]
+        "terraform/deployment-instance" = local.deployment_labels["terraform/deployment-instance"]
       }
     }
 
@@ -128,7 +137,8 @@ resource "kubernetes_service" "anaml_ui" {
   spec {
     type = var.kubernetes_service_type
     selector = {
-      "app.kubernetes.io/name" = local.deployment_labels["app.kubernetes.io/name"]
+      "app.kubernetes.io/name"        = local.deployment_labels["app.kubernetes.io/name"]
+      "terraform/deployment-instance" = local.deployment_labels["terraform/deployment-instance"]
     }
     port {
       name        = "http"

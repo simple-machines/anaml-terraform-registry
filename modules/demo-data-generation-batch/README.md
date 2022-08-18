@@ -37,12 +37,6 @@ The following resources are used by this module:
 
 The following input variables are required:
 
-### <a name="input_anaml_demo_setup_version"></a> [anaml\_demo\_setup\_version](#input\_anaml\_demo\_setup\_version)
-
-Description: The version of anaml-demo-setup container image to deploy
-
-Type: `string`
-
 ### <a name="input_input_path"></a> [input\_path](#input\_input\_path)
 
 Description: TODO
@@ -58,6 +52,12 @@ Type: `string`
 ### <a name="input_kubernetes_service_account_name"></a> [kubernetes\_service\_account\_name](#input\_kubernetes\_service\_account\_name)
 
 Description: Kubernetes service account to run the job under. Ensure this service account has access to the `input_path` and `output_path` destinations
+
+Type: `string`
+
+### <a name="input_oniomania_image_version"></a> [oniomania\_image\_version](#input\_oniomania\_image\_version)
+
+Description: The version of oniomania (https://github.com/HuwCampbell/oniomania) container image to deploy
 
 Type: `string`
 

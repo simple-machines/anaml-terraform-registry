@@ -22,9 +22,9 @@ variable "kubernetes_node_selector" {
   nullable    = true
 }
 
-variable "anaml_demo_setup_version" {
+variable "oniomania_image_version" {
   type        = string
-  description = "The version of anaml-demo-setup container image to deploy"
+  description = "The version of oniomania (https://github.com/HuwCampbell/oniomania) container image to deploy"
   nullable    = false
 }
 

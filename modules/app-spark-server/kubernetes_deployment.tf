@@ -292,7 +292,7 @@ resource "kubernetes_deployment" "spark_history_server_deployment" {
             name = "SPARK_HISTORY_OPTS"
             value = join(" ", [
               "-Dspark.history.fs.logDirectory=${var.spark_log_directory}",
-              "-Dspark.ui.proxyBase=/spark-history",
+              "-Dspark.ui.proxyBase=${var.spark_history_server_ui_proxy_base}",
               "-Dspark.history.fs.cleaner.enabled=true"
             ])
           }

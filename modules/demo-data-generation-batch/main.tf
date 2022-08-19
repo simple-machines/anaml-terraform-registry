@@ -21,7 +21,10 @@ terraform {
 locals {
   deployment_labels = merge({
     "app.kubernetes.io/name"       = "anaml-demo-data-generation-batch"
-    "app.kubernetes.io/version"    = replace(var.oniomania_image_version, ":", "_")
+    "app.kubernetes.io/version"    = try(
+      replace(regex("^sha256:[a-z0-9]{8}", var.oniomania_image_version), ":", "_"),
+      var.oniomania_image_version
+    )
     "app.kubernetes.io/component"  = "demo-data"
     "app.kubernetes.io/part-of"    = "anaml"
     "app.kubernetes.io/created-by" = "terraform"

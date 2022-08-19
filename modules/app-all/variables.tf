@@ -232,6 +232,11 @@ variable "override_spark_history_server_additional_volume_mounts" {
   default = []
 }
 
+variable "override_spark_history_server_ui_proxy_base" {
+  type    = string
+  default = null
+}
+
 variable "override_anaml_server_anaml_database_schema_name" {
   type    = string
   default = null

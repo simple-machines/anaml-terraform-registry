@@ -197,6 +197,7 @@ variable "spark_history_server_ui_proxy_base" {
   type        = string
   default     = "/spark-history"
   description = "Controls the basepath used in Spark UI history server hyperlinks"
+  nullable    = false
 }
 
 variable "postgres_host" {

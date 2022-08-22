@@ -91,6 +91,11 @@ resource "kubernetes_deployment" "anaml_ui" {
           }
 
           env {
+            name  = "REACT_APP_UI_BASEPATH"
+            value = var.basepath
+          }
+
+          env {
             name  = "SPARK_HISTORY_SERVER"
             value = var.spark_history_server_url
           }

@@ -2,6 +2,13 @@ variable "anaml_server_url" {
   type = string
 }
 
+variable "basepath" {
+  type        = string
+  nullable    = false
+  default     = "/"
+  description = "The root path used for UI ingress, defaults to '/'. You will need to change this if running the UI on a subpath"
+}
+
 variable "container_registry" {
   type        = string
   nullable    = false

@@ -61,7 +61,7 @@ resource "kubernetes_service_account" "anaml" {
 module "anaml-docs" {
   source = "../app-docs"
 
-  anaml_docs_version             = var.override_anaml_docs_version != null ? var.override_anaml_docs_version : var.anaml_version
+  anaml_docs_version             = coalesce(var.override_anaml_docs_version, var.anaml_version)
   container_registry             = var.container_registry
   hostname                       = var.hostname
   kubernetes_namespace           = var.kubernetes_namespace_create ? kubernetes_namespace.anaml_namespace[0].metadata.0.name : var.kubernetes_namespace_name
@@ -78,7 +78,7 @@ module "anaml-server" {
   anaml_admin_secret         = var.anaml_admin_secret
   anaml_admin_token          = var.anaml_admin_token
   anaml_database_schema_name = var.override_anaml_server_anaml_database_schema_name
-  anaml_server_version       = var.override_anaml_server_version != null ? var.override_anaml_server_version : var.anaml_version
+  anaml_server_version       = coalesce(var.override_anaml_server_version, var.anaml_version)
   container_registry         = var.container_registry
   enable_form_client         = var.enable_form_client
   hostname                   = var.hostname
@@ -142,7 +142,7 @@ module "anaml-ui" {
 module "spark-server" {
   source                     = "../app-spark-server"
   kubernetes_namespace       = var.kubernetes_namespace_create ? kubernetes_namespace.anaml_namespace[0].metadata.0.name : var.kubernetes_namespace_name
-  anaml_spark_server_version = var.override_anaml_spark_server_version != null ? var.override_anaml_spark_server_version : var.anaml_version
+  anaml_spark_server_version = coalesce(var.override_anaml_spark_server_version, var.anaml_version)
   container_registry         = var.container_registry
 
   checkpoint_location = var.override_anaml_spark_server_checkpoint_location

@@ -114,8 +114,16 @@ module "anaml-server" {
 module "anaml-ui" {
   source = "../app-ui"
 
-  anaml_ui_version               = var.override_anaml_ui_version != null ? var.override_anaml_ui_version : var.anaml_version
-  api_url                        = var.override_anaml_ui_api_url != null ? var.override_anaml_ui_api_url : join("", [var.https_urls ? "https" : "http", "://", var.hostname, "/api"])
+  anaml_ui_version               = coalesce(
+    var.override_anaml_ui_version,
+    var.anaml_version
+  )
+
+  api_url                        = coalesce(
+    var.override_anaml_ui_api_url,
+    join("", [var.https_urls ? "https" : "http", "://", var.hostname, var.ui_base_path == "/" ? "" : var.ui_base_path, "/api"])
+  )
+
   basepath                       = var.ui_base_path
   container_registry             = var.container_registry
   enable_new_functionality       = var.override_anaml_ui_enable_new_functionality

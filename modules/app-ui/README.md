@@ -7,11 +7,15 @@ The following requirements are needed by this module:
 
 - <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) (~> 2.11)
 
+- <a name="requirement_random"></a> [random](#requirement\_random) (>= 2.2.1)
+
 ## Providers
 
 The following providers are used by this module:
 
 - <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) (~> 2.11)
+
+- <a name="provider_random"></a> [random](#provider\_random) (>= 2.2.1)
 
 ## Modules
 
@@ -23,6 +27,7 @@ The following resources are used by this module:
 
 - [kubernetes_deployment.anaml_ui](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/deployment) (resource)
 - [kubernetes_service.anaml_ui](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/service) (resource)
+- [random_uuid.deployment_instance](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) (resource)
 
 ## Required Inputs
 
@@ -73,6 +78,14 @@ Type: `string`
 ## Optional Inputs
 
 The following input variables are optional (have default values):
+
+### <a name="input_basepath"></a> [basepath](#input\_basepath)
+
+Description: The root path used for UI ingress, defaults to '/'. You will need to change this if running the UI on a subpath
+
+Type: `string`
+
+Default: `"/"`
 
 ### <a name="input_enable_new_functionality"></a> [enable\_new\_functionality](#input\_enable\_new\_functionality)
 

@@ -418,6 +418,14 @@ list(object({
 
 Default: `[]`
 
+### <a name="input_spark_history_server_ui_proxy_base"></a> [spark\_history\_server\_ui\_proxy\_base](#input\_spark\_history\_server\_ui\_proxy\_base)
+
+Description: Controls the basepath used in Spark UI history server hyperlinks
+
+Type: `string`
+
+Default: `"/spark-history"`
+
 ## Outputs
 
 The following outputs are exported:

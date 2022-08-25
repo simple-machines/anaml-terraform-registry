@@ -683,6 +683,14 @@ list(object({
 
 Default: `[]`
 
+### <a name="input_override_spark_history_server_ui_proxy_base"></a> [override\_spark\_history\_server\_ui\_proxy\_base](#input\_override\_spark\_history\_server\_ui\_proxy\_base)
+
+Description: Override the Spark UI `spark.ui.proxyBase` value. Generally you should not set this value and prefer the `ui_base_path` option which sets the basepath across all apps
+
+Type: `string`
+
+Default: `null`
+
 ### <a name="input_postgres_host"></a> [postgres\_host](#input\_postgres\_host)
 
 Description: The postgres host to use if kubernetes\_service\_enable\_postgres if false and using an external postgres database
@@ -714,6 +722,14 @@ Description: The postgres user to use if kubernetes\_service\_enable\_postgres i
 Type: `string`
 
 Default: `"anaml"`
+
+### <a name="input_ui_base_path"></a> [ui\_base\_path](#input\_ui\_base\_path)
+
+Description: Set the application basepath if running on a path other than `/`. Useful if using pathbased routing and not host based routing
+
+Type: `string`
+
+Default: `"/"`
 
 ## Outputs
 

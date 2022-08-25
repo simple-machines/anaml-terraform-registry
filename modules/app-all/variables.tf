@@ -233,8 +233,9 @@ variable "override_spark_history_server_additional_volume_mounts" {
 }
 
 variable "override_spark_history_server_ui_proxy_base" {
-  type    = string
-  default = null
+  type        = string
+  default     = null
+  description = "Override the Spark UI `spark.ui.proxyBase` value. Generally you should not set this value and prefer the `ui_base_path` option which sets the basepath across all apps"
 }
 
 variable "override_anaml_server_anaml_database_schema_name" {
@@ -493,4 +494,11 @@ variable "license_key" {
   type        = string
   description = "Your ANAML license key. If the license key is stored as a Kubernetes secret you can use the `kubernetes_container_env_from` option to make the secret available in the POD as a `secret_ref` and then reference it using standard Kubernetes syntax, i.e. by setting this value to `$(ANAML_LICENSE_KEY)`."
   default     = null
+}
+
+variable "ui_base_path" {
+  type        = string
+  default     = "/"
+  nullable    = false
+  description = "Set the application basepath if running on a path other than `/`. Useful if using pathbased routing and not host based routing"
 }

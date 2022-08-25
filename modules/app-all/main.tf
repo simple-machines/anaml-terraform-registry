@@ -116,6 +116,7 @@ module "anaml-ui" {
 
   anaml_ui_version               = var.override_anaml_ui_version != null ? var.override_anaml_ui_version : var.anaml_version
   api_url                        = var.override_anaml_ui_api_url != null ? var.override_anaml_ui_api_url : join("", [var.https_urls ? "https" : "http", "://", var.hostname, "/api"])
+  basepath                       = var.ui_base_path
   container_registry             = var.container_registry
   enable_new_functionality       = var.override_anaml_ui_enable_new_functionality
   hostname                       = var.hostname
@@ -156,7 +157,10 @@ module "spark-server" {
 
   spark_log_directory = var.override_anaml_spark_server_spark_log_directory
 
-  spark_history_server_ui_proxy_base = var.override_spark_history_server_ui_proxy_base
+  spark_history_server_ui_proxy_base = coalesce(
+    override_spark_history_server_ui_proxy_base,
+    var.ui_base_path == "/" ? "/spark-history" : "${var.ui_base_path}/spark-history"
+  )
 
   kubernetes_container_spark_server_env_from = [
     # Inject the Postgres password

@@ -354,6 +354,14 @@ Type: `number`
 
 Default: `"5432"`
 
+### <a name="input_proxy_base"></a> [proxy\_base](#input\_proxy\_base)
+
+Description: (Optional) Controls the basepath used for redirects. Defaults to '/'
+
+Type: `string`
+
+Default: `null`
+
 ## Outputs
 
 The following outputs are exported:

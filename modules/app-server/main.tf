@@ -71,7 +71,20 @@ resource "kubernetes_config_map" "anaml_server" {
 
       license_offline_response_file_path = var.license_activation_data == null ? null : "/license/ls_activation.lic"
 
+      pac4j_loginUrl = coalesce(
+        var.proxy_base == "/" ? "/login" : null,
+        try(formatlist("/%s", concat(compact(split("/", var.proxy_base))), ["login"]), null),
+        "/login"
+      )
+
       permitted_user_group_id = var.oidc_permitted_users_group_id != null ? var.oidc_permitted_users_group_id : ""
+
+      web_rootUrl = coalesce(
+        var.proxy_base == "/" ? "https://${var.hostname}" : null,
+        try("https://${var.hostname}/${join("/", compact(split("/", null)))}", null),
+        "https://${var.hostname}"
+      )
+
     })
 
     "log4j2.xml" = file("${path.module}/_templates/log4j2.xml")

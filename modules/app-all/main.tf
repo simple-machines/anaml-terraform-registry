@@ -109,17 +109,19 @@ module "anaml-server" {
   kubernetes_pod_sidecars = var.kubernetes_pod_anaml_server_sidecars
 
   license_key = var.license_key
+
+  proxy_base = var.ui_base_path
 }
 
 module "anaml-ui" {
   source = "../app-ui"
 
-  anaml_ui_version               = coalesce(
+  anaml_ui_version = coalesce(
     var.override_anaml_ui_version,
     var.anaml_version
   )
 
-  api_url                        = coalesce(
+  api_url = coalesce(
     var.override_anaml_ui_api_url,
     join("", [var.https_urls ? "https" : "http", "://", var.hostname, var.ui_base_path == "/" ? "" : var.ui_base_path, "/api"])
   )

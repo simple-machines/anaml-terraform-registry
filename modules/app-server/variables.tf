@@ -259,3 +259,9 @@ variable "override_java_opts" {
   description = "A list of JAVA_OPT options to pass to anaml-server, i.e. `-XX:ActiveProcessorCount=8`"
   default = []
 }
+
+variable "proxy_base" {
+  type        = string
+  description = "(Optional) Controls the basepath used for redirects. Defaults to '/'"
+  default     = null
+}

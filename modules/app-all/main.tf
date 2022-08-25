@@ -158,7 +158,7 @@ module "spark-server" {
   spark_log_directory = var.override_anaml_spark_server_spark_log_directory
 
   spark_history_server_ui_proxy_base = coalesce(
-    override_spark_history_server_ui_proxy_base,
+    var.override_spark_history_server_ui_proxy_base,
     var.ui_base_path == "/" ? "/spark-history" : "${var.ui_base_path}/spark-history"
   )
 

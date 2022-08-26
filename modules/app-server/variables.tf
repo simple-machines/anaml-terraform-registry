@@ -255,13 +255,19 @@ variable "license_offline_activation" {
 }
 
 variable "override_java_opts" {
-  type = list(string)
+  type        = list(string)
   description = "A list of JAVA_OPT options to pass to anaml-server, i.e. `-XX:ActiveProcessorCount=8`"
-  default = []
+  default     = []
 }
 
 variable "proxy_base" {
   type        = string
   description = "(Optional) Controls the basepath used for redirects. Defaults to '/'"
   default     = null
+}
+
+variable "governance_run_type_checks" {
+  type     = bool
+  default  = false
+  nullable = false
 }

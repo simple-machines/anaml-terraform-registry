@@ -51,6 +51,8 @@ resource "kubernetes_config_map" "anaml_server" {
       enable_form_client    = var.enable_form_client
       enable_oidc_client    = var.oidc_enable
 
+      governance_runTypeChecks = var.governance_run_type_checks ? "true" : "false"
+
       # If we get a kubernetes style environment variable, i.e. "$(ANAML_LICENSE_KEY)", convert it to the config expected format "${?ANAML_LICENSE_KEY}" otherwise use the value as given.
       # We do this so the terraform modules a more consistent rather than mixing the different ways to access environment variables
       license_key = try(
@@ -363,7 +365,7 @@ resource "kubernetes_service" "anaml_server" {
   metadata {
     name        = var.kubernetes_deployment_name
     namespace   = var.kubernetes_namespace
-    labels      = { for k, v in local.deployment_labels : k => v if k != "app.kubernetes.io/version"}
+    labels      = { for k, v in local.deployment_labels : k => v if k != "app.kubernetes.io/version" }
     annotations = var.kubernetes_service_annotations
   }
 

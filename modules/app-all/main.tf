@@ -81,6 +81,7 @@ module "anaml-server" {
   anaml_server_version       = coalesce(var.override_anaml_server_version, var.anaml_version)
   container_registry         = var.container_registry
   enable_form_client         = var.enable_form_client
+  governance_run_type_checks = var.override_anaml_server_governance_run_type_checks
   hostname                   = var.hostname
   kubernetes_namespace       = var.kubernetes_namespace_create ? kubernetes_namespace.anaml_namespace[0].metadata.0.name : var.kubernetes_namespace_name
   kubernetes_node_selector   = var.kubernetes_pod_node_selector_app

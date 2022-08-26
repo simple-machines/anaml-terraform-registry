@@ -146,6 +146,11 @@ variable "override_anaml_server_java_opts" {
   description = "anaml_server override_java_opts value. Provide additional JAVA_OPTS values to anaml_server"
 }
 
+variable "override_anaml_server_governance_run_type_checks" {
+  type = bool
+  default = null
+}
+
 variable "override_anaml_spark_server_version" {
   type        = string
   default     = null

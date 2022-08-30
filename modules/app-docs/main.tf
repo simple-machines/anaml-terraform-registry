@@ -19,7 +19,7 @@ locals {
     "app.kubernetes.io/name"    = "anaml-docs"
     "app.kubernetes.io/version" = var.anaml_docs_version
     "app.kubernetes.io/version" = try(
-      replace(regex("^sha256:[a-z0-9]{8}", var.anaml_docs_version, ":", "_")),
+      replace(regex("^sha256:[a-z0-9]{8}", var.anaml_docs_version), ":", "_"),
       var.anaml_docs_version
     )
     "app.kubernetes.io/component"  = "frontend"

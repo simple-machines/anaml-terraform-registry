@@ -16,8 +16,12 @@ terraform {
 
 locals {
   deployment_labels = merge({
-    "app.kubernetes.io/name"       = "anaml-docs"
-    "app.kubernetes.io/version"    = var.anaml_docs_version
+    "app.kubernetes.io/name"    = "anaml-docs"
+    "app.kubernetes.io/version" = var.anaml_docs_version
+    "app.kubernetes.io/version" = try(
+      replace(regex("^sha256:[a-z0-9]{8}", var.anaml_docs_version, ":", "_")),
+      var.anaml_docs_version
+    )
     "app.kubernetes.io/component"  = "frontend"
     "app.kubernetes.io/part-of"    = "anaml"
     "app.kubernetes.io/created-by" = "terraform"
@@ -49,8 +53,12 @@ resource "kubernetes_deployment" "anaml_docs" {
         node_selector = var.kubernetes_node_selector
 
         container {
-          name              = var.kubernetes_deployment_name
-          image             = "${var.container_registry}/anaml-docs:${var.anaml_docs_version}"
+          name = var.kubernetes_deployment_name
+          image = (
+            can(regex("^sha256:[0-9A-Za-z]+$", var.anaml_docs_version))
+            ? "${var.container_registry}/anaml-docs@${var.anaml_docs_version}"
+            : "${var.container_registry}/anaml-docs:${var.anaml_docs_version}"
+          )
           image_pull_policy = var.kubernetes_image_pull_policy == null ? (var.anaml_docs_version == "latest" ? "Always" : "IfNotPresent") : var.kubernetes_image_pull_policy
           port {
             container_port = 80

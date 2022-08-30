@@ -1,6 +1,9 @@
 locals {
   base_deployment_labels = merge({
-    "app.kubernetes.io/version"    = var.anaml_spark_server_version
+    "app.kubernetes.io/version" = try(
+      replace(regex("^sha256:[a-z0-9]{8}", var.anaml_spark_server_version), ":", "_"),
+      var.anaml_spark_server_version
+    )
     "app.kubernetes.io/component"  = "spark"
     "app.kubernetes.io/part-of"    = "anaml"
     "app.kubernetes.io/created-by" = "terraform"
@@ -14,7 +17,11 @@ locals {
     "app.kubernetes.io/name" = "spark-history-server"
   })
 
-  image = "${var.container_registry}/anaml-spark-server:${var.anaml_spark_server_version}"
+  image = (
+    can(regex("^sha256:[0-9A-Za-z]+$", var.anaml_spark_server_version))
+    ? "${var.container_registry}/anaml-spark-server@${var.anaml_spark_server_version}"
+    : "${var.container_registry}/anaml-spark-server:${var.anaml_spark_server_version}"
+  )
 
   # Platform independent spark conf.
   # GCP/AWS specfic conf is injected in and merged using var.spark_config_overrides

@@ -14,8 +14,11 @@ terraform {
 
 locals {
   deployment_labels = merge({
-    "app.kubernetes.io/name"       = "webhook-server"
-    "app.kubernetes.io/version"    = var.webhook_server_version
+    "app.kubernetes.io/name" = "webhook-server"
+    "app.kubernetes.io/version" = try(
+      replace(regex("^sha256:[a-z0-9]{8}", var.webhook_server_version), ":", "_"),
+      var.webhook_server_version
+    )
     "app.kubernetes.io/component"  = "demo"
     "app.kubernetes.io/part-of"    = "anaml"
     "app.kubernetes.io/created-by" = "terraform"
@@ -64,8 +67,12 @@ resource "kubernetes_deployment" "webhook_server" {
         }
 
         container {
-          name              = var.kubernetes_deployment_name
-          image             = "${var.container_registry}/webhook-server:${var.webhook_server_version}"
+          name = var.kubernetes_deployment_name
+          image = (
+            can(regex("^sha256:[0-9A-Za-z]+$", var.webhook_server_version))
+            ? "${var.container_registry}/webhook-server@${var.webhook_server_version}"
+            : "${var.container_registry}/webhook-server:${var.webhook_server_version}"
+          )
           image_pull_policy = var.kubernetes_image_pull_policy == null ? (var.webhook_server_version == "latest" ? "Always" : "IfNotPresent") : var.kubernetes_image_pull_policy
 
           port {

@@ -22,8 +22,12 @@ terraform {
 
 locals {
   deployment_labels = merge({
-    "app.kubernetes.io/name"       = "anaml-route-not-found-service"
-    "app.kubernetes.io/version"    = var.anaml_route_not_found_service_version
+    "app.kubernetes.io/name"    = "anaml-route-not-found-service"
+    "app.kubernetes.io/version" = var.anaml_route_not_found_service_version
+    "app.kubernetes.io/version" = try(
+      replace(regex("^sha256:[a-z0-9]{8}", var.anaml_route_not_found_service_version), ":", "_"),
+      var.anaml_route_not_found_service_version
+    )
     "app.kubernetes.io/component"  = "frontend"
     "app.kubernetes.io/part-of"    = "anaml"
     "app.kubernetes.io/created-by" = "terraform"
@@ -53,8 +57,12 @@ resource "kubernetes_deployment" "anaml_route_not_found_service" {
         node_selector = var.kubernetes_node_selector
 
         container {
-          name              = var.kubernetes_deployment_name
-          image             = "${var.container_registry}/anaml-route-not-found-service:${var.anaml_route_not_found_service_version}"
+          name = var.kubernetes_deployment_name
+          image = (
+            can(regex("^sha256:[0-9A-Za-z]+$", var.anaml_route_bot_found_service_version))
+            ? "${var.container_registry}/anaml-route-not-found-service@${var.anaml_route_not_found_service_version}"
+            : "${var.container_registry}/anaml-route-not-found-service:${var.anaml_route_not_found_service_version}"
+          )
           image_pull_policy = var.kubernetes_image_pull_policy == null ? (var.anaml_route_not_found_service_version == "latest" ? "Always" : "IfNotPresent") : var.kubernetes_image_pull_policy
           port {
             container_port = 8080
@@ -64,7 +72,7 @@ resource "kubernetes_deployment" "anaml_route_not_found_service" {
 
         security_context {
           run_as_non_root = true
-          run_as_user = 101 #nginx user in container
+          run_as_user     = 101 #nginx user in container
         }
       }
     }

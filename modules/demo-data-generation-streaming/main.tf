@@ -14,8 +14,11 @@ terraform {
 
 locals {
   deployment_labels = merge({
-    "app.kubernetes.io/name"       = "anaml-demo-data-generation-streaming"
-    "app.kubernetes.io/version"    = var.anaml_producer_demo_version
+    "app.kubernetes.io/name" = "anaml-demo-data-generation-streaming"
+    "app.kubernetes.io/version" = try(
+      replace(regex("^sha256:[a-z0-9]{8}", var.anaml_producer_demo_version), ":", "_"),
+      var.anaml_producer_demo_version
+    )
     "app.kubernetes.io/component"  = "demo-data"
     "app.kubernetes.io/part-of"    = "anaml"
     "app.kubernetes.io/created-by" = "terraform"
@@ -69,8 +72,12 @@ resource "kubernetes_deployment" "kafka_data_generator" {
         node_selector = var.kubernetes_node_selector
 
         container {
-          name              = "anaml-producer-demo"
-          image             = "${var.container_registry}/anaml-producer-demo:${var.anaml_producer_demo_version}"
+          name = "anaml-producer-demo"
+          image = (
+            can(regex("^sha256:[0-9A-Za-z]+$", var.anaml_producer_demo_version))
+            ? "${var.container_registry}/anaml-producer-demo@${var.anaml_producer_demo_version}"
+            : "${var.container_registry}/anaml-producer-demo:${var.anaml_producer_demo_version}"
+          )
           image_pull_policy = var.kubernetes_image_pull_policy == null ? (var.anaml_producer_demo_version == "latest" ? "Always" : "IfNotPresent") : var.kubernetes_image_pull_policy
 
           env {

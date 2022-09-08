@@ -20,12 +20,6 @@ variable "docs_url" {
   nullable = false
 }
 
-variable "enable_new_functionality" {
-  type        = bool
-  description = "Enable new-style functionality in the user interface."
-  default     = true
-}
-
 variable "hostname" {
   type        = string
   nullable    = false

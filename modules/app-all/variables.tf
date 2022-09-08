@@ -305,12 +305,6 @@ variable "enable_form_client" {
   default     = false
 }
 
-variable "override_anaml_ui_enable_new_functionality" {
-  type        = bool
-  default     = false
-  description = "true|false - whether to enable new functionality behind feature flags"
-}
-
 variable "override_anaml_spark_server_checkpoint_location" {
   type = string
 }

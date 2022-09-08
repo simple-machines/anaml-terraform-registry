@@ -87,14 +87,6 @@ Type: `string`
 
 Default: `"/"`
 
-### <a name="input_enable_new_functionality"></a> [enable\_new\_functionality](#input\_enable\_new\_functionality)
-
-Description: Enable new-style functionality in the user interface.
-
-Type: `bool`
-
-Default: `true`
-
 ### <a name="input_kubernetes_deployment_labels"></a> [kubernetes\_deployment\_labels](#input\_kubernetes\_deployment\_labels)
 
 Description: Additional labels to add to Kubernetes deployment

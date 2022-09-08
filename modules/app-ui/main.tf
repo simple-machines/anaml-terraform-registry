@@ -88,11 +88,6 @@ resource "kubernetes_deployment" "anaml_ui" {
           }
 
           env {
-            name  = "REACT_APP_ENABLE_POLICY"
-            value = var.enable_new_functionality
-          }
-
-          env {
             name  = "REACT_APP_FRONTEND_SKIN"
             value = var.skin
           }

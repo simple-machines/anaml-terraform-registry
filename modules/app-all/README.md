@@ -606,14 +606,6 @@ Type: `string`
 
 Default: `null`
 
-### <a name="input_override_anaml_ui_enable_new_functionality"></a> [override\_anaml\_ui\_enable\_new\_functionality](#input\_override\_anaml\_ui\_enable\_new\_functionality)
-
-Description: true|false - whether to enable new functionality behind feature flags
-
-Type: `bool`
-
-Default: `false`
-
 ### <a name="input_override_anaml_ui_skin"></a> [override\_anaml\_ui\_skin](#input\_override\_anaml\_ui\_skin)
 
 Description: anaml-ui skin override

@@ -22,7 +22,6 @@
  *       override_anaml_docs_version                = "v1.5.4-5-g645ac24"
  *       override_anaml_server_version              = "v1.5.4-31-gb15f5a72"
  *       override_anaml_ui_api_url                  = "v1.5.4-13-gaff59c3b"
- *       override_anaml_ui_enable_new_functionality = true
  *       version                                    = "v1.5.4"
  *       ...
  *     },

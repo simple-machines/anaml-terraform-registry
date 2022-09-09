@@ -2,21 +2,10 @@ apiVersion: v1
 kind: Pod
 spec:
   tolerations:
-  - key: "anaml-spark-pool"
-    operator: "Exists"
-    effect: "NoSchedule"
+%{ for toleration in tolerations ~}
+  - key: "${toleration.key}"
+    operator: "${toleration.operator}"
+    effect: "${toleration.effect}"
+%{ endfor ~}
   containers:
   - name: spark-kubernetes-driver
-  # TODO: Need something like this to clean up sidecar when driver exits:
-  # https://docs.aws.amazon.com/emr/latest/EMR-on-EKS-DevelopmentGuide/pod-templates.html#pod-template-sidecar
-  # - name: cloud-sql-proxy
-  #   command:
-  #   - /cloud_sql_proxy
-  #   - -dir=/cloudsql
-  #   - -log_debug_stdout=true
-  #   - -instances=${data.terraform_remote_state.infra.outputs.google_sql_database_instance_anaml_postgres_instance_connection_names[var.debug_pod_postgresql_version]}=tcp:5432
-  #   image: gcr.io/cloudsql-docker/gce-proxy:1.28.0
-  #   securityContext:
-  #     runAsGroup: 2000
-  #     runAsNonRoot: true
-  #     runAsUser: 1000

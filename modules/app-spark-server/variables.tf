@@ -292,4 +292,59 @@ variable "kubernetes_pod_sidecars" {
   description = "Optional sidecars to provision i.e. Google Cloud SQL Auth Proxy if deploying in GCP"
 }
 
+variable "additional_spark_executor_pod_tolerations" {
+  type = set(
+    object({
+      key      = string
+      operator = string
+      effect   = string
+    })
+  )
+  default  = []
+  nullable = false
 
+  validation {
+    condition = alltrue([
+      for toleration in var.additional_spark_executor_pod_tolerations : contains(["Equal", "Exists"], toleration.operator)
+    ])
+    error_message = "operator is not one of Equal or Exists"
+  }
+
+  validation {
+    condition = alltrue([
+      for toleration in var.additional_spark_executor_pod_tolerations : contains(["NoSchedule", "NoExecute", "PreferNoSchedule"], toleration.effect)
+    ])
+    error_message = "effect must be one of NoExecute, NoSchedule or PreferNoSchedule"
+  }
+
+
+
+}
+
+variable "additional_spark_driver_pod_tolerations" {
+  type = set(
+    object({
+      key      = string
+      operator = string
+      effect   = string
+    })
+  )
+  default  = []
+  nullable = false
+
+  validation {
+    condition = alltrue([
+      for toleration in var.additional_spark_driver_pod_tolerations : contains(["Equal", "Exists"], toleration.operator)
+    ])
+    error_message = "operator is not one of Equal or Exists"
+  }
+
+  validation {
+    condition = alltrue([
+      for toleration in var.additional_spark_driver_pod_tolerations : contains(["NoSchedule", "NoExecute", "PreferNoSchedule"], toleration.effect)
+    ])
+    error_message = "effect must be one of NoExecute, NoSchedule or PreferNoSchedule"
+  }
+
+
+}

@@ -147,7 +147,7 @@ variable "override_anaml_server_java_opts" {
 }
 
 variable "override_anaml_server_governance_run_type_checks" {
-  type = bool
+  type    = bool
   default = null
 }
 
@@ -199,6 +199,28 @@ variable "override_anaml_spark_server_additional_volume_mounts" {
     mount_path = string
     read_only  = bool
   }))
+  default = []
+}
+
+variable "override_anaml_spark_server_additional_spark_executor_pod_tolerations" {
+  type = set(
+    object({
+      key      = string
+      operator = string
+      effect   = string
+    })
+  )
+  default = []
+}
+
+variable "override_anaml_spark_server_additional_spark_driver_pod_tolerations" {
+  type = set(
+    object({
+      key      = string
+      operator = string
+      effect   = string
+    })
+  )
   default = []
 }
 

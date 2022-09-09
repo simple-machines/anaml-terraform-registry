@@ -39,9 +39,16 @@ resource "kubernetes_config_map" "anaml_spark_server_config" {
         var.anaml_server_password
       )
     })
-    "log4j2.xml"                   = file("${path.module}/_templates/log4j2.xml")
-    "spark-driver-template.yaml"   = file("${path.module}/_templates/spark-driver-template.yaml")
-    "spark-executor-template.yaml" = file("${path.module}/_templates/spark-executor-template.yaml")
+
+    "log4j2.xml" = file("${path.module}/_templates/log4j2.xml")
+
+    "spark-driver-template.yaml" = templatefile("${path.module}/_templates/spark-driver-template.yaml", {
+      tolerations = setunion(local.default_driver_tolerations, var.additional_spark_driver_pod_tolerations)
+    })
+
+    "spark-executor-template.yaml" = templatefile("${path.module}/_templates/spark-executor-template.yaml", {
+      tolerations = setunion(local.default_executor_tolerations, var.additional_spark_executor_pod_tolerations)
+    })
   }
 }
 

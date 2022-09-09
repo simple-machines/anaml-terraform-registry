@@ -513,6 +513,14 @@ Type: `string`
 
 Default: `null`
 
+### <a name="input_override_anaml_server_governance_run_type_checks"></a> [override\_anaml\_server\_governance\_run\_type\_checks](#input\_override\_anaml\_server\_governance\_run\_type\_checks)
+
+Description: n/a
+
+Type: `bool`
+
+Default: `null`
+
 ### <a name="input_override_anaml_server_java_opts"></a> [override\_anaml\_server\_java\_opts](#input\_override\_anaml\_server\_java\_opts)
 
 Description: anaml\_server override\_java\_opts value. Provide additional JAVA\_OPTS values to anaml\_server
@@ -540,6 +548,42 @@ list(object({
     name  = string
     value = string
   }))
+```
+
+Default: `[]`
+
+### <a name="input_override_anaml_spark_server_additional_spark_driver_pod_tolerations"></a> [override\_anaml\_spark\_server\_additional\_spark\_driver\_pod\_tolerations](#input\_override\_anaml\_spark\_server\_additional\_spark\_driver\_pod\_tolerations)
+
+Description: n/a
+
+Type:
+
+```hcl
+set(
+    object({
+      key      = string
+      operator = string
+      effect   = string
+    })
+  )
+```
+
+Default: `[]`
+
+### <a name="input_override_anaml_spark_server_additional_spark_executor_pod_tolerations"></a> [override\_anaml\_spark\_server\_additional\_spark\_executor\_pod\_tolerations](#input\_override\_anaml\_spark\_server\_additional\_spark\_executor\_pod\_tolerations)
+
+Description: n/a
+
+Type:
+
+```hcl
+set(
+    object({
+      key      = string
+      operator = string
+      effect   = string
+    })
+  )
 ```
 
 Default: `[]`

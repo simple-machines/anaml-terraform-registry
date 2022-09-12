@@ -280,20 +280,14 @@ resource "kubernetes_deployment" "spark_history_server_deployment" {
           }
 
           env {
-            name = "JAVA_OPTS"
-            value = join(" ", [
-              "-Xmx2g",
-              "-Dweb.host=0.0.0.0",
-              "-Dlog4j2.configurationFile=/config/log4j2.xml"
-            ])
-          }
-
-          env {
             name = "SPARK_HISTORY_OPTS"
             value = join(" ", [
               "-Dspark.history.fs.logDirectory=${var.spark_log_directory}",
               "-Dspark.ui.proxyBase=${var.spark_history_server_ui_proxy_base}",
-              "-Dspark.history.fs.cleaner.enabled=true"
+              "-Dspark.history.fs.cleaner.enabled=true",
+              "-Djava.library.path=/opt/hadoop/lib/native",
+              "-Dweb.host=0.0.0.0",
+              "-Dlog4j2.configurationFile=/config/log4j2.xml"
             ])
           }
 

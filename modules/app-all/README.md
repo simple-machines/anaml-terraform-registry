@@ -552,41 +552,49 @@ list(object({
 
 Default: `[]`
 
-### <a name="input_override_anaml_spark_server_additional_spark_driver_pod_tolerations"></a> [override\_anaml\_spark\_server\_additional\_spark\_driver\_pod\_tolerations](#input\_override\_anaml\_spark\_server\_additional\_spark\_driver\_pod\_tolerations)
+### <a name="input_override_anaml_spark_server_additional_spark_driver_pod_templates"></a> [override\_anaml\_spark\_server\_additional\_spark\_driver\_pod\_templates](#input\_override\_anaml\_spark\_server\_additional\_spark\_driver\_pod\_templates)
 
 Description: n/a
 
 Type:
 
 ```hcl
-set(
+map(
     object({
-      key      = string
-      operator = string
-      effect   = string
+      tolerations = set(
+        object({
+          key      = string
+          operator = string
+          effect   = string
+        })
+      )
     })
   )
 ```
 
-Default: `[]`
+Default: `null`
 
-### <a name="input_override_anaml_spark_server_additional_spark_executor_pod_tolerations"></a> [override\_anaml\_spark\_server\_additional\_spark\_executor\_pod\_tolerations](#input\_override\_anaml\_spark\_server\_additional\_spark\_executor\_pod\_tolerations)
+### <a name="input_override_anaml_spark_server_additional_spark_executor_pod_templates"></a> [override\_anaml\_spark\_server\_additional\_spark\_executor\_pod\_templates](#input\_override\_anaml\_spark\_server\_additional\_spark\_executor\_pod\_templates)
 
 Description: n/a
 
 Type:
 
 ```hcl
-set(
+map(
     object({
-      key      = string
-      operator = string
-      effect   = string
+      tolerations = set(
+        object({
+          key      = string
+          operator = string
+          effect   = string
+        })
+      )
     })
   )
 ```
 
-Default: `[]`
+Default: `null`
 
 ### <a name="input_override_anaml_spark_server_additional_volume_mounts"></a> [override\_anaml\_spark\_server\_additional\_volume\_mounts](#input\_override\_anaml\_spark\_server\_additional\_volume\_mounts)
 

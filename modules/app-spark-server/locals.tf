@@ -56,7 +56,7 @@ locals {
     var.kubernetes_service_account == null ? {} : { "spark.kubernetes.authenticate.driver.serviceAccountName" = var.kubernetes_service_account }
   )
 
-  default_executor_tolerations = [
+  default_executor_template_tolerations = [
     {
       key      = "anaml-spark-pool"
       operator = "Exists"
@@ -64,7 +64,7 @@ locals {
     }
   ]
 
-  default_driver_tolerations = [
+  default_driver_template_tolerations = [
     {
       key      = "anaml-spark-pool"
       operator = "Exists"

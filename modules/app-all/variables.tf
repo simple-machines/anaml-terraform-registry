@@ -202,26 +202,34 @@ variable "override_anaml_spark_server_additional_volume_mounts" {
   default = []
 }
 
-variable "override_anaml_spark_server_additional_spark_executor_pod_tolerations" {
-  type = set(
+variable "override_anaml_spark_server_additional_spark_executor_pod_templates" {
+  type = map(
     object({
-      key      = string
-      operator = string
-      effect   = string
+      tolerations = set(
+        object({
+          key      = string
+          operator = string
+          effect   = string
+        })
+      )
     })
   )
-  default = []
+  default = null
 }
 
-variable "override_anaml_spark_server_additional_spark_driver_pod_tolerations" {
-  type = set(
+variable "override_anaml_spark_server_additional_spark_driver_pod_templates" {
+  type = map(
     object({
-      key      = string
-      operator = string
-      effect   = string
+      tolerations = set(
+        object({
+          key      = string
+          operator = string
+          effect   = string
+        })
+      )
     })
   )
-  default = []
+  default = null
 }
 
 

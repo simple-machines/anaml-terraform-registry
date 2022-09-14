@@ -55,4 +55,20 @@ locals {
     },
     var.kubernetes_service_account == null ? {} : { "spark.kubernetes.authenticate.driver.serviceAccountName" = var.kubernetes_service_account }
   )
+
+  default_executor_template_tolerations = [
+    {
+      key      = "anaml-spark-pool"
+      operator = "Exists"
+      effect   = "NoSchedule"
+    }
+  ]
+
+  default_driver_template_tolerations = [
+    {
+      key      = "anaml-spark-pool"
+      operator = "Exists"
+      effect   = "NoSchedule"
+    }
+  ]
 }

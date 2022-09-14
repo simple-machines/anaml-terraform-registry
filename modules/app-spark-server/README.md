@@ -94,6 +94,50 @@ Type: `string`
 
 The following input variables are optional (have default values):
 
+### <a name="input_additional_spark_driver_pod_templates"></a> [additional\_spark\_driver\_pod\_templates](#input\_additional\_spark\_driver\_pod\_templates)
+
+Description: n/a
+
+Type:
+
+```hcl
+map(
+    object({
+      tolerations = set(
+        object({
+          key      = string
+          operator = string
+          effect   = string
+        })
+      )
+    })
+  )
+```
+
+Default: `{}`
+
+### <a name="input_additional_spark_executor_pod_templates"></a> [additional\_spark\_executor\_pod\_templates](#input\_additional\_spark\_executor\_pod\_templates)
+
+Description: n/a
+
+Type:
+
+```hcl
+map(
+    object({
+      tolerations = set(
+        object({
+          key      = string
+          operator = string
+          effect   = string
+        })
+      )
+    })
+  )
+```
+
+Default: `{}`
+
 ### <a name="input_anaml_database_name"></a> [anaml\_database\_name](#input\_anaml\_database\_name)
 
 Description: n/a

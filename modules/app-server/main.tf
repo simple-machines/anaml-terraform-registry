@@ -27,6 +27,22 @@ locals {
     "app.kubernetes.io/part-of"    = "anaml"
     "app.kubernetes.io/created-by" = "terraform"
   }, var.kubernetes_deployment_labels)
+
+  default_log4j_loggers = {
+    "io.anaml" : "debug"
+    "org.apache.hadoop" : "error"
+    "org.apache.parquet.hadoop" : "error"
+    "org.apache.spark" : "error"
+    "org.apache.spark.deploy.yarn.Client" : "error"
+    "org.apache.spark.scheduler.DAGScheduler" : "info"
+    "org.apache.spark.scheduler.TaskSetManager" : "error"
+    "org.eclipse.jetty" : "error"
+    "org.http4s.blaze" : "warn"
+    "org.http4s.client.middleware" : "info"
+    "org.pac4j" : "warn"
+    "org.spark_project.jetty" : "error"
+    "org.sparkproject.jetty" : "error"
+  }
 }
 
 resource "kubernetes_config_map" "anaml_server" {
@@ -91,7 +107,9 @@ resource "kubernetes_config_map" "anaml_server" {
 
     })
 
-    "log4j2.xml" = file("${path.module}/_templates/log4j2.xml")
+    "log4j2.xml" = templatefile("${path.module}/_templates/log4j2.xml", {
+      loggers = merge(local.default_log4j_loggers, var.log4j_overrides)
+    })
   }
 }
 

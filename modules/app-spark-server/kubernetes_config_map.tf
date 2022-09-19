@@ -58,7 +58,9 @@ resource "kubernetes_config_map" "anaml_spark_server_config" {
         )
       })
 
-      "log4j2.xml" = file("${path.module}/_templates/log4j2.xml")
+      "log4j2.xml" = templatefile("${path.module}/_templates/log4j2.xml", {
+        loggers = merge(local.default_log4j_loggers, var.log4j_overrides)
+      })
 
       "spark-driver-template.yaml" = templatefile("${path.module}/_templates/spark-driver-template.yaml", {
         tolerations = local.default_driver_template_tolerations

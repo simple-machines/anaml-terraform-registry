@@ -298,6 +298,14 @@ Type: `bool`
 
 Default: `false`
 
+### <a name="input_log4j_overrides"></a> [log4j\_overrides](#input\_log4j\_overrides)
+
+Description: Override log4j default log levels. Format is class.name={debug|error|info|trace|warn}
+
+Type: `map(string)`
+
+Default: `{}`
+
 ### <a name="input_oidc_additional_scopes"></a> [oidc\_additional\_scopes](#input\_oidc\_additional\_scopes)
 
 Description: OpenID Connect scopes to request from the provider. Optional when using OIDC authentication method.

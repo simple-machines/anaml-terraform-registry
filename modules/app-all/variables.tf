@@ -146,6 +146,12 @@ variable "override_anaml_server_java_opts" {
   description = "anaml_server override_java_opts value. Provide additional JAVA_OPTS values to anaml_server"
 }
 
+variable "override_anaml_server_log4j_overrides" {
+  type        = map(string)
+  description = "Override anaml-sercer log4j default log levels. Format is class.name={debug|error|info|trace|warn}"
+  default     = null
+}
+
 variable "override_anaml_server_governance_run_type_checks" {
   type    = bool
   default = null
@@ -232,6 +238,12 @@ variable "override_anaml_spark_server_additional_spark_driver_pod_templates" {
   default = null
 }
 
+
+variable "override_anaml_spark_server_log4j_overrides" {
+  type        = map(string)
+  description = "Override anaml-spark-sercer log4j default log levels. Format is class.name={debug|error|info|trace|warn}"
+  default     = null
+}
 
 variable "override_spark_history_server_additional_volumes" {
   type = list(object({

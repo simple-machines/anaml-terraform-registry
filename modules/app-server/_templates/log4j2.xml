@@ -7,45 +7,13 @@
         </Console>
     </Appenders>
     <Loggers>
-        <Logger name="io.anaml" level="debug" additivity="false">
+
+        %{ for logger, level in loggers }
+        <Logger name="${logger}" level="${level}" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="org.pac4j" level="warn" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-        <Logger name="org.apache.hadoop" level="error" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-        <Logger name="org.apache.parquet.hadoop" level="error" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-        <Logger name="org.apache.spark" level="error" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-        <Logger name="org.apache.spark.scheduler.DAGScheduler" level="info" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-        <Logger name="org.apache.spark.deploy.yarn.Client" level="error" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-        <Logger name="org.apache.spark.scheduler.TaskSetManager" level="error" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger> -->
-        <Logger name="org.eclipse.jetty" level="error" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-        <Logger name="org.sparkproject.jetty" level="error" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-        <Logger name="org.spark_project.jetty" level="error" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-        <Logger name="org.http4s.blaze" level="warn" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-        <Logger name="org.http4s.client.middleware" level="info" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
+        %{ endfor ~}
+
         <Root level="info">
             <AppenderRef ref="Console"/>
         </Root>

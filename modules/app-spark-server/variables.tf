@@ -355,3 +355,16 @@ variable "additional_spark_driver_pod_templates" {
   }
 
 }
+
+variable "log4j_overrides" {
+  type     = map(string)
+  default  = {}
+  nullable = false
+
+  description = "Override log4j default log levels. Format is class.name={debug|error|info|trace|warn}"
+
+  validation {
+    condition     = alltrue([for k, v in var.log4j_overrides : contains(["debug", "error", "info", "trace", "warn"], v)])
+    error_message = "Value is not a valid log level. Must be one of debug, error, info, trace, warn"
+  }
+}

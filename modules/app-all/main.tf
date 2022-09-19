@@ -109,6 +109,8 @@ module "anaml-server" {
 
   kubernetes_pod_sidecars = var.kubernetes_pod_anaml_server_sidecars
 
+  log4j_overrides = var.override_anaml_server_log4j_overrides
+
   license_key = var.license_key
 
   proxy_base = var.ui_base_path
@@ -192,6 +194,8 @@ module "spark-server" {
   spark_history_server_additional_volumes       = var.override_spark_history_server_additional_volumes
   spark_history_server_additional_volume_mounts = var.override_spark_history_server_additional_volume_mounts
   # spark_history_server_additional_env_from      = var.override_spark_history_server_additional_env_from
+
+  log4j_overrides = var.override_anaml_spark_server_log4j_overrides
 
   # Use injected env_from values
   anaml_server_user     = "$(ANAML_ADMIN_TOKEN)"

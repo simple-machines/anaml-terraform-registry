@@ -393,6 +393,14 @@ Type: `string`
 
 Default: `"ClusterIP"`
 
+### <a name="input_log4j_overrides"></a> [log4j\_overrides](#input\_log4j\_overrides)
+
+Description: Override log4j default log levels. Format is class.name={debug|error|info|trace|warn}
+
+Type: `map(string)`
+
+Default: `{}`
+
 ### <a name="input_postgres_port"></a> [postgres\_port](#input\_postgres\_port)
 
 Description: n/a

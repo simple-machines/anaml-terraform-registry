@@ -71,4 +71,20 @@ locals {
       effect   = "NoSchedule"
     }
   ]
+
+  default_log4j_loggers = {
+    "io.anaml" : "debug"
+    "org.apache.hadoop" : "error"
+    "org.apache.parquet.hadoop" : "error"
+    "org.apache.spark" : "error"
+    "org.apache.spark.deploy.yarn.Client" : "error"
+    "org.apache.spark.scheduler.DAGScheduler" : "info"
+    "org.apache.spark.scheduler.TaskSetManager" : "error"
+    "org.eclipse.jetty" : "error"
+    "org.http4s.blaze" : "warn"
+    "org.http4s.client.middleware" : "info"
+    "org.pac4j" : "warn"
+    "org.spark_project.jetty" : "error"
+    "org.sparkproject.jetty" : "error"
+  }
 }

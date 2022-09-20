@@ -234,6 +234,9 @@ resource "kubernetes_deployment" "spark_history_server_deployment" {
         name      = "spark-history-server"
         namespace = "spark-history-server"
         labels    = local.spark_history_server_labels
+        annotations = {
+          "checksum/configmap_${kubernetes_config_map.anaml_spark_server_config.metadata[0].name}" = sha256(jsonencode(kubernetes_config_map.anaml_spark_server_config.data))
+        }
       }
       spec {
         service_account_name = var.kubernetes_service_account

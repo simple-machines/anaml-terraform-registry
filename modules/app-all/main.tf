@@ -195,6 +195,8 @@ module "spark-server" {
   spark_history_server_additional_volume_mounts = var.override_spark_history_server_additional_volume_mounts
   # spark_history_server_additional_env_from      = var.override_spark_history_server_additional_env_from
 
+  spark_history_server_additional_spark_history_opts = var.override_spark_history_server_additional_spark_history_opts
+
   log4j_overrides = var.override_anaml_spark_server_log4j_overrides
 
   # Use injected env_from values

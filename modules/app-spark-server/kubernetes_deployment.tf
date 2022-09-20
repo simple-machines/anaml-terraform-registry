@@ -284,14 +284,14 @@ resource "kubernetes_deployment" "spark_history_server_deployment" {
 
           env {
             name = "SPARK_HISTORY_OPTS"
-            value = join(" ", [
+            value = join(" ", concat([
               "-Dspark.history.fs.logDirectory=${var.spark_log_directory}",
               "-Dspark.ui.proxyBase=${var.spark_history_server_ui_proxy_base}",
               "-Dspark.history.fs.cleaner.enabled=true",
               "-Djava.library.path=/opt/hadoop/lib/native",
               "-Dweb.host=0.0.0.0",
               "-Dlog4j2.configurationFile=/config/log4j2.xml"
-            ])
+            ], var.spark_history_server_additional_spark_history_opts))
           }
 
           dynamic "env" {
@@ -314,11 +314,14 @@ resource "kubernetes_deployment" "spark_history_server_deployment" {
             }
           }
 
-          # Spark History Server re-uses log4j2.xml config from anaml-spark-server, it looks to
-          # ignore other files under /config
+          # Spark History Server re-uses log4j2.xml config from anaml-spark-server
+          #
+          # Other history server config has to be set using SPARK_HISTORY_OPTS
+          # based on the entrypoint.
           volume_mount {
             name       = "config"
-            mount_path = "/config"
+            mount_path = "/config/log4j2.xml"
+            sub_path   = "log4j2.xml"
             read_only  = true
           }
 

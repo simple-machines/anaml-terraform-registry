@@ -193,6 +193,12 @@ variable "spark_history_server_additional_volume_mounts" {
   default = []
 }
 
+variable "spark_history_server_additional_spark_history_opts" {
+  type     = list(string)
+  default  = []
+  nullable = false
+}
+
 variable "spark_history_server_ui_proxy_base" {
   type        = string
   default     = "/spark-history"

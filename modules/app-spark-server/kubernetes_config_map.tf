@@ -27,7 +27,20 @@ resource "kubernetes_config_map" "anaml_spark_server_config" {
       "application.conf" = templatefile("${path.module}/_templates/application.conf", {
         checkpointLocation = var.checkpoint_location
         anamlServerUrl     = var.anaml_server_url
-        spark_conf         = merge(local.spark_conf_base, var.spark_config_overrides)
+
+        spark_conf = merge(
+          # Allow overriding the "spark-local-dir-1" named volume
+          # If the spark_config_overrides has a volume named "spark-local-dir-1" we drop the "spark-local-dir-1" setting in the base config
+          anytrue(
+            [for k in keys(var.spark_config_overrides) : can(regex("spark\\.kubernetes\\.executor\\.volumes\\.(hostPath|emptyDir|nfs|persistentVolumeClaim)\\.spark-local-dir-1", k))]
+            ) ? (
+            { for k, v in local.spark_conf_base : k => v if !can(regex("spark\\.kubernetes\\.executor\\.volumes\\.(hostPath|emptyDir|nfs|persistentVolumeClaim)\\.spark-local-dir-1", k)) }
+            ) : (
+            local.spark_conf_base
+          ),
+
+          var.spark_config_overrides
+        )
 
         anamlServerUsername = try(
           // Allow Kubernetes style values and convert to Typesafe config format

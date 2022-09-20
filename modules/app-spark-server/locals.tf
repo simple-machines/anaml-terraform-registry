@@ -52,6 +52,7 @@ locals {
       "spark.sql.adaptive.enabled"                                              = "true"
       "spark.sql.cbo.enabled"                                                   = "true"
       "spark.sql.cbo.joinReorder.enabled"                                       = "true"
+      "spark.executor.extraJavaOptions"                                         = "-Djava.library.path=/opt/hadoop/lib/native"
     },
     var.kubernetes_service_account == null ? {} : { "spark.kubernetes.authenticate.driver.serviceAccountName" = var.kubernetes_service_account }
   )

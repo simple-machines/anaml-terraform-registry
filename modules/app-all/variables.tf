@@ -316,6 +316,18 @@ variable "override_anaml_ui_skin" {
   description = "anaml-ui skin override"
 }
 
+variable "override_anaml_ui_kubernetes_deployment_container_env" {
+  type        = map(string)
+  description = "(Optional) Additional environment values to pass through to the anaml-ui container. This is useful if you want to use SSL and change the default certificate paths using`NGINX_SSL_CERTIFICATE` and `NGINX_SSL_CERTIFICATE_KEY`"
+  default     = null
+}
+
+variable "override_anaml_ui_kubernetes_secret_ssl" {
+  type        = string
+  default     = null
+  description = "(Optional) The name of the Kubernetes secret cotaining `tls.cert` and `tls.key` if you wish to terminate SSL inside the pod"
+}
+
 variable "postgres_host" {
   type        = string
   default     = null

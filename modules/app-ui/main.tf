@@ -1,3 +1,33 @@
+/**
+ * # app-ui Terraform module
+ *
+ * This module deploys a Kubernetes Deployment and Service running the Anaml frontend UI web application.
+ *
+ * ## Terminating SSL inside the pod
+ * By default Anaml UI uses plain HTTP and delegates SSL termination to Kubernetes Ingress.
+ *
+ * If you wish to terminate SSL inside the pod, you should:
+ *
+ * 1) Create a Kubernetes Secret containing the SSL certificate and key in PEM format with the names "tls.crt" for the certificate and "tls.key" for the key, either using Terraform or kubectl. Below is an example using kubectl.
+ * ```
+ * kubectl create secret generic anaml-ui-ssl-certs \
+ *   --from-file=tls.crt=./tls.crt \
+ *   --from-file=tls.key=./tls.key
+ * ```
+ * 2) Specify the secret using the `kubernetes_secret_ssl` anaml-ui Terraform module parameter.
+ *
+ * ### Notes:
+ * If you do not wish to use the filenames `tls.crt` and `tls.secret` you can use the `kubernetes_deployment_container_env` anaml-ui Terraform module parameter setting `NGINX_SSL_CERTIFICATE` and `NGINX_SSL_CERTIFICATE_KEY` with the path `/certificates/MY_FILENAME` respectively where MY_FILENAME is your new name. I.e.
+ *
+ * ```
+ * kubernetes_deployment_container_env = {
+ *   NGINX_SSL_CERTIFICATE: "/certificates/anaml.crt",
+ *   NGINX_SSL_CERTIFICATE_KEY: "/certificates/anaml.key"
+ * }
+ *
+ * ```
+ */
+
 terraform {
   required_version = ">= 1.1"
   required_providers {
@@ -24,6 +54,16 @@ locals {
     "app.kubernetes.io/created-by"  = "terraform"
     "terraform/deployment-instance" = random_uuid.deployment_instance.result
   }, var.kubernetes_deployment_labels)
+
+  env = merge({
+    "ANAML_DOCS_URL" : var.docs_url,
+    "ANAML_EXTERNAL_DOMAIN" : var.hostname,
+    "ANAML_SERVER_URL" : var.anaml_server_url,
+    "REACT_APP_API_URL" : var.api_url,
+    "REACT_APP_FRONTEND_SKIN" : var.skin,
+    "REACT_APP_UI_BASEPATH" : var.basepath,
+    "SPARK_HISTORY_SERVER" : var.spark_history_server_url
+  }, var.kubernetes_deployment_container_env)
 }
 
 # Added to allow running multiple independent instances (useful for test/development)
@@ -67,39 +107,21 @@ resource "kubernetes_deployment" "anaml_ui" {
             name           = "http-web-svc"
           }
 
-          env {
-            name  = "ANAML_DOCS_URL"
-            value = var.docs_url
+          dynamic "env" {
+            for_each = local.env
+            content {
+              name  = env.key
+              value = env.value
+            }
           }
 
-          env {
-            name  = "ANAML_EXTERNAL_DOMAIN"
-            value = var.hostname
-          }
-
-          env {
-            name  = "ANAML_SERVER_URL"
-            value = var.anaml_server_url
-          }
-
-          env {
-            name  = "REACT_APP_API_URL"
-            value = var.api_url
-          }
-
-          env {
-            name  = "REACT_APP_FRONTEND_SKIN"
-            value = var.skin
-          }
-
-          env {
-            name  = "REACT_APP_UI_BASEPATH"
-            value = var.basepath
-          }
-
-          env {
-            name  = "SPARK_HISTORY_SERVER"
-            value = var.spark_history_server_url
+          dynamic "volume_mount" {
+            for_each = var.kubernetes_secret_ssl == null ? [] : [var.kubernetes_secret_ssl]
+            content {
+              name = volume_mount.value
+              mount_path = "/certificates"
+              read_only = true
+            }
           }
 
           liveness_probe {
@@ -124,6 +146,18 @@ resource "kubernetes_deployment" "anaml_ui" {
             timeout_seconds = 5
           }
         }
+
+        dynamic "volume" {
+          for_each = var.kubernetes_secret_ssl == null ? [] : [var.kubernetes_secret_ssl]
+          content {
+            secret {
+              secret_name = volume.value
+              optional = "false"
+              default_mode = "0444"
+            }
+          }
+        }
+
       }
     }
   }

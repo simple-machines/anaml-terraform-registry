@@ -666,6 +666,22 @@ Type: `string`
 
 Default: `null`
 
+### <a name="input_override_anaml_ui_kubernetes_deployment_container_env"></a> [override\_anaml\_ui\_kubernetes\_deployment\_container\_env](#input\_override\_anaml\_ui\_kubernetes\_deployment\_container\_env)
+
+Description: (Optional) Additional environment values to pass through to the anaml-ui container. This is useful if you want to use SSL and change the default certificate paths using`NGINX_SSL_CERTIFICATE` and `NGINX_SSL_CERTIFICATE_KEY`
+
+Type: `map(string)`
+
+Default: `null`
+
+### <a name="input_override_anaml_ui_kubernetes_secret_ssl"></a> [override\_anaml\_ui\_kubernetes\_secret\_ssl](#input\_override\_anaml\_ui\_kubernetes\_secret\_ssl)
+
+Description: (Optional) The name of the Kubernetes secret cotaining `tls.cert` and `tls.key` if you wish to terminate SSL inside the pod
+
+Type: `string`
+
+Default: `null`
+
 ### <a name="input_override_anaml_ui_skin"></a> [override\_anaml\_ui\_skin](#input\_override\_anaml\_ui\_skin)
 
 Description: anaml-ui skin override

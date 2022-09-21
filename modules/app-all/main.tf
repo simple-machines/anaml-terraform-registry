@@ -129,14 +129,16 @@ module "anaml-ui" {
     join("", [var.https_urls ? "https" : "http", "://", var.hostname, var.ui_base_path == "/" ? "" : var.ui_base_path, "/api"])
   )
 
-  basepath                       = var.ui_base_path
-  container_registry             = var.container_registry
-  hostname                       = var.hostname
-  kubernetes_namespace           = var.kubernetes_namespace_create ? kubernetes_namespace.anaml_namespace[0].metadata.0.name : var.kubernetes_namespace_name
-  kubernetes_node_selector       = var.kubernetes_pod_node_selector_app
-  kubernetes_service_annotations = var.kubernetes_service_annotations_anaml_ui
-  kubernetes_service_type        = var.kubernetes_service_type
-  skin                           = var.override_anaml_ui_skin
+  basepath                            = var.ui_base_path
+  container_registry                  = var.container_registry
+  hostname                            = var.hostname
+  kubernetes_deployment_container_env = var.override_anaml_ui_kubernetes_deployment_container_env
+  kubernetes_namespace                = var.kubernetes_namespace_create ? kubernetes_namespace.anaml_namespace[0].metadata.0.name : var.kubernetes_namespace_name
+  kubernetes_node_selector            = var.kubernetes_pod_node_selector_app
+  kubernetes_secret_ssl               = var.override_anaml_ui_kubernetes_secret_ssl
+  kubernetes_service_annotations      = var.kubernetes_service_annotations_anaml_ui
+  kubernetes_service_type             = var.kubernetes_service_type
+  skin                                = var.override_anaml_ui_skin
 
   docs_url                 = module.anaml-docs.internal_url
   spark_history_server_url = module.spark-server.spark_history_server_internal_url

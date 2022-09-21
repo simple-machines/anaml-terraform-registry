@@ -705,6 +705,14 @@ list(object({
 
 Default: `[]`
 
+### <a name="input_override_spark_history_server_additional_spark_history_opts"></a> [override\_spark\_history\_server\_additional\_spark\_history\_opts](#input\_override\_spark\_history\_server\_additional\_spark\_history\_opts)
+
+Description: n/a
+
+Type: `list(string)`
+
+Default: `null`
+
 ### <a name="input_override_spark_history_server_additional_volume_mounts"></a> [override\_spark\_history\_server\_additional\_volume\_mounts](#input\_override\_spark\_history\_server\_additional\_volume\_mounts)
 
 Description: n/a

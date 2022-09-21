@@ -432,6 +432,14 @@ list(object({
 
 Default: `[]`
 
+### <a name="input_spark_history_server_additional_spark_history_opts"></a> [spark\_history\_server\_additional\_spark\_history\_opts](#input\_spark\_history\_server\_additional\_spark\_history\_opts)
+
+Description: n/a
+
+Type: `list(string)`
+
+Default: `[]`
+
 ### <a name="input_spark_history_server_additional_volume_mounts"></a> [spark\_history\_server\_additional\_volume\_mounts](#input\_spark\_history\_server\_additional\_volume\_mounts)
 
 Description: n/a

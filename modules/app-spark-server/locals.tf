@@ -77,7 +77,7 @@ locals {
     "io.anaml" : "debug"
     "org.apache.hadoop" : "error"
     "org.apache.parquet.hadoop" : "error"
-    "org.apache.spark" : "error"
+    "org.apache.spark" : "warn"
     "org.apache.spark.deploy.yarn.Client" : "error"
     "org.apache.spark.scheduler.DAGScheduler" : "info"
     "org.apache.spark.scheduler.TaskSetManager" : "error"

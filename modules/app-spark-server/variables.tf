@@ -246,12 +246,6 @@ variable "kubernetes_service_annotations_anaml_spark_server" {
   description = "(Optional) An unstructured key value map stored with the **anaml_spark_server** service that may be used to store arbitrary metadata."
 }
 
-variable "kubernetes_service_annotations_spark_driver" {
-  type        = map(string)
-  default     = null
-  description = "(Optional) An unstructured key value map stored with the **anaml_spark_driver** service that may be used to store arbitrary metadata."
-}
-
 variable "kubernetes_service_annotations_spark_history_service" {
   type        = map(string)
   default     = null

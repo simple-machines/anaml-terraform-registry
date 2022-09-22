@@ -401,14 +401,6 @@ Type: `map(string)`
 
 Default: `null`
 
-### <a name="input_kubernetes_service_annotations_spark_driver"></a> [kubernetes\_service\_annotations\_spark\_driver](#input\_kubernetes\_service\_annotations\_spark\_driver)
-
-Description: Kubernetes service annotations to set if any
-
-Type: `map(string)`
-
-Default: `null`
-
 ### <a name="input_kubernetes_service_annotations_spark_history_service"></a> [kubernetes\_service\_annotations\_spark\_history\_service](#input\_kubernetes\_service\_annotations\_spark\_history\_service)
 
 Description: Kubernetes service annotations to set if any

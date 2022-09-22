@@ -165,7 +165,6 @@ module "spark-server" {
 
   kubernetes_service_account                           = var.kubernetes_service_account_create ? kubernetes_service_account.anaml[0].metadata.0.name : var.kubernetes_service_account_name
   kubernetes_service_annotations_anaml_spark_server    = var.kubernetes_service_annotations_anaml_spark_server
-  kubernetes_service_annotations_spark_driver          = var.kubernetes_service_annotations_spark_driver
   kubernetes_service_annotations_spark_history_service = var.kubernetes_service_annotations_spark_history_service
 
   spark_config_overrides = var.override_anaml_spark_server_spark_config_overrides

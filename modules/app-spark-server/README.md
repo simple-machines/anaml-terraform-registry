@@ -27,7 +27,6 @@ The following resources are used by this module:
 - [kubernetes_deployment.spark_history_server_deployment](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/deployment) (resource)
 - [kubernetes_role.spark](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/role) (resource)
 - [kubernetes_role_binding.spark](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/role_binding) (resource)
-- [kubernetes_service.anaml_spark_driver](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/service) (resource)
 - [kubernetes_service.anaml_spark_server_service](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/service) (resource)
 - [kubernetes_service.spark_history_server_service](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/service) (resource)
 - [kubernetes_service_account.spark](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/service_account) (resource)
@@ -364,14 +363,6 @@ Default: `null`
 ### <a name="input_kubernetes_service_annotations_anaml_spark_server"></a> [kubernetes\_service\_annotations\_anaml\_spark\_server](#input\_kubernetes\_service\_annotations\_anaml\_spark\_server)
 
 Description: (Optional) An unstructured key value map stored with the **anaml\_spark\_server** service that may be used to store arbitrary metadata.
-
-Type: `map(string)`
-
-Default: `null`
-
-### <a name="input_kubernetes_service_annotations_spark_driver"></a> [kubernetes\_service\_annotations\_spark\_driver](#input\_kubernetes\_service\_annotations\_spark\_driver)
-
-Description: (Optional) An unstructured key value map stored with the **anaml\_spark\_driver** service that may be used to store arbitrary metadata.
 
 Type: `map(string)`
 

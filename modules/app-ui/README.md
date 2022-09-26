@@ -1,4 +1,32 @@
 <!-- BEGIN_TF_DOCS -->
+# app-ui Terraform module
+
+This module deploys a Kubernetes Deployment and Service running the Anaml frontend UI web application.
+
+## Terminating SSL inside the pod
+By default Anaml UI uses plain HTTP and delegates SSL termination to Kubernetes Ingress.
+
+If you wish to terminate SSL inside the pod, you should:
+
+1) Create a Kubernetes Secret containing the SSL certificate and key in PEM format with the names "tls.crt" for the certificate and "tls.key" for the key, either using Terraform or kubectl. Below is an example using kubectl.
+```
+kubectl create secret generic anaml-ui-ssl-certs \
+  --from-file=tls.crt=./tls.crt \
+  --from-file=tls.key=./tls.key
+```
+2) Specify the secret using the `kubernetes_secret_ssl` anaml-ui Terraform module parameter.
+
+### Notes:
+If you do not wish to use the filenames `tls.crt` and `tls.secret` you can use the `kubernetes_deployment_container_env` anaml-ui Terraform module parameter setting `NGINX_SSL_CERTIFICATE` and `NGINX_SSL_CERTIFICATE_KEY` with the path `/certificates/MY_FILENAME` respectively where MY\_FILENAME is your new name. I.e.
+
+```
+kubernetes_deployment_container_env = {
+  NGINX_SSL_CERTIFICATE: "/certificates/anaml.crt",
+  NGINX_SSL_CERTIFICATE_KEY: "/certificates/anaml.key"
+}
+
+```
+
 ## Requirements
 
 The following requirements are needed by this module:
@@ -87,6 +115,14 @@ Type: `string`
 
 Default: `"/"`
 
+### <a name="input_kubernetes_deployment_container_env"></a> [kubernetes\_deployment\_container\_env](#input\_kubernetes\_deployment\_container\_env)
+
+Description: (Optional) Additional environment values to pass through to the anaml-ui container. This is useful if you want to use SSL and change the default certificate paths using`NGINX_SSL_CERTIFICATE` and `NGINX_SSL_CERTIFICATE_KEY`
+
+Type: `map(string)`
+
+Default: `null`
+
 ### <a name="input_kubernetes_deployment_labels"></a> [kubernetes\_deployment\_labels](#input\_kubernetes\_deployment\_labels)
 
 Description: Additional labels to add to Kubernetes deployment
@@ -132,6 +168,14 @@ Default: `null`
 Description: (Optional) NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/node-selection).
 
 Type: `map(string)`
+
+Default: `null`
+
+### <a name="input_kubernetes_secret_ssl"></a> [kubernetes\_secret\_ssl](#input\_kubernetes\_secret\_ssl)
+
+Description: (Optional) The name of the Kubernetes secret cotaining `tls.cert` and `tls.key` if you wish to terminate SSL inside the pod
+
+Type: `string`
 
 Default: `null`
 

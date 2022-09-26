@@ -36,6 +36,12 @@ variable "kubernetes_namespace" {
   default     = null
 }
 
+variable "kubernetes_deployment_container_env" {
+  type        = map(string)
+  description = "(Optional) Additional environment values to pass through to the anaml-ui container. This is useful if you want to use SSL and change the default certificate paths using`NGINX_SSL_CERTIFICATE` and `NGINX_SSL_CERTIFICATE_KEY`"
+  default     = null
+}
+
 variable "kubernetes_deployment_name" {
   type        = string
   description = "(Optional) Name of the deployment, must be unique. Cannot be updated. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/identifiers#names)"
@@ -87,6 +93,12 @@ variable "kubernetes_node_selector" {
   default     = null
   nullable    = true
   description = "(Optional) NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/node-selection)."
+}
+
+variable "kubernetes_secret_ssl" {
+  type        = string
+  default     = null
+  description = "(Optional) The name of the Kubernetes secret cotaining `tls.cert` and `tls.key` if you wish to terminate SSL inside the pod"
 }
 
 variable "skin" {

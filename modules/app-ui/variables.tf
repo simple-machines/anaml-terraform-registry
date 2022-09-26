@@ -20,16 +20,6 @@ variable "docs_url" {
   nullable = false
 }
 
-variable "hostname" {
-  type        = string
-  nullable    = false
-  description = "The hostname to use for UI links"
-}
-
-variable "api_url" {
-  type = string
-}
-
 variable "kubernetes_namespace" {
   type        = string
   description = "(Optional) Namespace defines the space within which name of the deployment must be unique."

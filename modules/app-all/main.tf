@@ -124,14 +124,8 @@ module "anaml-ui" {
     var.anaml_version
   )
 
-  api_url = coalesce(
-    var.override_anaml_ui_api_url,
-    join("", [var.https_urls ? "https" : "http", "://", var.hostname, var.ui_base_path == "/" ? "" : var.ui_base_path, "/api"])
-  )
-
   basepath                            = var.ui_base_path
   container_registry                  = var.container_registry
-  hostname                            = var.hostname
   kubernetes_deployment_container_env = var.override_anaml_ui_kubernetes_deployment_container_env
   kubernetes_namespace                = var.kubernetes_namespace_create ? kubernetes_namespace.anaml_namespace[0].metadata.0.name : var.kubernetes_namespace_name
   kubernetes_node_selector            = var.kubernetes_pod_node_selector_app

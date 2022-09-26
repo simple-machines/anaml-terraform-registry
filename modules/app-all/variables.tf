@@ -304,12 +304,6 @@ variable "override_anaml_ui_version" {
   description = "anaml-ui version override. This value should contain the container tag to deploy"
 }
 
-variable "override_anaml_ui_api_url" {
-  type        = string
-  default     = null
-  description = "anaml-ui api_url override"
-}
-
 variable "override_anaml_ui_skin" {
   type        = string
   default     = "anaml"

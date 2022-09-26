@@ -56,13 +56,12 @@ locals {
   }, var.kubernetes_deployment_labels)
 
   env = merge({
-    "ANAML_DOCS_URL" : var.docs_url,
-    "ANAML_EXTERNAL_DOMAIN" : var.hostname,
-    "ANAML_SERVER_URL" : var.anaml_server_url,
-    "REACT_APP_API_URL" : var.api_url,
+    "ANAML_BASEPATH" : var.basepath,
+    "ANAML_API_ORIGIN_URL": "${var.anaml_server_url}/api"
+    "ANAML_AUTH_ORIGIN_URL": "${var.anaml_server_url}/auth"
+    "ANAML_DOCS_ORIGIN_URL" : var.docs_url,
     "REACT_APP_FRONTEND_SKIN" : var.skin,
-    "REACT_APP_UI_BASEPATH" : var.basepath,
-    "SPARK_HISTORY_SERVER" : var.spark_history_server_url
+    "SPARK_HISTORY_SERVER_ORIGIN_URL" : var.spark_history_server_url
   }, var.kubernetes_deployment_container_env)
 }
 

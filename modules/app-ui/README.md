@@ -73,12 +73,6 @@ Description: The version of anaml-ui to deploy
 
 Type: `string`
 
-### <a name="input_api_url"></a> [api\_url](#input\_api\_url)
-
-Description: n/a
-
-Type: `string`
-
 ### <a name="input_container_registry"></a> [container\_registry](#input\_container\_registry)
 
 Description: The container registry to use to fetch the anaml-ui container
@@ -88,12 +82,6 @@ Type: `string`
 ### <a name="input_docs_url"></a> [docs\_url](#input\_docs\_url)
 
 Description: n/a
-
-Type: `string`
-
-### <a name="input_hostname"></a> [hostname](#input\_hostname)
-
-Description: The hostname to use for UI links
 
 Type: `string`
 

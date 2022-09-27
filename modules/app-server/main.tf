@@ -2,6 +2,19 @@
  * # app-server Terraform module
  *
  * This module deploys a Kubernetes Deployment and Service running the Anaml backend server application
+ * ## Terminating SSL inside the pod
+ *
+ * By default Anaml UI uses plain HTTP and delegates SSL termination to Kubernetes Ingress.
+ *
+ * If you wish to terminate SSL inside the pod, you should:
+ *
+ * 1) Create a JAVA pkcs12 truststore. Place it in a secret under the `javax.net.ssl.trustStore` key. If the trust store has a password you should create a secret for the password and place it under the JAVAX_NET_SSL_TRUSTSTOREPASSWORD key.
+ * 2) Create a JAVA pkcs12 keystore. Place it in a secret under the `javax.net.ssl.keyStore` key. If the key store has a password you should create a secret for the password and place it under the JAVAX_NET_SSL_TRUSTKEYPASSWORD key.
+ * 3) Set the `ssl_kubernetes_secret_pkcs12_truststore` variable with the name of the secret containing the trust store. Also set the `ssl_kubernetes_secret_pkcs12_truststore_password` variable with the name of the secret containing the truststore password if it has one
+ * 4) Set the `ssl_kubernetes_secret_pkcs12_keystore` variable with the name of the secret containing the key store. Also set the `ssl_kubernetes_secret_pkcs12_keystore_password` variable with the name of the secret containing the keystore password if it has one
+ *
+ * See https://docs.oracle.com/cd/E19509-01/820-3503/6nf1il6er/index.html for details on creating Java key and tust stores
+ *
  */
 
 terraform {
@@ -43,6 +56,8 @@ locals {
     "org.spark_project.jetty" : "error"
     "org.sparkproject.jetty" : "error"
   }
+
+  port = var.ssl_kubernetes_secret_pkcs12_keystore  == null ? 8080 : 8443
 }
 
 resource "kubernetes_config_map" "anaml_server" {
@@ -103,13 +118,24 @@ resource "kubernetes_config_map" "anaml_server" {
         var.proxy_base == "/" ? "https://${var.hostname}" : null,
         try("https://${var.hostname}/${join("/", compact(split("/", var.proxy_base)))}", null),
         "https://${var.hostname}"
-      )
+      ),
 
+      truststore = var.ssl_kubernetes_secret_pkcs12_truststore != null ? "/tmp/certificates/java/truststore/truststore.p12" : null,
+
+      # If password is set, it gets mounted as an env var named using var.ssl_kubernetes_secret_pkcs12_truststore_password_key
+      use_truststore_password = var.ssl_kubernetes_secret_pkcs12_truststore_password != null,
+
+
+      keystore              = var.ssl_kubernetes_secret_pkcs12_keystore != null ? "/tmp/certificates/java/keystore/keystore.p12" : null,
+      use_keystore_password = var.ssl_kubernetes_secret_pkcs12_keystore_password != null,
+
+      port = local.port
     })
 
     "log4j2.xml" = templatefile("${path.module}/_templates/log4j2.xml", {
       loggers = merge(local.default_log4j_loggers, var.log4j_overrides)
     })
+
   }
 }
 
@@ -199,6 +225,37 @@ resource "kubernetes_deployment" "anaml_server" {
           }
         }
 
+        dynamic "volume" {
+          for_each = var.ssl_kubernetes_secret_pkcs12_truststore != null ? [var.ssl_kubernetes_secret_pkcs12_truststore] : []
+          content {
+            name = "java-truststore"
+            secret {
+              secret_name = volume.value
+              optional    = false
+              items {
+                key  = var.ssl_kubernetes_secret_pkcs12_truststore_key
+                path = "truststore.p12"
+              }
+            }
+          }
+        }
+
+        dynamic "volume" {
+          for_each = var.ssl_kubernetes_secret_pkcs12_keystore != null ? [var.ssl_kubernetes_secret_pkcs12_keystore] : []
+          content {
+            name = "java-keystore"
+            secret {
+              secret_name  = volume.value
+              optional     = false
+              default_mode = "0444"
+              items {
+                key  = var.ssl_kubernetes_secret_pkcs12_keystore_key
+                path = "keystore.p12"
+              }
+            }
+          }
+        }
+
         node_selector = var.kubernetes_node_selector
 
         container {
@@ -211,14 +268,14 @@ resource "kubernetes_deployment" "anaml_server" {
           image_pull_policy = var.kubernetes_image_pull_policy == null ? (var.anaml_server_version == "latest" ? "Always" : "IfNotPresent") : var.kubernetes_image_pull_policy
 
           port {
-            container_port = 8080
+            container_port = local.port
             name           = "http-web-svc"
           }
 
           liveness_probe {
             http_get {
               path = "/"
-              port = 8080
+              port = local.port
             }
 
             initial_delay_seconds = 30
@@ -230,7 +287,7 @@ resource "kubernetes_deployment" "anaml_server" {
           readiness_probe {
             http_get {
               path = "/"
-              port = 8080
+              port = local.port
             }
 
             initial_delay_seconds = 30
@@ -243,7 +300,7 @@ resource "kubernetes_deployment" "anaml_server" {
           startup_probe {
             http_get {
               path = "/"
-              port = 8080
+              port = local.port
             }
 
             period_seconds        = 10
@@ -263,6 +320,24 @@ resource "kubernetes_deployment" "anaml_server" {
             content {
               name       = "license"
               mount_path = "/license"
+              read_only  = true
+            }
+          }
+
+          dynamic "volume_mount" {
+            for_each = var.ssl_kubernetes_secret_pkcs12_truststore != null ? [var.ssl_kubernetes_secret_pkcs12_truststore] : []
+            content {
+              name       = "java-truststore"
+              mount_path = "/tmp/certificates/java/truststore"
+              read_only  = true
+            }
+          }
+
+          dynamic "volume_mount" {
+            for_each = var.ssl_kubernetes_secret_pkcs12_keystore != null ? [var.ssl_kubernetes_secret_pkcs12_keystore] : []
+            content {
+              name       = "java-keystore"
+              mount_path = "/tmp/certificates/java/keystore"
               read_only  = true
             }
           }
@@ -297,6 +372,34 @@ resource "kubernetes_deployment" "anaml_server" {
                 for_each = [env_from.value.secret_ref]
                 content {
                   name = secret_ref.value.name
+                }
+              }
+            }
+          }
+
+          dynamic "env" {
+            for_each = var.ssl_kubernetes_secret_pkcs12_truststore_password != null ? [var.ssl_kubernetes_secret_pkcs12_truststore_password] : []
+            content {
+              name = "JAVAX_NET_SSL_TRUSTSTOREPASSWORD"
+              value_from {
+                secret_key_ref {
+                  name     = var.ssl_kubernetes_secret_pkcs12_truststore_password
+                  key      = var.ssl_kubernetes_secret_pkcs12_truststore_password_key
+                  optional = false
+                }
+              }
+            }
+          }
+
+          dynamic "env" {
+            for_each = var.ssl_kubernetes_secret_pkcs12_keystore_password != null ? [var.ssl_kubernetes_secret_pkcs12_keystore_password] : []
+            content {
+              name = "JAVAX_NET_SSL_KEYSTOREPASSWORD"
+              value_from {
+                secret_key_ref {
+                  name     = var.ssl_kubernetes_secret_pkcs12_keystore_password
+                  key      = var.ssl_kubernetes_secret_pkcs12_keystore_password_key
+                  optional = false
                 }
               }
             }
@@ -400,7 +503,7 @@ resource "kubernetes_service" "anaml_server" {
     }
     port {
       name        = "http"
-      port        = 8080
+      port        = local.port
       protocol    = "TCP"
       target_port = "http-web-svc"
     }

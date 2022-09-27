@@ -57,8 +57,8 @@ locals {
 
   env = merge({
     "ANAML_BASEPATH" : var.basepath,
-    "ANAML_API_ORIGIN_URL": "${var.anaml_server_url}/api"
-    "ANAML_AUTH_ORIGIN_URL": "${var.anaml_server_url}/auth"
+    "ANAML_API_ORIGIN_URL" : "${var.anaml_server_url}/api"
+    "ANAML_AUTH_ORIGIN_URL" : "${var.anaml_server_url}/auth"
     "ANAML_DOCS_ORIGIN_URL" : var.docs_url,
     "REACT_APP_FRONTEND_SKIN" : var.skin,
     "SPARK_HISTORY_SERVER_ORIGIN_URL" : var.spark_history_server_url
@@ -98,8 +98,8 @@ resource "kubernetes_deployment" "anaml_ui" {
           content {
             name = "certificates"
             secret {
-              secret_name = volume.value
-              optional = "false"
+              secret_name  = volume.value
+              optional     = "false"
               default_mode = "0444"
             }
           }
@@ -113,9 +113,19 @@ resource "kubernetes_deployment" "anaml_ui" {
             : "${var.container_registry}/anaml-ui:${var.anaml_ui_version}"
           )
           image_pull_policy = var.kubernetes_image_pull_policy
+
           port {
             container_port = 80
             name           = "http-web-svc"
+          }
+
+
+          dynamic "port" {
+            for_each = var.kubernetes_secret_ssl == null ? [] : [1]
+            content {
+              container_port = 443
+              name           = "https-web-svc"
+            }
           }
 
           dynamic "env" {
@@ -129,9 +139,9 @@ resource "kubernetes_deployment" "anaml_ui" {
           dynamic "volume_mount" {
             for_each = var.kubernetes_secret_ssl == null ? [] : ["certificates"]
             content {
-              name = volume_mount.value
+              name       = volume_mount.value
               mount_path = "/certificates"
-              read_only = true
+              read_only  = true
             }
           }
 
@@ -187,6 +197,16 @@ resource "kubernetes_service" "anaml_ui" {
       port        = 80
       protocol    = "TCP"
       target_port = "http-web-svc"
+    }
+
+    dynamic "port" {
+      for_each = var.kubernetes_secret_ssl == null ? [] : [1]
+      content {
+        name        = "https"
+        port        = 443
+        protocol    = "TCP"
+        target_port = "https-web-svc"
+      }
     }
   }
 

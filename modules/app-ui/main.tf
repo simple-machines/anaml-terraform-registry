@@ -93,6 +93,18 @@ resource "kubernetes_deployment" "anaml_ui" {
       spec {
         node_selector = var.kubernetes_node_selector
 
+        dynamic "volume" {
+          for_each = var.kubernetes_secret_ssl == null ? [] : [var.kubernetes_secret_ssl]
+          content {
+            name = "certificates"
+            secret {
+              secret_name = volume.value
+              optional = "false"
+              default_mode = "0444"
+            }
+          }
+        }
+
         container {
           name = var.kubernetes_deployment_name
           image = (
@@ -115,7 +127,7 @@ resource "kubernetes_deployment" "anaml_ui" {
           }
 
           dynamic "volume_mount" {
-            for_each = var.kubernetes_secret_ssl == null ? [] : [var.kubernetes_secret_ssl]
+            for_each = var.kubernetes_secret_ssl == null ? [] : ["certificates"]
             content {
               name = volume_mount.value
               mount_path = "/certificates"
@@ -146,16 +158,6 @@ resource "kubernetes_deployment" "anaml_ui" {
           }
         }
 
-        dynamic "volume" {
-          for_each = var.kubernetes_secret_ssl == null ? [] : [var.kubernetes_secret_ssl]
-          content {
-            secret {
-              secret_name = volume.value
-              optional = "false"
-              default_mode = "0444"
-            }
-          }
-        }
 
       }
     }

@@ -15,6 +15,58 @@
  *
  * See https://docs.oracle.com/cd/E19509-01/820-3503/6nf1il6er/index.html for details on creating Java key and tust stores
  *
+ * Example using Terraform for secrets:
+ * ```
+ * resource "kubernetes_secret" "truststore" {
+ *   metadata {
+ *     name = "java-truststore"
+ *     namespace = var.namespace
+ *   }
+ *
+ *   binary_data = {
+ *     "javax.net.ssl.trustStore" = "${filebase64("./tmp_certs/cacerts")}"
+ *   }
+ * }
+ *
+ * resource "kubernetes_secret" "truststore_password" {
+ *   metadata {
+ *     name = "java-truststore-password"
+ *     namespace = var.namespace
+ *   }
+ *
+ *   data = {
+ *     JAVAX_NET_SSL_TRUSTSTOREPASSWORD = "changeit"
+ *   }
+ * }
+ *
+ * resource "kubernetes_secret" "keystore" {
+ *   metadata {
+ *     name = "java-keystore"
+ *     namespace = var.namespace
+ *   }
+ *
+ *    binary_data = {
+ *     "javax.net.ssl.keyStore" = "${filebase64("./tmp_certs/keystore.pfx")}"
+ *   }
+ * }
+ *
+ * resource "kubernetes_secret" "keystore_password" {
+ *   metadata {
+ *     name = "java-keystore-password"
+ *     namespace = var.namespace
+ *   }
+ *
+ *   data = {
+ *     JAVAX_NET_SSL_KEYSTOREPASSWORD = "changeit"
+ *   }
+ * }
+ *```
+ * ## SSL Notes
+ * If you enable SSL on anaml-server you need to update your ingress to tell it to use HTTPS.
+ * For the nginx ingress controller, this is done by adding the below annotation
+ * ```
+ * "nginx.ingress.kubernetes.io/backend-protocol" : "HTTP",
+ * ```
  */
 
 terraform {
@@ -57,7 +109,7 @@ locals {
     "org.sparkproject.jetty" : "error"
   }
 
-  port = var.ssl_kubernetes_secret_pkcs12_keystore  == null ? 8080 : 8443
+  port = var.ssl_kubernetes_secret_pkcs12_keystore == null ? 8080 : 8443
 }
 
 resource "kubernetes_config_map" "anaml_server" {
@@ -274,8 +326,9 @@ resource "kubernetes_deployment" "anaml_server" {
 
           liveness_probe {
             http_get {
-              path = "/"
-              port = local.port
+              path   = "/"
+              port   = local.port
+              scheme = local.port == 8443 ? "HTTPS" : "HTTP"
             }
 
             initial_delay_seconds = 30
@@ -286,8 +339,9 @@ resource "kubernetes_deployment" "anaml_server" {
 
           readiness_probe {
             http_get {
-              path = "/"
-              port = local.port
+              path   = "/"
+              port   = local.port
+              scheme = local.port == 8443 ? "HTTPS" : "HTTP"
             }
 
             initial_delay_seconds = 30
@@ -299,8 +353,9 @@ resource "kubernetes_deployment" "anaml_server" {
           # Startup probe allows enough time (180 seconds) for DB migrations to run
           startup_probe {
             http_get {
-              path = "/"
-              port = local.port
+              path   = "/"
+              port   = local.port
+              scheme = local.port == 8443 ? "HTTPS" : "HTTP"
             }
 
             period_seconds        = 10

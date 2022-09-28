@@ -10,3 +10,7 @@ output "kubernetes_service_account" {
 output "kubernetes_service_name_anaml_server" {
   value = module.anaml-server.kubernetes_service_name
 }
+
+output "anaml_server_port" {
+  value = module.anaml-server.kubernetes_service_port_number
+}

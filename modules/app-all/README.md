@@ -871,6 +871,10 @@ The following outputs are exported:
 
 Description: n/a
 
+### <a name="output_anaml_server_port"></a> [anaml\_server\_port](#output\_anaml\_server\_port)
+
+Description: n/a
+
 ### <a name="output_kubernetes_service_account"></a> [kubernetes\_service\_account](#output\_kubernetes\_service\_account)
 
 Description: The Kubernetes service account used for deployments

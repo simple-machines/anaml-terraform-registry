@@ -15,6 +15,60 @@ If you wish to terminate SSL inside the pod, you should:
 
 See https://docs.oracle.com/cd/E19509-01/820-3503/6nf1il6er/index.html for details on creating Java key and tust stores
 
+Example using Terraform for secrets:
+```
+resource "kubernetes_secret" "truststore" {
+  metadata {
+    name = "java-truststore"
+    namespace = var.namespace
+  }
+
+  binary_data = {
+    "javax.net.ssl.trustStore" = "${filebase64("./tmp_certs/cacerts")}"
+  }
+}
+
+resource "kubernetes_secret" "truststore_password" {
+  metadata {
+    name = "java-truststore-password"
+    namespace = var.namespace
+  }
+
+  data = {
+    JAVAX_NET_SSL_TRUSTSTOREPASSWORD = "changeit"
+  }
+}
+
+resource "kubernetes_secret" "keystore" {
+  metadata {
+    name = "java-keystore"
+    namespace = var.namespace
+  }
+
+   binary_data = {
+    "javax.net.ssl.keyStore" = "${filebase64("./tmp_certs/keystore.pfx")}"
+  }
+}
+
+resource "kubernetes_secret" "keystore_password" {
+  metadata {
+    name = "java-keystore-password"
+    namespace = var.namespace
+  }
+
+  data = {
+    JAVAX_NET_SSL_KEYSTOREPASSWORD = "changeit"
+  }
+}
+*
+```
+## SSL Notes
+If you enable SSL on anaml-server you need to update your ingress to tell it to use HTTPS.
+For the nginx ingress controller, this is done by adding the below annotation
+```
+"nginx.ingress.kubernetes.io/backend-protocol" : "HTTP",
+```
+
 ## Requirements
 
 The following requirements are needed by this module:
@@ -463,6 +517,10 @@ The following outputs are exported:
 Description: n/a
 
 ### <a name="output_internal_url"></a> [internal\_url](#output\_internal\_url)
+
+Description: n/a
+
+### <a name="output_is_https"></a> [is\_https](#output\_is\_https)
 
 Description: n/a
 

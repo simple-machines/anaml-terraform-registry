@@ -58,6 +58,37 @@ resource "kubernetes_deployment" "anaml_spark_server_deployment" {
           }
         }
 
+        dynamic "volume" {
+          for_each = var.ssl_kubernetes_secret_pkcs12_truststore != null ? [var.ssl_kubernetes_secret_pkcs12_truststore] : []
+          content {
+            name = "java-truststore"
+            secret {
+              secret_name = volume.value
+              optional    = false
+              items {
+                key  = var.ssl_kubernetes_secret_pkcs12_truststore_key
+                path = "truststore.p12"
+              }
+            }
+          }
+        }
+
+        dynamic "volume" {
+          for_each = var.ssl_kubernetes_secret_pkcs12_keystore != null ? [var.ssl_kubernetes_secret_pkcs12_keystore] : []
+          content {
+            name = "java-keystore"
+            secret {
+              secret_name  = volume.value
+              optional     = false
+              default_mode = "0444"
+              items {
+                key  = var.ssl_kubernetes_secret_pkcs12_keystore_key
+                path = "keystore.p12"
+              }
+            }
+          }
+        }
+
         node_selector = var.kubernetes_node_selector_app
 
         container {
@@ -108,6 +139,34 @@ resource "kubernetes_deployment" "anaml_spark_server_deployment" {
           }
 
           dynamic "env" {
+            for_each = var.ssl_kubernetes_secret_pkcs12_truststore_password != null ? [var.ssl_kubernetes_secret_pkcs12_truststore_password] : []
+            content {
+              name = "JAVAX_NET_SSL_TRUST_STORE_PASSWORD"
+              value_from {
+                secret_key_ref {
+                  name     = var.ssl_kubernetes_secret_pkcs12_truststore_password
+                  key      = var.ssl_kubernetes_secret_pkcs12_truststore_password_key
+                  optional = false
+                }
+              }
+            }
+          }
+
+          dynamic "env" {
+            for_each = var.ssl_kubernetes_secret_pkcs12_keystore_password != null ? [var.ssl_kubernetes_secret_pkcs12_keystore_password] : []
+            content {
+              name = "JAVAX_NET_SSL_KEY_STORE_PASSWORD"
+              value_from {
+                secret_key_ref {
+                  name     = var.ssl_kubernetes_secret_pkcs12_keystore_password
+                  key      = var.ssl_kubernetes_secret_pkcs12_keystore_password_key
+                  optional = false
+                }
+              }
+            }
+          }
+
+          dynamic "env" {
             for_each = var.kubernetes_container_spark_server_env
             content {
               name  = env.value.name
@@ -125,6 +184,24 @@ resource "kubernetes_deployment" "anaml_spark_server_deployment" {
             name       = "spark-conf"
             mount_path = "/opt/spark/conf"
             read_only  = true
+          }
+
+          dynamic "volume_mount" {
+            for_each = var.ssl_kubernetes_secret_pkcs12_truststore != null ? [var.ssl_kubernetes_secret_pkcs12_truststore] : []
+            content {
+              name       = "java-truststore"
+              mount_path = "/tmp/certificates/java/truststore"
+              read_only  = true
+            }
+          }
+
+          dynamic "volume_mount" {
+            for_each = var.ssl_kubernetes_secret_pkcs12_keystore != null ? [var.ssl_kubernetes_secret_pkcs12_keystore] : []
+            content {
+              name       = "java-keystore"
+              mount_path = "/tmp/certificates/java/keystore"
+              read_only  = true
+            }
           }
 
           # User injected volume mounts - decouples AWS/GCP implementations

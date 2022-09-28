@@ -477,6 +477,70 @@ Type: `string`
 
 Default: `"/spark-history"`
 
+### <a name="input_ssl_kubernetes_secret_pkcs12_keystore"></a> [ssl\_kubernetes\_secret\_pkcs12\_keystore](#input\_ssl\_kubernetes\_secret\_pkcs12\_keystore)
+
+Description: (Optional) The name of the Kubernetes secret containing a Java pkcs12 keystore if you which to enable client SSL support and or enable HTTPS for anaml-server
+
+Type: `string`
+
+Default: `null`
+
+### <a name="input_ssl_kubernetes_secret_pkcs12_keystore_key"></a> [ssl\_kubernetes\_secret\_pkcs12\_keystore\_key](#input\_ssl\_kubernetes\_secret\_pkcs12\_keystore\_key)
+
+Description: (Optional) The Java pkcs12 keystore key inside the kubernetes\_secret\_pkcs12\_keystore value
+
+Type: `string`
+
+Default: `"javax.net.ssl.keyStore"`
+
+### <a name="input_ssl_kubernetes_secret_pkcs12_keystore_password"></a> [ssl\_kubernetes\_secret\_pkcs12\_keystore\_password](#input\_ssl\_kubernetes\_secret\_pkcs12\_keystore\_password)
+
+Description: (Optional) The Kubernetes secret name containing the ssl\_kubernetes\_secret\_pkcs12\_keystore password if the keystore is password protected
+
+Type: `string`
+
+Default: `null`
+
+### <a name="input_ssl_kubernetes_secret_pkcs12_keystore_password_key"></a> [ssl\_kubernetes\_secret\_pkcs12\_keystore\_password\_key](#input\_ssl\_kubernetes\_secret\_pkcs12\_keystore\_password\_key)
+
+Description: (Optional) The key used inside ssl\_kubernetes\_secret\_pkcs12\_keystore\_password for the trust store password if set
+
+Type: `string`
+
+Default: `"javax.net.ssl.keyStorePassword"`
+
+### <a name="input_ssl_kubernetes_secret_pkcs12_truststore"></a> [ssl\_kubernetes\_secret\_pkcs12\_truststore](#input\_ssl\_kubernetes\_secret\_pkcs12\_truststore)
+
+Description: (Optional) The name of the Kubernetes secret containing a Java pkcs12 truststore if you which to enable client SSL support and or enable HTTPS for anaml-server
+
+Type: `string`
+
+Default: `null`
+
+### <a name="input_ssl_kubernetes_secret_pkcs12_truststore_key"></a> [ssl\_kubernetes\_secret\_pkcs12\_truststore\_key](#input\_ssl\_kubernetes\_secret\_pkcs12\_truststore\_key)
+
+Description: (Optional) The Java pkcs12 truststore key inside the kubernetes\_secret\_pkcs12\_truststore value
+
+Type: `string`
+
+Default: `"javax.net.ssl.trustStore"`
+
+### <a name="input_ssl_kubernetes_secret_pkcs12_truststore_password"></a> [ssl\_kubernetes\_secret\_pkcs12\_truststore\_password](#input\_ssl\_kubernetes\_secret\_pkcs12\_truststore\_password)
+
+Description: (Optional) The Kubernetes secret name containing the ssl\_kubernetes\_secret\_pkcs12\_truststore password if the truststore is password protected
+
+Type: `string`
+
+Default: `null`
+
+### <a name="input_ssl_kubernetes_secret_pkcs12_truststore_password_key"></a> [ssl\_kubernetes\_secret\_pkcs12\_truststore\_password\_key](#input\_ssl\_kubernetes\_secret\_pkcs12\_truststore\_password\_key)
+
+Description: (Optional) The key used inside ssl\_kubernetes\_secret\_pkcs12\_truststore\_password for the trust store password if set
+
+Type: `string`
+
+Default: `"javax.net.ssl.trustStorePassword"`
+
 ## Outputs
 
 The following outputs are exported:

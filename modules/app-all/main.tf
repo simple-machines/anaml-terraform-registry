@@ -198,6 +198,17 @@ module "spark-server" {
   kubernetes_container_spark_server_volumes       = var.override_anaml_spark_server_additional_volumes
   kubernetes_container_spark_server_volume_mounts = var.override_anaml_spark_server_additional_volume_mounts
 
+  ssl_kubernetes_secret_pkcs12_truststore              = var.override_anaml_spark_server_ssl_kubernetes_secret_pkcs12_truststore
+  ssl_kubernetes_secret_pkcs12_truststore_key          = var.override_anaml_spark_server_ssl_kubernetes_secret_pkcs12_truststore_key
+  ssl_kubernetes_secret_pkcs12_truststore_password     = var.override_anaml_spark_server_ssl_kubernetes_secret_pkcs12_truststore_password
+  ssl_kubernetes_secret_pkcs12_truststore_password_key = var.override_anaml_spark_server_ssl_kubernetes_secret_pkcs12_truststore_password_key
+
+  ssl_kubernetes_secret_pkcs12_keystore              = var.override_anaml_spark_server_ssl_kubernetes_secret_pkcs12_keystore
+  ssl_kubernetes_secret_pkcs12_keystore_key          = var.override_anaml_spark_server_ssl_kubernetes_secret_pkcs12_keystore_key
+  ssl_kubernetes_secret_pkcs12_keystore_password     = var.override_anaml_spark_server_ssl_kubernetes_secret_pkcs12_keystore_password
+  ssl_kubernetes_secret_pkcs12_keystore_password_key = var.override_anaml_spark_server_ssl_kubernetes_secret_pkcs12_keystore_password_key
+
+
   spark_history_server_additional_env_values    = var.override_spark_history_server_additional_env_values
   spark_history_server_additional_volumes       = var.override_spark_history_server_additional_volumes
   spark_history_server_additional_volume_mounts = var.override_spark_history_server_additional_volume_mounts

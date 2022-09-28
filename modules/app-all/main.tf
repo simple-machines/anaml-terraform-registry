@@ -210,6 +210,8 @@ module "spark-server" {
   # Use injected env_from values
   anaml_server_user     = "$(ANAML_ADMIN_TOKEN)"
   anaml_server_password = "$(ANAML_ADMIN_SECRET)"
+
+  anaml_server_url = module.anaml-server.internal_url
 }
 
 

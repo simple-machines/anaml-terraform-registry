@@ -543,7 +543,7 @@ Description: (Optional) The Java pkcs12 keystore key inside the kubernetes\_secr
 
 Type: `string`
 
-Default: `"javax.net.ssl.keyStore"`
+Default: `null`
 
 ### <a name="input_override_anaml_server_ssl_kubernetes_secret_pkcs12_keystore_password"></a> [override\_anaml\_server\_ssl\_kubernetes\_secret\_pkcs12\_keystore\_password](#input\_override\_anaml\_server\_ssl\_kubernetes\_secret\_pkcs12\_keystore\_password)
 
@@ -559,7 +559,7 @@ Description: (Optional) The key used inside ssl\_kubernetes\_secret\_pkcs12\_key
 
 Type: `string`
 
-Default: `"JAVAX_NET_SSL_KEYSTOREPASSWORD"`
+Default: `null`
 
 ### <a name="input_override_anaml_server_ssl_kubernetes_secret_pkcs12_truststore"></a> [override\_anaml\_server\_ssl\_kubernetes\_secret\_pkcs12\_truststore](#input\_override\_anaml\_server\_ssl\_kubernetes\_secret\_pkcs12\_truststore)
 
@@ -591,7 +591,7 @@ Description: (Optional) The key used inside ssl\_kubernetes\_secret\_pkcs12\_tru
 
 Type: `string`
 
-Default: `"JAVAX_NET_SSL_TRUSTSTOREPASSWORD"`
+Default: `null`
 
 ### <a name="input_override_anaml_server_version"></a> [override\_anaml\_server\_version](#input\_override\_anaml\_server\_version)
 

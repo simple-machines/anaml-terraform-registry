@@ -172,8 +172,8 @@ variable "override_anaml_server_ssl_kubernetes_secret_pkcs12_truststore_password
 
 variable "override_anaml_server_ssl_kubernetes_secret_pkcs12_truststore_password_key" {
   type        = string
-  default     = "JAVAX_NET_SSL_TRUSTSTOREPASSWORD"
   description = "(Optional) The key used inside ssl_kubernetes_secret_pkcs12_truststore_password for the trust store password if set"
+  default = null
 }
 
 variable "override_anaml_server_ssl_kubernetes_secret_pkcs12_keystore" {
@@ -184,7 +184,7 @@ variable "override_anaml_server_ssl_kubernetes_secret_pkcs12_keystore" {
 
 variable "override_anaml_server_ssl_kubernetes_secret_pkcs12_keystore_key" {
   type        = string
-  default     = "javax.net.ssl.keyStore"
+  default     = null
   description = "(Optional) The Java pkcs12 keystore key inside the kubernetes_secret_pkcs12_keystore value"
 }
 
@@ -196,8 +196,8 @@ variable "override_anaml_server_ssl_kubernetes_secret_pkcs12_keystore_password" 
 
 variable "override_anaml_server_ssl_kubernetes_secret_pkcs12_keystore_password_key" {
   type        = string
-  default     = "JAVAX_NET_SSL_KEYSTOREPASSWORD"
   description = "(Optional) The key used inside ssl_kubernetes_secret_pkcs12_keystore_password for the trust store password if set"
+  default = null
 }
 
 variable "override_anaml_server_governance_run_type_checks" {

@@ -8,8 +8,8 @@ By default Anaml UI uses plain HTTP and delegates SSL termination to Kubernetes 
 
 If you wish to terminate SSL inside the pod, you should:
 
-1) Create a JAVA pkcs12 truststore. Place it in a secret under the `javax.net.ssl.trustStore` key. If the trust store has a password you should create a secret for the password and place it under the JAVAX\_NET\_SSL\_TRUSTSTOREPASSWORD key.
-2) Create a JAVA pkcs12 keystore. Place it in a secret under the `javax.net.ssl.keyStore` key. If the key store has a password you should create a secret for the password and place it under the JAVAX\_NET\_SSL\_TRUSTKEYPASSWORD key.
+1) Create a JAVA pkcs12 truststore. Place it in a secret under the `javax.net.ssl.trustStore` key. If the trust store has a password you should create a secret for the password and place it under the javax.net.ssl.trustSTorePassword key.
+2) Create a JAVA pkcs12 keystore. Place it in a secret under the `javax.net.ssl.keyStore` key. If the key store has a password you should create a secret for the password and place it under the javax.net.ssl.ketStorePassword key.
 3) Set the `ssl_kubernetes_secret_pkcs12_truststore` variable with the name of the secret containing the trust store. Also set the `ssl_kubernetes_secret_pkcs12_truststore_password` variable with the name of the secret containing the truststore password if it has one
 4) Set the `ssl_kubernetes_secret_pkcs12_keystore` variable with the name of the secret containing the key store. Also set the `ssl_kubernetes_secret_pkcs12_keystore_password` variable with the name of the secret containing the keystore password if it has one
 
@@ -35,7 +35,7 @@ resource "kubernetes_secret" "truststore_password" {
   }
 
   data = {
-    JAVAX_NET_SSL_TRUSTSTOREPASSWORD = "changeit"
+    "javax.net.ssl.trustStorePassword" = "changeit"
   }
 }
 
@@ -57,7 +57,7 @@ resource "kubernetes_secret" "keystore_password" {
   }
 
   data = {
-    JAVAX_NET_SSL_KEYSTOREPASSWORD = "changeit"
+    "javax.net.ssl.keyStorePassword" = "changeit"
   }
 }
 *
@@ -66,7 +66,7 @@ resource "kubernetes_secret" "keystore_password" {
 If you enable SSL on anaml-server you need to update your ingress to tell it to use HTTPS.
 For the nginx ingress controller, this is done by adding the below annotation
 ```
-"nginx.ingress.kubernetes.io/backend-protocol" : "HTTP",
+"nginx.ingress.kubernetes.io/backend-protocol" : "HTTPS",
 ```
 
 ## Requirements
@@ -474,7 +474,7 @@ Description: (Optional) The key used inside ssl\_kubernetes\_secret\_pkcs12\_key
 
 Type: `string`
 
-Default: `"JAVAX_NET_SSL_KEYSTOREPASSWORD"`
+Default: `"javax.net.ssl.keyStorePassword"`
 
 ### <a name="input_ssl_kubernetes_secret_pkcs12_truststore"></a> [ssl\_kubernetes\_secret\_pkcs12\_truststore](#input\_ssl\_kubernetes\_secret\_pkcs12\_truststore)
 
@@ -506,7 +506,7 @@ Description: (Optional) The key used inside ssl\_kubernetes\_secret\_pkcs12\_tru
 
 Type: `string`
 
-Default: `"JAVAX_NET_SSL_TRUSTSTOREPASSWORD"`
+Default: `"javax.net.ssl.trustStorePassword"`
 
 ## Outputs
 

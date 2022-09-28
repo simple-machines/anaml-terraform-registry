@@ -295,6 +295,7 @@ variable "ssl_kubernetes_secret_pkcs12_truststore_key" {
   type        = string
   default     = "javax.net.ssl.trustStore"
   description = "(Optional) The Java pkcs12 truststore key inside the kubernetes_secret_pkcs12_truststore value"
+  nullable    = false
 }
 
 variable "ssl_kubernetes_secret_pkcs12_truststore_password" {
@@ -305,8 +306,9 @@ variable "ssl_kubernetes_secret_pkcs12_truststore_password" {
 
 variable "ssl_kubernetes_secret_pkcs12_truststore_password_key" {
   type        = string
-  default     = "JAVAX_NET_SSL_TRUSTSTOREPASSWORD"
+  default     = "javax.net.ssl.trustStorePassword"
   description = "(Optional) The key used inside ssl_kubernetes_secret_pkcs12_truststore_password for the trust store password if set"
+  nullable    = false
 }
 
 variable "ssl_kubernetes_secret_pkcs12_keystore" {
@@ -319,6 +321,7 @@ variable "ssl_kubernetes_secret_pkcs12_keystore_key" {
   type        = string
   default     = "javax.net.ssl.keyStore"
   description = "(Optional) The Java pkcs12 keystore key inside the kubernetes_secret_pkcs12_keystore value"
+  nullable    = false
 }
 
 variable "ssl_kubernetes_secret_pkcs12_keystore_password" {
@@ -329,6 +332,7 @@ variable "ssl_kubernetes_secret_pkcs12_keystore_password" {
 
 variable "ssl_kubernetes_secret_pkcs12_keystore_password_key" {
   type        = string
-  default     = "JAVAX_NET_SSL_KEYSTOREPASSWORD"
+  default     = "javax.net.ssl.keyStorePassword"
   description = "(Optional) The key used inside ssl_kubernetes_secret_pkcs12_keystore_password for the trust store password if set"
+  nullable    = false
 }

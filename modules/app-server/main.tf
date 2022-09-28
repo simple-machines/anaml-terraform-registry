@@ -8,8 +8,8 @@
  *
  * If you wish to terminate SSL inside the pod, you should:
  *
- * 1) Create a JAVA pkcs12 truststore. Place it in a secret under the `javax.net.ssl.trustStore` key. If the trust store has a password you should create a secret for the password and place it under the JAVAX_NET_SSL_TRUSTSTOREPASSWORD key.
- * 2) Create a JAVA pkcs12 keystore. Place it in a secret under the `javax.net.ssl.keyStore` key. If the key store has a password you should create a secret for the password and place it under the JAVAX_NET_SSL_TRUSTKEYPASSWORD key.
+ * 1) Create a JAVA pkcs12 truststore. Place it in a secret under the `javax.net.ssl.trustStore` key. If the trust store has a password you should create a secret for the password and place it under the javax.net.ssl.trustSTorePassword key.
+ * 2) Create a JAVA pkcs12 keystore. Place it in a secret under the `javax.net.ssl.keyStore` key. If the key store has a password you should create a secret for the password and place it under the javax.net.ssl.ketStorePassword key.
  * 3) Set the `ssl_kubernetes_secret_pkcs12_truststore` variable with the name of the secret containing the trust store. Also set the `ssl_kubernetes_secret_pkcs12_truststore_password` variable with the name of the secret containing the truststore password if it has one
  * 4) Set the `ssl_kubernetes_secret_pkcs12_keystore` variable with the name of the secret containing the key store. Also set the `ssl_kubernetes_secret_pkcs12_keystore_password` variable with the name of the secret containing the keystore password if it has one
  *
@@ -35,7 +35,7 @@
  *   }
  *
  *   data = {
- *     JAVAX_NET_SSL_TRUSTSTOREPASSWORD = "changeit"
+ *     "javax.net.ssl.trustStorePassword" = "changeit"
  *   }
  * }
  *
@@ -57,7 +57,7 @@
  *   }
  *
  *   data = {
- *     JAVAX_NET_SSL_KEYSTOREPASSWORD = "changeit"
+ *     "javax.net.ssl.keyStorePassword" = "changeit"
  *   }
  * }
  *```
@@ -65,7 +65,7 @@
  * If you enable SSL on anaml-server you need to update your ingress to tell it to use HTTPS.
  * For the nginx ingress controller, this is done by adding the below annotation
  * ```
- * "nginx.ingress.kubernetes.io/backend-protocol" : "HTTP",
+ * "nginx.ingress.kubernetes.io/backend-protocol" : "HTTPS",
  * ```
  */
 
@@ -435,7 +435,7 @@ resource "kubernetes_deployment" "anaml_server" {
           dynamic "env" {
             for_each = var.ssl_kubernetes_secret_pkcs12_truststore_password != null ? [var.ssl_kubernetes_secret_pkcs12_truststore_password] : []
             content {
-              name = "JAVAX_NET_SSL_TRUSTSTOREPASSWORD"
+              name = "JAVAX_NET_SSL_TRUST_STORE_PASSWORD"
               value_from {
                 secret_key_ref {
                   name     = var.ssl_kubernetes_secret_pkcs12_truststore_password
@@ -449,7 +449,7 @@ resource "kubernetes_deployment" "anaml_server" {
           dynamic "env" {
             for_each = var.ssl_kubernetes_secret_pkcs12_keystore_password != null ? [var.ssl_kubernetes_secret_pkcs12_keystore_password] : []
             content {
-              name = "JAVAX_NET_SSL_KEYSTOREPASSWORD"
+              name = "JAVAX_NET_SSL_KEY_STORE_PASSWORD"
               value_from {
                 secret_key_ref {
                   name     = var.ssl_kubernetes_secret_pkcs12_keystore_password

@@ -109,6 +109,18 @@ module "anaml-server" {
 
   kubernetes_pod_sidecars = var.kubernetes_pod_anaml_server_sidecars
 
+
+  ssl_kubernetes_secret_pkcs12_truststore              = var.override_anaml_server_ssl_kubernetes_secret_pkcs12_truststore
+  ssl_kubernetes_secret_pkcs12_truststore_key          = var.override_anaml_server_ssl_kubernetes_secret_pkcs12_truststore_key
+  ssl_kubernetes_secret_pkcs12_truststore_password     = var.override_anaml_server_ssl_kubernetes_secret_pkcs12_truststore_password
+  ssl_kubernetes_secret_pkcs12_truststore_password_key = var.override_anaml_server_ssl_kubernetes_secret_pkcs12_truststore_password_key
+
+  ssl_kubernetes_secret_pkcs12_keystore              = var.override_anaml_server_ssl_kubernetes_secret_pkcs12_keystore
+  ssl_kubernetes_secret_pkcs12_keystore_key          = var.override_anaml_server_ssl_kubernetes_secret_pkcs12_keystore_key
+  ssl_kubernetes_secret_pkcs12_keystore_password     = var.override_anaml_server_ssl_kubernetes_secret_pkcs12_keystore_password
+  ssl_kubernetes_secret_pkcs12_keystore_password_key = var.override_anaml_server_ssl_kubernetes_secret_pkcs12_keystore_password_key
+
+
   log4j_overrides = var.override_anaml_server_log4j_overrides
 
   license_key = var.license_key
@@ -133,6 +145,7 @@ module "anaml-ui" {
   kubernetes_service_annotations      = var.kubernetes_service_annotations_anaml_ui
   kubernetes_service_type             = var.kubernetes_service_type
   skin                                = var.override_anaml_ui_skin
+
 
   docs_url                 = module.anaml-docs.internal_url
   spark_history_server_url = module.spark-server.spark_history_server_internal_url

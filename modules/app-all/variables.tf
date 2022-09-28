@@ -152,6 +152,54 @@ variable "override_anaml_server_log4j_overrides" {
   default     = null
 }
 
+variable "override_anaml_server_ssl_kubernetes_secret_pkcs12_truststore" {
+  type        = string
+  default     = null
+  description = "(Optional) The name of the Kubernetes secret containing a Java pkcs12 truststore if you which to enable client SSL support and or enable HTTPS for anaml-server"
+}
+
+variable "override_anaml_server_ssl_kubernetes_secret_pkcs12_truststore_key" {
+  type        = string
+  default     = "javax.net.ssl.trustStore"
+  description = "(Optional) The Java pkcs12 truststore key inside the kubernetes_secret_pkcs12_truststore value"
+}
+
+variable "override_anaml_server_ssl_kubernetes_secret_pkcs12_truststore_password" {
+  type        = string
+  default     = null
+  description = "(Optional) The Kubernetes secret name containing the ssl_kubernetes_secret_pkcs12_truststore password if the truststore is password protected"
+}
+
+variable "override_anaml_server_ssl_kubernetes_secret_pkcs12_truststore_password_key" {
+  type        = string
+  default     = "JAVAX_NET_SSL_TRUSTSTOREPASSWORD"
+  description = "(Optional) The key used inside ssl_kubernetes_secret_pkcs12_truststore_password for the trust store password if set"
+}
+
+variable "override_anaml_server_ssl_kubernetes_secret_pkcs12_keystore" {
+  type        = string
+  default     = null
+  description = "(Optional) The name of the Kubernetes secret containing a Java pkcs12 keystore if you which to enable client SSL support and or enable HTTPS for anaml-server"
+}
+
+variable "override_anaml_server_ssl_kubernetes_secret_pkcs12_keystore_key" {
+  type        = string
+  default     = "javax.net.ssl.keyStore"
+  description = "(Optional) The Java pkcs12 keystore key inside the kubernetes_secret_pkcs12_keystore value"
+}
+
+variable "override_anaml_server_ssl_kubernetes_secret_pkcs12_keystore_password" {
+  type        = string
+  default     = null
+  description = "(Optional) The Kubernetes secret name containing the ssl_kubernetes_secret_pkcs12_keystore password if the keystore is password protected"
+}
+
+variable "override_anaml_server_ssl_kubernetes_secret_pkcs12_keystore_password_key" {
+  type        = string
+  default     = "JAVAX_NET_SSL_KEYSTOREPASSWORD"
+  description = "(Optional) The key used inside ssl_kubernetes_secret_pkcs12_keystore_password for the trust store password if set"
+}
+
 variable "override_anaml_server_governance_run_type_checks" {
   type    = bool
   default = null

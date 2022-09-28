@@ -2,6 +2,72 @@
 # app-server Terraform module
 
 This module deploys a Kubernetes Deployment and Service running the Anaml backend server application
+## Terminating SSL inside the pod
+
+By default Anaml UI uses plain HTTP and delegates SSL termination to Kubernetes Ingress.
+
+If you wish to terminate SSL inside the pod, you should:
+
+1) Create a JAVA pkcs12 truststore. Place it in a secret under the `javax.net.ssl.trustStore` key. If the trust store has a password you should create a secret for the password and place it under the JAVAX\_NET\_SSL\_TRUSTSTOREPASSWORD key.
+2) Create a JAVA pkcs12 keystore. Place it in a secret under the `javax.net.ssl.keyStore` key. If the key store has a password you should create a secret for the password and place it under the JAVAX\_NET\_SSL\_TRUSTKEYPASSWORD key.
+3) Set the `ssl_kubernetes_secret_pkcs12_truststore` variable with the name of the secret containing the trust store. Also set the `ssl_kubernetes_secret_pkcs12_truststore_password` variable with the name of the secret containing the truststore password if it has one
+4) Set the `ssl_kubernetes_secret_pkcs12_keystore` variable with the name of the secret containing the key store. Also set the `ssl_kubernetes_secret_pkcs12_keystore_password` variable with the name of the secret containing the keystore password if it has one
+
+See https://docs.oracle.com/cd/E19509-01/820-3503/6nf1il6er/index.html for details on creating Java key and tust stores
+
+Example using Terraform for secrets:
+```
+resource "kubernetes_secret" "truststore" {
+  metadata {
+    name = "java-truststore"
+    namespace = var.namespace
+  }
+
+  binary_data = {
+    "javax.net.ssl.trustStore" = "${filebase64("./tmp_certs/cacerts")}"
+  }
+}
+
+resource "kubernetes_secret" "truststore_password" {
+  metadata {
+    name = "java-truststore-password"
+    namespace = var.namespace
+  }
+
+  data = {
+    JAVAX_NET_SSL_TRUSTSTOREPASSWORD = "changeit"
+  }
+}
+
+resource "kubernetes_secret" "keystore" {
+  metadata {
+    name = "java-keystore"
+    namespace = var.namespace
+  }
+
+   binary_data = {
+    "javax.net.ssl.keyStore" = "${filebase64("./tmp_certs/keystore.pfx")}"
+  }
+}
+
+resource "kubernetes_secret" "keystore_password" {
+  metadata {
+    name = "java-keystore-password"
+    namespace = var.namespace
+  }
+
+  data = {
+    JAVAX_NET_SSL_KEYSTOREPASSWORD = "changeit"
+  }
+}
+*
+```
+## SSL Notes
+If you enable SSL on anaml-server you need to update your ingress to tell it to use HTTPS.
+For the nginx ingress controller, this is done by adding the below annotation
+```
+"nginx.ingress.kubernetes.io/backend-protocol" : "HTTP",
+```
 
 ## Requirements
 
@@ -378,6 +444,70 @@ Type: `string`
 
 Default: `null`
 
+### <a name="input_ssl_kubernetes_secret_pkcs12_keystore"></a> [ssl\_kubernetes\_secret\_pkcs12\_keystore](#input\_ssl\_kubernetes\_secret\_pkcs12\_keystore)
+
+Description: (Optional) The name of the Kubernetes secret containing a Java pkcs12 keystore if you which to enable client SSL support and or enable HTTPS for anaml-server
+
+Type: `string`
+
+Default: `null`
+
+### <a name="input_ssl_kubernetes_secret_pkcs12_keystore_key"></a> [ssl\_kubernetes\_secret\_pkcs12\_keystore\_key](#input\_ssl\_kubernetes\_secret\_pkcs12\_keystore\_key)
+
+Description: (Optional) The Java pkcs12 keystore key inside the kubernetes\_secret\_pkcs12\_keystore value
+
+Type: `string`
+
+Default: `"javax.net.ssl.keyStore"`
+
+### <a name="input_ssl_kubernetes_secret_pkcs12_keystore_password"></a> [ssl\_kubernetes\_secret\_pkcs12\_keystore\_password](#input\_ssl\_kubernetes\_secret\_pkcs12\_keystore\_password)
+
+Description: (Optional) The Kubernetes secret name containing the ssl\_kubernetes\_secret\_pkcs12\_keystore password if the keystore is password protected
+
+Type: `string`
+
+Default: `null`
+
+### <a name="input_ssl_kubernetes_secret_pkcs12_keystore_password_key"></a> [ssl\_kubernetes\_secret\_pkcs12\_keystore\_password\_key](#input\_ssl\_kubernetes\_secret\_pkcs12\_keystore\_password\_key)
+
+Description: (Optional) The key used inside ssl\_kubernetes\_secret\_pkcs12\_keystore\_password for the trust store password if set
+
+Type: `string`
+
+Default: `"JAVAX_NET_SSL_KEYSTOREPASSWORD"`
+
+### <a name="input_ssl_kubernetes_secret_pkcs12_truststore"></a> [ssl\_kubernetes\_secret\_pkcs12\_truststore](#input\_ssl\_kubernetes\_secret\_pkcs12\_truststore)
+
+Description: (Optional) The name of the Kubernetes secret containing a Java pkcs12 truststore if you which to enable client SSL support and or enable HTTPS for anaml-server
+
+Type: `string`
+
+Default: `null`
+
+### <a name="input_ssl_kubernetes_secret_pkcs12_truststore_key"></a> [ssl\_kubernetes\_secret\_pkcs12\_truststore\_key](#input\_ssl\_kubernetes\_secret\_pkcs12\_truststore\_key)
+
+Description: (Optional) The Java pkcs12 truststore key inside the kubernetes\_secret\_pkcs12\_truststore value
+
+Type: `string`
+
+Default: `"javax.net.ssl.trustStore"`
+
+### <a name="input_ssl_kubernetes_secret_pkcs12_truststore_password"></a> [ssl\_kubernetes\_secret\_pkcs12\_truststore\_password](#input\_ssl\_kubernetes\_secret\_pkcs12\_truststore\_password)
+
+Description: (Optional) The Kubernetes secret name containing the ssl\_kubernetes\_secret\_pkcs12\_truststore password if the truststore is password protected
+
+Type: `string`
+
+Default: `null`
+
+### <a name="input_ssl_kubernetes_secret_pkcs12_truststore_password_key"></a> [ssl\_kubernetes\_secret\_pkcs12\_truststore\_password\_key](#input\_ssl\_kubernetes\_secret\_pkcs12\_truststore\_password\_key)
+
+Description: (Optional) The key used inside ssl\_kubernetes\_secret\_pkcs12\_truststore\_password for the trust store password if set
+
+Type: `string`
+
+Default: `"JAVAX_NET_SSL_TRUSTSTOREPASSWORD"`
+
 ## Outputs
 
 The following outputs are exported:
@@ -387,6 +517,10 @@ The following outputs are exported:
 Description: n/a
 
 ### <a name="output_internal_url"></a> [internal\_url](#output\_internal\_url)
+
+Description: n/a
+
+### <a name="output_is_https"></a> [is\_https](#output\_is\_https)
 
 Description: n/a
 

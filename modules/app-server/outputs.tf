@@ -14,9 +14,14 @@ output "kubernetes_service_port_number" {
   value = kubernetes_service.anaml_server.spec.0.port.0.port
 }
 
+output "is_https" {
+  value = local.port == 8443
+}
+
 output "internal_url" {
   value = format(
-    "http://%s.%s.svc.cluster.local:%s",
+    "%s://%s.%s.svc.cluster.local:%s",
+    local.port == 8443 ? "https" : "http",
     kubernetes_service.anaml_server.metadata.0.name,
     kubernetes_service.anaml_server.metadata.0.namespace,
     kubernetes_service.anaml_server.spec[0].port[0].port

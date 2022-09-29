@@ -264,6 +264,16 @@ resource "kubernetes_deployment" "anaml_server" {
           name = "config"
           config_map {
             name = kubernetes_config_map.anaml_server.metadata.0.name
+            default_mode = "0444"
+            optional = false
+            items {
+              key = "application.conf"
+              path = "application.conf"
+            }
+            items {
+              key = "log4j2.xml"
+              path = "log4j2.xml"
+            }
           }
         }
 

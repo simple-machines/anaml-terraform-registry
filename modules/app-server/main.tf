@@ -263,15 +263,15 @@ resource "kubernetes_deployment" "anaml_server" {
         volume {
           name = "config"
           config_map {
-            name = kubernetes_config_map.anaml_server.metadata.0.name
+            name         = kubernetes_config_map.anaml_server.metadata.0.name
             default_mode = "0444"
-            optional = false
+            optional     = false
             items {
-              key = "application.conf"
+              key  = "application.conf"
               path = "application.conf"
             }
             items {
-              key = "log4j2.xml"
+              key  = "log4j2.xml"
               path = "log4j2.xml"
             }
           }
@@ -292,8 +292,8 @@ resource "kubernetes_deployment" "anaml_server" {
           content {
             name = "java-truststore"
             secret {
-              secret_name = volume.value
-              optional    = false
+              secret_name  = volume.value
+              optional     = false
               default_mode = "0444"
               items {
                 key  = var.ssl_kubernetes_secret_pkcs12_truststore_key

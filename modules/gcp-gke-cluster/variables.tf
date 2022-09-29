@@ -104,13 +104,13 @@ variable "anaml_spark_pool_machine_type" {
 
 
 variable "maintenance_start_time" {
-  type = string
-  default = null
+  type        = string
+  default     = null
   description = "(Optional) Time window specified for daily or recurring maintenance operations in RFC3339 format"
 }
 
 variable "maintenance_end_time" {
-  type = string
-  default = null
+  type        = string
+  default     = null
   description = "(Optional) Time window specified for daily or recurring maintenance operations in RFC3339 format"
 }

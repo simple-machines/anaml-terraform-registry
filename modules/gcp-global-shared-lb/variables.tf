@@ -46,38 +46,38 @@ variable "gcp_project_name" {
 }
 
 variable "enable_health_check_logging" {
-  type = bool
-  default = false
+  type        = bool
+  default     = false
   description = "(Optional) Indicates whether or not to export logs. This is false by default, which means no health check logging will be done."
 }
 
 variable "enable_backend_logging" {
-  type = bool
-  default = false
+  type        = bool
+  default     = false
   description = "(Optional) This field denotes the logging options for the load balancer traffic served by this backend service. If logging is enabled, logs will be exported to Stackdriver"
 
 }
 
 variable "anaml_docs_security_policy" {
-  type = string
-  default = null
+  type        = string
+  default     = null
   description = "(Optional) The security policy associated with this backend service."
 }
 
 variable "anaml_ui_security_policy" {
-  type = string
-  default = null
+  type        = string
+  default     = null
   description = "(Optional) The security policy associated with this backend service."
 }
 
 variable "anaml_server_security_policy" {
-  type = string
-  default = null
+  type        = string
+  default     = null
   description = "(Optional) The security policy associated with this backend service."
 }
 
 variable "spark_history_server_security_policy" {
-  type = string
-  default = null
+  type        = string
+  default     = null
   description = "(Optional) The security policy associated with this backend service."
 }

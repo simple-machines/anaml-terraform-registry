@@ -5,7 +5,7 @@ variable "postgresql_deploy_versions" {
 }
 
 variable "name_prefix" {
-  type = string
+  type    = string
   default = "anaml-"
 }
 
@@ -24,51 +24,51 @@ variable "ip_configuration_private_network_id" {
 }
 
 variable "ip_configuration_ipv4_enabled" {
-  type = bool
+  type    = bool
   default = false
 }
 
 variable "tier" {
-  type = string
+  type    = string
   default = "db-custom-2-8192"
 }
 
 variable "disk_size" {
-  type = number
+  type    = number
   default = 20
 }
 
 variable "deletion_protection" {
-  type = bool
+  type    = bool
   default = false
 }
 
 variable "insights_config_query_insights_enabled" {
-  type = bool
+  type    = bool
   default = true
 }
 
 variable "insights_config_query_string_length" {
-  type = number
+  type    = number
   default = 1024
 }
 
 variable "insights_config_record_application_tags" {
-  type = bool
+  type    = bool
   default = false
 }
 
 variable "insights_config_record_client_address" {
-  type = bool
+  type    = bool
   default = false
 }
 
 variable "password" {
-  type = string
+  type     = string
   nullable = false
 }
 
 variable "user" {
-  type = string
+  type    = string
   default = "anaml"
 }

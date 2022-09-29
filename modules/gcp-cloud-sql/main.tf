@@ -43,7 +43,7 @@ resource "google_sql_database_instance" "anaml_postgres_instance" {
 
 
 resource "google_sql_database" "anaml" {
-  for_each         = toset(var.postgresql_deploy_versions)
+  for_each = toset(var.postgresql_deploy_versions)
 
   name     = "anaml"
   instance = google_sql_database_instance.anaml_postgres_instance[each.key].name

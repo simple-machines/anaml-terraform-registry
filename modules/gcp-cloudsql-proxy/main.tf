@@ -57,8 +57,8 @@ resource "kubernetes_deployment" "default" {
         service_account_name = var.kubernetes_service_account
         node_selector        = var.kubernetes_node_selector
         container {
-          name  = var.kubernetes_deployment_name
-          image = "${var.gcp_cloudsql_image_repository}:${var.gcp_cloudsql_proxy_version}"
+          name              = var.kubernetes_deployment_name
+          image             = "${var.gcp_cloudsql_image_repository}:${var.gcp_cloudsql_proxy_version}"
           image_pull_policy = var.kubernetes_image_pull_policy == null ? (var.gcp_cloudsql_proxy_version == "latest" ? "Always" : "IfNotPresent") : var.kubernetes_image_pull_policy
           command = flatten([
             ["/cloud_sql_proxy"],
@@ -95,9 +95,9 @@ resource "kubernetes_service" "default" {
   }
 
   spec {
-    type     = var.kubernetes_service_type
+    type = var.kubernetes_service_type
     selector = {
-        "app.kubernetes.io/name" = local.deployment_labels["app.kubernetes.io/name"]
+      "app.kubernetes.io/name" = local.deployment_labels["app.kubernetes.io/name"]
     }
     port {
       name        = "postgres"

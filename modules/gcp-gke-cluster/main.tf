@@ -45,7 +45,7 @@ module "gke_cluster" {
   remove_default_node_pool = true
 
   maintenance_start_time = var.maintenance_start_time
-  maintenance_end_time = var.maintenance_end_time
+  maintenance_end_time   = var.maintenance_end_time
 
 
   release_channel = "REGULAR"

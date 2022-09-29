@@ -4,8 +4,8 @@ variable "gcp_cloudsql_proxy_version" {
 }
 
 variable "kubernetes_deployment_name" {
-  type    = string
-  default = "cloudsql-proxy"
+  type        = string
+  default     = "cloudsql-proxy"
   description = "(Optional) Name of the deployment, must be unique. Cannot be updated. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/identifiers#names)"
 }
 
@@ -20,26 +20,26 @@ variable "kubernetes_service_enable" {
 }
 
 variable "kubernetes_image_pull_policy" {
-  type    = string
+  type        = string
   description = " (Optional) Image pull policy. One of Always, Never, IfNotPresent. Defaults to Always if `anaml_docs_version` is set to`latest`, or IfNotPresent otherwise. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/images#updating-images)"
-  default = null
+  default     = null
 
   validation {
-    condition = var.kubernetes_image_pull_policy == null ? true : contains(["Always", "Never", "IfNotPresent"], var.kubernetes_image_pull_policy)
+    condition     = var.kubernetes_image_pull_policy == null ? true : contains(["Always", "Never", "IfNotPresent"], var.kubernetes_image_pull_policy)
     error_message = "The kubernetes_image_pull_policy value must be one of Always, Nerver or IfNotPresent."
   }
 }
 
 variable "kubernetes_namespace" {
-  type = string
+  type        = string
   description = "(Optional) Namespace defines the space within which name of the deployment must be unique."
-  default = null
+  default     = null
 }
 
 variable "kubernetes_node_selector" {
-  type     = map(string)
-  default  = null
-  nullable = true
+  type        = map(string)
+  default     = null
+  nullable    = true
   description = "(Optional) NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/node-selection)."
 }
 
@@ -86,12 +86,12 @@ variable "kubernetes_service_annotations" {
 }
 
 variable "kubernetes_service_type" {
-  type = string
-  default = "ClusterIP"
+  type        = string
+  default     = "ClusterIP"
   description = "(Optional) Determines how the service is exposed. Defaults to `ClusterIP`. Valid options are `ExternalName`, `ClusterIP`, `NodePort`, and `LoadBalancer`. `ExternalName` maps to the specified external_name. For more info see [ Kubernetes reference](http://kubernetes.io/docs/user-guide/services#overview)"
 
   validation {
-    condition = contains(["ExternalName", "ClusterIP", "NodePort", "LoadBalancer"], var.kubernetes_service_type)
+    condition     = contains(["ExternalName", "ClusterIP", "NodePort", "LoadBalancer"], var.kubernetes_service_type)
     error_message = "The kubernetes_service_type value must be one of ExternalName, ClusterIP, NodePort or LoadBalancer."
   }
 }

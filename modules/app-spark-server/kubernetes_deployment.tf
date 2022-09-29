@@ -325,8 +325,8 @@ resource "kubernetes_deployment" "spark_history_server_deployment" {
           name = "spark-history-conf"
           config_map {
             default_mode = "0444"
-            name = kubernetes_config_map.anaml_spark_history_server_config.metadata.0.name
-            optional = false
+            name         = kubernetes_config_map.anaml_spark_history_server_config.metadata.0.name
+            optional     = false
           }
         }
 
@@ -480,10 +480,10 @@ resource "kubernetes_deployment" "spark_history_server_deployment" {
           }
 
           volume_mount {
-            name = "spark-history-conf"
-            read_only = true
+            name       = "spark-history-conf"
+            read_only  = true
             mount_path = "/opt/spark/conf/log4j.properties"
-            sub_path = "log4j.properties"
+            sub_path   = "log4j.properties"
           }
 
           dynamic "volume_mount" {

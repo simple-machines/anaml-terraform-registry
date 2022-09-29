@@ -20,8 +20,8 @@ terraform {
 
 locals {
   deployment_labels = merge({
-    "app.kubernetes.io/name"       = "anaml-demo-data-generation-batch"
-    "app.kubernetes.io/version"    = try(
+    "app.kubernetes.io/name" = "anaml-demo-data-generation-batch"
+    "app.kubernetes.io/version" = try(
       replace(regex("^sha256:[a-z0-9]{8}", var.oniomania_image_version), ":", "_"),
       var.oniomania_image_version
     )
@@ -63,8 +63,8 @@ resource "kubernetes_cron_job" "data_generation" {
 
               image = (
                 can(regex("^sha256:[0-9A-Za-z]+$", var.oniomania_image_version))
-                  ? "${var.container_registry}/oniomania@${var.oniomania_image_version}"
-                  : "${var.container_registry}/oniomania:${var.oniomania_image_version}"
+                ? "${var.container_registry}/oniomania@${var.oniomania_image_version}"
+                : "${var.container_registry}/oniomania:${var.oniomania_image_version}"
               )
 
               image_pull_policy = var.kubernetes_image_pull_policy
@@ -130,12 +130,12 @@ resource "kubernetes_job" "data_generation_init" {
         service_account_name = var.kubernetes_service_account_name
         node_selector        = var.kubernetes_node_selector
         container {
-          name              = "anaml-demo-setup"
+          name = "anaml-demo-setup"
 
-          image             = (
+          image = (
             can(regex("^sha256:[0-9A-Za-z]+$", var.oniomania_image_version))
-              ? "${var.container_registry}/oniomania@${var.oniomania_image_version}"
-              : "${var.container_registry}/oniomania:${var.oniomania_image_version}"
+            ? "${var.container_registry}/oniomania@${var.oniomania_image_version}"
+            : "${var.container_registry}/oniomania:${var.oniomania_image_version}"
           )
 
           image_pull_policy = var.kubernetes_image_pull_policy

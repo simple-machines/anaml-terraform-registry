@@ -122,31 +122,31 @@ resource "google_compute_managed_ssl_certificate" "default" {
 resource "google_compute_backend_service" "backends" {
   for_each = merge(
     { for deployment in var.deployments : "anaml-${deployment}-docs" => {
-      health_checks = [google_compute_health_check.default.id]
+      health_checks   = [google_compute_health_check.default.id]
       security_policy = var.anaml_docs_security_policy
-    }},
+    } },
 
     { for deployment in var.deployments : "anaml-${deployment}-ui" => {
-      health_checks = [google_compute_health_check.default.id]
+      health_checks   = [google_compute_health_check.default.id]
       security_policy = var.anaml_ui_security_policy
-    }},
+    } },
 
     { for deployment in var.deployments : "anaml-${deployment}-server" => {
-      health_checks = [google_compute_health_check.default.id],
+      health_checks   = [google_compute_health_check.default.id],
       security_policy = var.anaml_server_security_policy
-      timeout_sec = 1800
-    }},
+      timeout_sec     = 1800
+    } },
 
     { for deployment in var.deployments : "${deployment}-spark-history-server" => {
-      health_checks = [google_compute_health_check.default.id]
+      health_checks   = [google_compute_health_check.default.id]
       security_policy = var.spark_history_server_security_policy
-    }}
+    } }
   )
 
 
-  name          = each.key
-  health_checks = each.value.health_checks
-  timeout_sec   = try(each.value.timeout_sec, 30)
+  name            = each.key
+  health_checks   = each.value.health_checks
+  timeout_sec     = try(each.value.timeout_sec, 30)
   security_policy = each.value.security_policy
 
   log_config {

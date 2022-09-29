@@ -10,7 +10,7 @@ main() {
    if [ -x "$file" ]; then
      info "Running pre-commit hook $(basename "$file")"
      if ! $file < /dev/tty; then
-         error "$file failed with exist code $0"
+         error "$file failed with exist code $?"
          exit 1
      fi
    fi

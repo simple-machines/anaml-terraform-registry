@@ -319,9 +319,11 @@ resource "kubernetes_deployment" "spark_history_server_deployment" {
         service_account_name = var.kubernetes_service_account
 
         volume {
-          name = "config"
+          name = "spark-history-conf"
           config_map {
-            name = kubernetes_config_map.anaml_spark_server_config.metadata.0.name
+            default_mode = "0444"
+            name = kubernetes_config_map.anaml_spark_history_server_config.metadata.0.name
+            optional = false
           }
         }
 
@@ -367,7 +369,6 @@ resource "kubernetes_deployment" "spark_history_server_deployment" {
               "-Dspark.history.fs.cleaner.enabled=true",
               "-Djava.library.path=/opt/hadoop/lib/native",
               "-Dweb.host=0.0.0.0",
-              "-Dlog4j2.configurationFile=/config/log4j2.xml"
             ], var.spark_history_server_additional_spark_history_opts))
           }
 
@@ -391,17 +392,6 @@ resource "kubernetes_deployment" "spark_history_server_deployment" {
             }
           }
 
-          # Spark History Server re-uses log4j2.xml config from anaml-spark-server
-          #
-          # Other history server config has to be set using SPARK_HISTORY_OPTS
-          # based on the entrypoint.
-          volume_mount {
-            name       = "config"
-            mount_path = "/config/log4j2.xml"
-            sub_path   = "log4j2.xml"
-            read_only  = true
-          }
-
           # User injected volume mounts - decouples AWS/GCP implementations
           dynamic "volume_mount" {
             for_each = var.spark_history_server_additional_volume_mounts
@@ -410,6 +400,13 @@ resource "kubernetes_deployment" "spark_history_server_deployment" {
               mount_path = volume_mount.value.mount_path
               read_only  = volume_mount.value.read_only
             }
+          }
+
+          volume_mount {
+            name = "spark-history-conf"
+            read_only = true
+            mount_path = "/opt/spark/conf/log4j.properties"
+            sub_path = "log4j.properties"
           }
 
         }

@@ -104,3 +104,51 @@ resource "kubernetes_config_map" "spark_defaults_conf" {
     "fairscheduler.xml" = file("${path.module}/_templates/fairscheduler.xml")
   }
 }
+
+resource "kubernetes_config_map" "anaml_spark_history_server_config" {
+  metadata {
+    name      = "anaml-spark-history-server-config"
+    namespace = var.kubernetes_namespace
+    labels    = { for k, v in local.anaml_spark_server_labels : k => v if k != "app.kubernetes.io/version" }
+  }
+
+  # The anaml-spark-docker default log4j conf suppresses more logs than we want for the history-server.
+  # Instead we provide the history server it's own log config
+  # TODO: we should bake a spark-history.log4j.properties config file in to /opt/spark/conf and use
+  # SPARK_HISTORY_OPTS="-Dlog4j2.configurationFile=/opt/spark/conf/spark-history.log4j.properties"
+  data = {
+    "log4j.properties" = <<EOT
+# Set everything to be logged to the console
+log4j.rootCategory=INFO, console
+log4j.appender.console=org.apache.log4j.ConsoleAppender
+log4j.appender.console.target=System.err
+log4j.appender.console.layout=org.apache.log4j.PatternLayout
+log4j.appender.console.layout.ConversionPattern=%d{yy/MM/dd HH:mm:ss} %p %c{1}: %m%n
+
+# Set the default spark-shell log level to WARN. When running the spark-shell, the
+# log level for this class is used to overwrite the root logger's log level, so that
+# the user can have different defaults for the shell and regular Spark apps.
+log4j.logger.org.apache.spark.repl.Main=WARN
+
+# Settings to quiet third party logs that are too verbose
+log4j.logger.org.sparkproject.jetty=WARN
+log4j.logger.org.sparkproject.jetty.util.component.AbstractLifeCycle=ERROR
+log4j.logger.org.apache.spark.repl.SparkIMain$exprTyper=INFO
+log4j.logger.org.apache.spark.repl.SparkILoop$SparkILoopInterpreter=INFO
+log4j.logger.org.apache.parquet=ERROR
+log4j.logger.parquet=ERROR
+
+# SPARK-9183: Settings to avoid annoying messages when looking up nonexistent UDFs in SparkSQL with Hive support
+log4j.logger.org.apache.hadoop.hive.metastore.RetryingHMSHandler=FATAL
+log4j.logger.org.apache.hadoop.hive.ql.exec.FunctionRegistry=ERROR
+
+# For deploying Spark ThriftServer
+# SPARK-34128：Suppress undesirable TTransportException warnings involved in THRIFT-4805
+log4j.appender.console.filter.1=org.apache.log4j.varia.StringMatchFilter
+log4j.appender.console.filter.1.StringToMatch=Thrift error occurred during processing of message
+log4j.appender.console.filter.1.AcceptOnMatch=false
+EOT
+  }
+
+
+}

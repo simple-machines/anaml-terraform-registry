@@ -63,11 +63,12 @@ resource "kubernetes_deployment" "anaml_spark_server_deployment" {
           content {
             name = "java-truststore"
             secret {
-              secret_name = volume.value
-              optional    = false
+              secret_name  = volume.value
+              optional     = false
+              default_mode = "0444"
               items {
                 key  = var.ssl_kubernetes_secret_pkcs12_truststore_key
-                path = "truststore.p12"
+                path = "truststore"
               }
             }
           }
@@ -83,7 +84,7 @@ resource "kubernetes_deployment" "anaml_spark_server_deployment" {
               default_mode = "0444"
               items {
                 key  = var.ssl_kubernetes_secret_pkcs12_keystore_key
-                path = "keystore.p12"
+                path = "keystore"
               }
             }
           }
@@ -191,6 +192,7 @@ resource "kubernetes_deployment" "anaml_spark_server_deployment" {
             content {
               name       = "java-truststore"
               mount_path = "/tmp/certificates/java/truststore"
+              sub_path   = "truststore"
               read_only  = true
             }
           }
@@ -200,6 +202,7 @@ resource "kubernetes_deployment" "anaml_spark_server_deployment" {
             content {
               name       = "java-keystore"
               mount_path = "/tmp/certificates/java/keystore"
+              sub_path   = "keystore"
               read_only  = true
             }
           }

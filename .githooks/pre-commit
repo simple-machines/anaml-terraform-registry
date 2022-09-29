@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
+source "$SCRIPT_DIR/logging.sh"
+
+main() {
+ while IFS= read -r file ; do
+   if [ -x "$file" ]; then
+     info "Running pre-commit hook $(basename "$file")"
+     if ! $file < /dev/tty; then
+         error "$file failed with exist code $0"
+         exit 1
+     fi
+   fi
+ done < <(find "$SCRIPT_DIR/pre-commit.d" -type f -maxdepth 1)
+}
+
+main "$@"

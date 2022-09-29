@@ -172,13 +172,13 @@ resource "kubernetes_config_map" "anaml_server" {
         "https://${var.hostname}"
       ),
 
-      truststore = var.ssl_kubernetes_secret_pkcs12_truststore != null ? "/tmp/certificates/java/truststore/truststore.p12" : null,
+      truststore = var.ssl_kubernetes_secret_pkcs12_truststore != null ? "/tmp/certificates/java/truststore" : null,
 
       # If password is set, it gets mounted as an env var named using var.ssl_kubernetes_secret_pkcs12_truststore_password_key
       use_truststore_password = var.ssl_kubernetes_secret_pkcs12_truststore_password != null,
 
 
-      keystore              = var.ssl_kubernetes_secret_pkcs12_keystore != null ? "/tmp/certificates/java/keystore/keystore.p12" : null,
+      keystore              = var.ssl_kubernetes_secret_pkcs12_keystore != null ? "/tmp/certificates/java/keystore" : null,
       use_keystore_password = var.ssl_kubernetes_secret_pkcs12_keystore_password != null,
 
       port = local.port
@@ -284,9 +284,10 @@ resource "kubernetes_deployment" "anaml_server" {
             secret {
               secret_name = volume.value
               optional    = false
+              default_mode = "0444"
               items {
                 key  = var.ssl_kubernetes_secret_pkcs12_truststore_key
-                path = "truststore.p12"
+                path = "truststore"
               }
             }
           }
@@ -302,7 +303,7 @@ resource "kubernetes_deployment" "anaml_server" {
               default_mode = "0444"
               items {
                 key  = var.ssl_kubernetes_secret_pkcs12_keystore_key
-                path = "keystore.p12"
+                path = "keystore"
               }
             }
           }
@@ -384,6 +385,7 @@ resource "kubernetes_deployment" "anaml_server" {
             content {
               name       = "java-truststore"
               mount_path = "/tmp/certificates/java/truststore"
+              sub_path   = "truststore"
               read_only  = true
             }
           }
@@ -393,6 +395,7 @@ resource "kubernetes_deployment" "anaml_server" {
             content {
               name       = "java-keystore"
               mount_path = "/tmp/certificates/java/keystore"
+              sub_path   = "keystore"
               read_only  = true
             }
           }

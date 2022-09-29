@@ -21,6 +21,7 @@ No modules.
 
 The following resources are used by this module:
 
+- [kubernetes_config_map.anaml_spark_history_server_config](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/config_map) (resource)
 - [kubernetes_config_map.anaml_spark_server_config](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/config_map) (resource)
 - [kubernetes_config_map.spark_defaults_conf](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/config_map) (resource)
 - [kubernetes_deployment.anaml_spark_server_deployment](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/deployment) (resource)

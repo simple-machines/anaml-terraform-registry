@@ -714,6 +714,70 @@ Type: `map(string)`
 
 Default: `{}`
 
+### <a name="input_override_anaml_spark_server_ssl_kubernetes_secret_pkcs12_keystore"></a> [override\_anaml\_spark\_server\_ssl\_kubernetes\_secret\_pkcs12\_keystore](#input\_override\_anaml\_spark\_server\_ssl\_kubernetes\_secret\_pkcs12\_keystore)
+
+Description: (Optional) The name of the Kubernetes secret containing a Java pkcs12 keystore if you which to enable client SSL support and or enable HTTPS for anaml-server
+
+Type: `string`
+
+Default: `null`
+
+### <a name="input_override_anaml_spark_server_ssl_kubernetes_secret_pkcs12_keystore_key"></a> [override\_anaml\_spark\_server\_ssl\_kubernetes\_secret\_pkcs12\_keystore\_key](#input\_override\_anaml\_spark\_server\_ssl\_kubernetes\_secret\_pkcs12\_keystore\_key)
+
+Description: (Optional) The Java pkcs12 keystore key inside the kubernetes\_secret\_pkcs12\_keystore value
+
+Type: `string`
+
+Default: `null`
+
+### <a name="input_override_anaml_spark_server_ssl_kubernetes_secret_pkcs12_keystore_password"></a> [override\_anaml\_spark\_server\_ssl\_kubernetes\_secret\_pkcs12\_keystore\_password](#input\_override\_anaml\_spark\_server\_ssl\_kubernetes\_secret\_pkcs12\_keystore\_password)
+
+Description: (Optional) The Kubernetes secret name containing the ssl\_kubernetes\_secret\_pkcs12\_keystore password if the keystore is password protected
+
+Type: `string`
+
+Default: `null`
+
+### <a name="input_override_anaml_spark_server_ssl_kubernetes_secret_pkcs12_keystore_password_key"></a> [override\_anaml\_spark\_server\_ssl\_kubernetes\_secret\_pkcs12\_keystore\_password\_key](#input\_override\_anaml\_spark\_server\_ssl\_kubernetes\_secret\_pkcs12\_keystore\_password\_key)
+
+Description: (Optional) The key used inside ssl\_kubernetes\_secret\_pkcs12\_keystore\_password for the trust store password if set
+
+Type: `string`
+
+Default: `null`
+
+### <a name="input_override_anaml_spark_server_ssl_kubernetes_secret_pkcs12_truststore"></a> [override\_anaml\_spark\_server\_ssl\_kubernetes\_secret\_pkcs12\_truststore](#input\_override\_anaml\_spark\_server\_ssl\_kubernetes\_secret\_pkcs12\_truststore)
+
+Description: (Optional) The name of the Kubernetes secret containing a Java pkcs12 truststore if you which to enable client SSL support and or enable HTTPS for anaml-server
+
+Type: `string`
+
+Default: `null`
+
+### <a name="input_override_anaml_spark_server_ssl_kubernetes_secret_pkcs12_truststore_key"></a> [override\_anaml\_spark\_server\_ssl\_kubernetes\_secret\_pkcs12\_truststore\_key](#input\_override\_anaml\_spark\_server\_ssl\_kubernetes\_secret\_pkcs12\_truststore\_key)
+
+Description: (Optional) The Java pkcs12 truststore key inside the kubernetes\_secret\_pkcs12\_truststore value
+
+Type: `string`
+
+Default: `"javax.net.ssl.trustStore"`
+
+### <a name="input_override_anaml_spark_server_ssl_kubernetes_secret_pkcs12_truststore_password"></a> [override\_anaml\_spark\_server\_ssl\_kubernetes\_secret\_pkcs12\_truststore\_password](#input\_override\_anaml\_spark\_server\_ssl\_kubernetes\_secret\_pkcs12\_truststore\_password)
+
+Description: (Optional) The Kubernetes secret name containing the ssl\_kubernetes\_secret\_pkcs12\_truststore password if the truststore is password protected
+
+Type: `string`
+
+Default: `null`
+
+### <a name="input_override_anaml_spark_server_ssl_kubernetes_secret_pkcs12_truststore_password_key"></a> [override\_anaml\_spark\_server\_ssl\_kubernetes\_secret\_pkcs12\_truststore\_password\_key](#input\_override\_anaml\_spark\_server\_ssl\_kubernetes\_secret\_pkcs12\_truststore\_password\_key)
+
+Description: (Optional) The key used inside ssl\_kubernetes\_secret\_pkcs12\_truststore\_password for the trust store password if set
+
+Type: `string`
+
+Default: `null`
+
 ### <a name="input_override_anaml_spark_server_version"></a> [override\_anaml\_spark\_server\_version](#input\_override\_anaml\_spark\_server\_version)
 
 Description: anaml-spark-server version override. This value should contain the container tag to deploy

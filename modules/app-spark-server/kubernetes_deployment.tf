@@ -330,6 +330,38 @@ resource "kubernetes_deployment" "spark_history_server_deployment" {
           }
         }
 
+        dynamic "volume" {
+          for_each = var.ssl_kubernetes_secret_pkcs12_truststore != null ? [var.ssl_kubernetes_secret_pkcs12_truststore] : []
+          content {
+            name = "java-truststore"
+            secret {
+              secret_name  = volume.value
+              optional     = false
+              default_mode = "0444"
+              items {
+                key  = var.ssl_kubernetes_secret_pkcs12_truststore_key
+                path = "truststore"
+              }
+            }
+          }
+        }
+
+        dynamic "volume" {
+          for_each = var.ssl_kubernetes_secret_pkcs12_keystore != null ? [var.ssl_kubernetes_secret_pkcs12_keystore] : []
+          content {
+            name = "java-keystore"
+            secret {
+              secret_name  = volume.value
+              optional     = false
+              default_mode = "0444"
+              items {
+                key  = var.ssl_kubernetes_secret_pkcs12_keystore_key
+                path = "keystore"
+              }
+            }
+          }
+        }
+
         # Allow users to inject additional secret / config volumes.
         dynamic "volume" {
           for_each = var.spark_history_server_additional_volumes
@@ -361,18 +393,60 @@ resource "kubernetes_deployment" "spark_history_server_deployment" {
           image_pull_policy = var.kubernetes_image_pull_policy == null ? (var.anaml_spark_server_version == "latest" ? "Always" : "IfNotPresent") : var.kubernetes_image_pull_policy
 
           port {
-            container_port = 18080
+            container_port = var.ssl_kubernetes_secret_pkcs12_keystore == null ? 18080 : 18480
+          }
+
+
+          dynamic "env" {
+            for_each = var.ssl_kubernetes_secret_pkcs12_truststore_password != null ? [var.ssl_kubernetes_secret_pkcs12_truststore_password] : []
+            content {
+              name = "JAVAX_NET_SSL_TRUST_STORE_PASSWORD"
+              value_from {
+                secret_key_ref {
+                  name     = var.ssl_kubernetes_secret_pkcs12_truststore_password
+                  key      = var.ssl_kubernetes_secret_pkcs12_truststore_password_key
+                  optional = false
+                }
+              }
+            }
+          }
+
+          dynamic "env" {
+            for_each = var.ssl_kubernetes_secret_pkcs12_keystore_password != null ? [var.ssl_kubernetes_secret_pkcs12_keystore_password] : []
+            content {
+              name = "JAVAX_NET_SSL_KEY_STORE_PASSWORD"
+              value_from {
+                secret_key_ref {
+                  name     = var.ssl_kubernetes_secret_pkcs12_keystore_password
+                  key      = var.ssl_kubernetes_secret_pkcs12_keystore_password_key
+                  optional = false
+                }
+              }
+            }
           }
 
           env {
             name = "SPARK_HISTORY_OPTS"
-            value = join(" ", concat([
-              "-Dspark.history.fs.logDirectory=${var.spark_log_directory}",
-              "-Dspark.ui.proxyBase=${var.spark_history_server_ui_proxy_base}",
-              "-Dspark.history.fs.cleaner.enabled=true",
-              "-Djava.library.path=/opt/hadoop/lib/native",
-              "-Dweb.host=0.0.0.0",
-            ], var.spark_history_server_additional_spark_history_opts))
+            value = join(
+              " ",
+              concat([
+                "-Dspark.history.fs.logDirectory=${var.spark_log_directory}",
+                "-Dspark.ui.proxyBase=${var.spark_history_server_ui_proxy_base}",
+                "-Dspark.history.fs.cleaner.enabled=true",
+                "-Djava.library.path=/opt/hadoop/lib/native",
+                "-Dweb.host=0.0.0.0",
+                ],
+                var.ssl_kubernetes_secret_pkcs12_keystore == null ? [] : [
+                  "-Dspark.ssl.enabled=true",
+                  "-Dspark.ssl.protocol=TLSv1.2",
+                  "-Dspark.ssl.keyStore=/tmp/certificates/java/keystore",
+                  "-Dspark.ssl.trustStore=/tmp/certificates/java/truststore",
+                ],
+                var.ssl_kubernetes_secret_pkcs12_keystore_password == null ? [] : ["-Dspark.ssl.keyStorePassword=$(JAVAX_NET_SSL_KEY_STORE_PASSWORD)"],
+                var.ssl_kubernetes_secret_pkcs12_truststore_password == null ? [] : ["-Dspark.ssl.trustStorePassword=$(JAVAX_NET_SSL_TRUST_STORE_PASSWORD)"],
+                var.spark_history_server_additional_spark_history_opts
+              )
+            )
           }
 
           dynamic "env" {
@@ -412,6 +486,25 @@ resource "kubernetes_deployment" "spark_history_server_deployment" {
             sub_path = "log4j.properties"
           }
 
+          dynamic "volume_mount" {
+            for_each = var.ssl_kubernetes_secret_pkcs12_truststore != null ? [var.ssl_kubernetes_secret_pkcs12_truststore] : []
+            content {
+              name       = "java-truststore"
+              mount_path = "/tmp/certificates/java/truststore"
+              sub_path   = "truststore"
+              read_only  = true
+            }
+          }
+
+          dynamic "volume_mount" {
+            for_each = var.ssl_kubernetes_secret_pkcs12_keystore != null ? [var.ssl_kubernetes_secret_pkcs12_keystore] : []
+            content {
+              name       = "java-keystore"
+              mount_path = "/tmp/certificates/java/keystore"
+              sub_path   = "keystore"
+              read_only  = true
+            }
+          }
         }
       }
     }

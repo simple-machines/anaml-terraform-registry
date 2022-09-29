@@ -55,10 +55,10 @@ resource "kubernetes_service" "spark_history_server_service" {
       "app.kubernetes.io/name" = local.spark_history_server_labels["app.kubernetes.io/name"]
     }
     port {
-      name        = "http"
-      port        = 18080
+      name        = var.ssl_kubernetes_secret_pkcs12_keystore == null ? "http" : "https"
+      port        = var.ssl_kubernetes_secret_pkcs12_keystore == null ? 18080 : 18480
       protocol    = "TCP"
-      target_port = 18080
+      target_port = var.ssl_kubernetes_secret_pkcs12_keystore == null ? 18080 : 18480
     }
   }
   lifecycle {

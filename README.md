@@ -24,3 +24,14 @@ Some modules require you to specify the container registry to use to fetch conta
 We provide the below region specific container registries:
 
   - australia-southeast1-docker.pkg.dev/anaml-release-artifacts/docker
+
+
+## Development
+
+After cloning the git repo run the below command in the project root directory:
+
+```
+git config core.hooksPath .githooks
+```
+
+This will configure Git pre-commit hooks in `.githooks/pre-commit.d/` to be executed on commit. This handles document generation and formatting automatically. 

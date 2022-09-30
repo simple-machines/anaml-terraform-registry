@@ -7,7 +7,6 @@ source "$SCRIPT_DIR/../logging.sh"
 prompt_git_add() {
   local file
   file="$1"
-  echo "---> $1"
   while true; do
     read -r -p "Do you wish to commit README changes (y/n)?" yn
     case $yn in
@@ -24,6 +23,7 @@ main() {
     CMD="$GIT_ROOT_DIR/bin/generate_readme_files.sh $GIT_ROOT_DIR/modules"
     $CMD
 
+    # Check for any updated README.md files and prompt if we should commit them
     while read -u 3 -r file; do
       git diff "$file"
       prompt_git_add "$file"

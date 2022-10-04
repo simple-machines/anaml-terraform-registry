@@ -1,6 +1,6 @@
 data "kubernetes_ingress_v1" "default" {
   metadata {
-    name = kubernetes_ingress_v1.anaml_ingress.metadata[0].name
+    name      = kubernetes_ingress_v1.anaml_ingress.metadata[0].name
     namespace = var.kubernetes_namespace
   }
 }

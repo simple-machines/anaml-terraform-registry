@@ -38,6 +38,30 @@ Type: `string`
 
 The following input variables are optional (have default values):
 
+### <a name="input_anaml_docs_port"></a> [anaml\_docs\_port](#input\_anaml\_docs\_port)
+
+Description: n/a
+
+Type: `number`
+
+Default: `80`
+
+### <a name="input_anaml_server_port"></a> [anaml\_server\_port](#input\_anaml\_server\_port)
+
+Description: n/a
+
+Type: `number`
+
+Default: `8080`
+
+### <a name="input_anaml_ui_port"></a> [anaml\_ui\_port](#input\_anaml\_ui\_port)
+
+Description: n/a
+
+Type: `number`
+
+Default: `80`
+
 ### <a name="input_host"></a> [host](#input\_host)
 
 Description: n/a

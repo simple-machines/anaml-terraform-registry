@@ -237,6 +237,10 @@ module "ingress" {
   kubernetes_ingress_tls_hosts       = var.kubernetes_ingress_tls_hosts
   kubernetes_ingress_tls_secret_name = var.kubernetes_ingress_tls_secret_name
   kubernetes_namespace               = var.kubernetes_namespace_create ? kubernetes_namespace.anaml_namespace[0].metadata.0.name : var.kubernetes_namespace_name
+
+  anaml_server_port = module.anaml-server.kubernetes_service_port_number
+  anaml_docs_port   = module.anaml-docs.kubernetes_service_port_number
+  anaml_ui_port     = module.anaml-ui.kubernetes_service_port_number
 }
 
 module "local-postgres" {

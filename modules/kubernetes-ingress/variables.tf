@@ -1,3 +1,18 @@
+variable "anaml_server_port" {
+  type    = number
+  default = 8080
+}
+
+variable "anaml_docs_port" {
+  type    = number
+  default = 80
+}
+
+variable "anaml_ui_port" {
+  type    = number
+  default = 80
+}
+
 variable "kubernetes_namespace" {
   type = string
 }

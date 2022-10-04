@@ -47,43 +47,46 @@ resource "kubernetes_ingress_v1" "anaml_ingress" {
             service {
               name = "anaml-server"
               port {
-                number = 8080
+                number = var.anaml_server_port
               }
             }
           }
 
           path = "/api/*"
         }
+
         path {
           backend {
             service {
               name = "anaml-server"
               port {
-                number = 8080
+                number = var.anaml_server_port
               }
             }
           }
 
           path = "/auth/*"
         }
+
         path {
           backend {
             service {
               name = "anaml-docs"
               port {
-                number = 80
+                number = var.anaml_docs_port
               }
             }
           }
 
           path = "/docs/*"
         }
+
         path {
           backend {
             service {
               name = "anaml-ui"
               port {
-                number = 80
+                number = var.anaml_ui_port
               }
             }
           }

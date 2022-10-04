@@ -7,7 +7,7 @@ output "kubernetes_service_port_name" {
 }
 
 output "kubernetes_service_port_number" {
-  value = kubernetes_service.anaml_ui.spec.0.port.0.port
+  value = var.kubernetes_secret_ssl == null ? kubernetes_service.anaml_ui.spec.0.port.0.port : kubernetes_service.anaml_ui.spec.0.port.1.port
 }
 
 output "internal_url" {

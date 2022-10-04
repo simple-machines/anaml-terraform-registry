@@ -22,6 +22,7 @@ No modules.
 The following resources are used by this module:
 
 - [kubernetes_ingress_v1.anaml_ingress](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/ingress_v1) (resource)
+- [kubernetes_ingress_v1.default](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/data-sources/ingress_v1) (data source)
 
 ## Required Inputs
 
@@ -103,5 +104,9 @@ Default: `null`
 
 ## Outputs
 
-No outputs.
+The following outputs are exported:
+
+### <a name="output_dns_hostname"></a> [dns\_hostname](#output\_dns\_hostname)
+
+Description: n/a
 <!-- END_TF_DOCS -->

@@ -14,3 +14,7 @@ output "kubernetes_service_name_anaml_server" {
 output "anaml_server_port" {
   value = module.anaml-server.kubernetes_service_port_number
 }
+
+output "ingress_dns_hostname" {
+  value = one(module.ingress[*].dns_hostname)
+}

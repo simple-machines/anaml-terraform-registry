@@ -987,6 +987,10 @@ Description: n/a
 
 Description: n/a
 
+### <a name="output_ingress_dns_hostname"></a> [ingress\_dns\_hostname](#output\_ingress\_dns\_hostname)
+
+Description: n/a
+
 ### <a name="output_kubernetes_service_account"></a> [kubernetes\_service\_account](#output\_kubernetes\_service\_account)
 
 Description: The Kubernetes service account used for deployments

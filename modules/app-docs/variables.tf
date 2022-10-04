@@ -74,3 +74,9 @@ variable "kubernetes_service_type" {
     error_message = "The kubernetes_service_type value must be one of ExternalName, ClusterIP, NodePort or LoadBalancer."
   }
 }
+
+variable "kubernetes_secret_ssl" {
+  type        = string
+  default     = null
+  description = "(Optional) The name of the Kubernetes secret cotaining `tls.cert` and `tls.key` if you wish to terminate SSL inside the pod"
+}

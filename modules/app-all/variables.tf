@@ -167,6 +167,12 @@ variable "override_anaml_docs_version" {
   description = "anaml-docs version override. This value should contain the container tag to deploy"
 }
 
+variable "override_anaml_docs_kubernetes_secret_ssl" {
+  type        = string
+  default     = null
+  description = "(Optional) The name of the Kubernetes secret cotaining `tls.cert` and `tls.key` if you wish to terminate SSL inside the pod"
+}
+
 variable "override_anaml_server_version" {
   type        = string
   default     = null

@@ -66,6 +66,7 @@ module "anaml-docs" {
   hostname                       = var.hostname
   kubernetes_namespace           = var.kubernetes_namespace_create ? kubernetes_namespace.anaml_namespace[0].metadata.0.name : var.kubernetes_namespace_name
   kubernetes_node_selector       = var.kubernetes_pod_node_selector_app
+  kubernetes_secret_ssl          = var.override_anaml_docs_kubernetes_secret_ssl
   kubernetes_service_annotations = var.kubernetes_service_annotations_anaml_docs
   kubernetes_service_type        = var.kubernetes_service_type
 }

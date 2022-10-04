@@ -537,6 +537,14 @@ Type: `string`
 
 Default: `null`
 
+### <a name="input_override_anaml_docs_kubernetes_secret_ssl"></a> [override\_anaml\_docs\_kubernetes\_secret\_ssl](#input\_override\_anaml\_docs\_kubernetes\_secret\_ssl)
+
+Description: (Optional) The name of the Kubernetes secret cotaining `tls.cert` and `tls.key` if you wish to terminate SSL inside the pod
+
+Type: `string`
+
+Default: `null`
+
 ### <a name="input_override_anaml_docs_version"></a> [override\_anaml\_docs\_version](#input\_override\_anaml\_docs\_version)
 
 Description: anaml-docs version override. This value should contain the container tag to deploy

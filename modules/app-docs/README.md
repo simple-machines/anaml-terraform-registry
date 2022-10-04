@@ -3,6 +3,18 @@
 
 The app-docs Terraform module deploys a Kubernetes Deployment and Service exposing the Anaml help documentation website.
 
+## Terminating SSL inside the pod
+By default Anaml Docs uses plain HTTP and delegates SSL termination to Kubernetes Ingress.
+
+If you wish to terminate SSL inside the pod, you should:
+
+1) Create a Kubernetes Secret containing the SSL certificate and key in PEM format with the names "tls.crt" for the certificate and "tls.key" for the key, either using Terraform or kubectl. Below is an example using kubectl.
+```
+kubectl create secret generic anaml-ui-ssl-certs \
+  --from-file=tls.crt=./tls.crt \
+  --from-file=tls.key=./tls.key
+```
+
 ## Requirements
 
 The following requirements are needed by this module:
@@ -99,6 +111,14 @@ Default: `null`
 Description: (Optional) NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/node-selection).
 
 Type: `map(string)`
+
+Default: `null`
+
+### <a name="input_kubernetes_secret_ssl"></a> [kubernetes\_secret\_ssl](#input\_kubernetes\_secret\_ssl)
+
+Description: (Optional) The name of the Kubernetes secret cotaining `tls.cert` and `tls.key` if you wish to terminate SSL inside the pod
+
+Type: `string`
 
 Default: `null`
 

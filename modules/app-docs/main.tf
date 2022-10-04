@@ -2,6 +2,18 @@
  * # app-docs Terraform module
  *
  * The app-docs Terraform module deploys a Kubernetes Deployment and Service exposing the Anaml help documentation website.
+ *
+ * ## Terminating SSL inside the pod
+ * By default Anaml Docs uses plain HTTP and delegates SSL termination to Kubernetes Ingress.
+ *
+ * If you wish to terminate SSL inside the pod, you should:
+ *
+ * 1) Create a Kubernetes Secret containing the SSL certificate and key in PEM format with the names "tls.crt" for the certificate and "tls.key" for the key, either using Terraform or kubectl. Below is an example using kubectl.
+ * ```
+ * kubectl create secret generic anaml-ui-ssl-certs \
+ *   --from-file=tls.crt=./tls.crt \
+ *   --from-file=tls.key=./tls.key
+ * ```
  */
 
 terraform {
@@ -52,6 +64,18 @@ resource "kubernetes_deployment" "anaml_docs" {
       spec {
         node_selector = var.kubernetes_node_selector
 
+        dynamic "volume" {
+          for_each = var.kubernetes_secret_ssl == null ? [] : [var.kubernetes_secret_ssl]
+          content {
+            name = "certificates"
+            secret {
+              secret_name  = volume.value
+              optional     = "false"
+              default_mode = "0444"
+            }
+          }
+        }
+
         container {
           name = var.kubernetes_deployment_name
           image = (
@@ -65,6 +89,15 @@ resource "kubernetes_deployment" "anaml_docs" {
             name           = "http-web-svc"
           }
           args = ["https://${var.hostname}", "docs"]
+
+          dynamic "volume_mount" {
+            for_each = var.kubernetes_secret_ssl == null ? [] : ["certificates"]
+            content {
+              name       = volume_mount.value
+              mount_path = "/certificates"
+              read_only  = true
+            }
+          }
 
           liveness_probe {
             http_get {

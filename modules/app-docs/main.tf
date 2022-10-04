@@ -38,6 +38,9 @@ locals {
     "app.kubernetes.io/part-of"    = "anaml"
     "app.kubernetes.io/created-by" = "terraform"
   }, var.kubernetes_deployment_labels)
+
+
+  port = var.kubernetes_secret_ssl != null ? 443 : 80
 }
 
 resource "kubernetes_deployment" "anaml_docs" {
@@ -85,7 +88,7 @@ resource "kubernetes_deployment" "anaml_docs" {
           )
           image_pull_policy = var.kubernetes_image_pull_policy == null ? (var.anaml_docs_version == "latest" ? "Always" : "IfNotPresent") : var.kubernetes_image_pull_policy
           port {
-            container_port = 80
+            container_port = local.port
             name           = "http-web-svc"
           }
           args = ["https://${var.hostname}", "docs"]
@@ -101,8 +104,9 @@ resource "kubernetes_deployment" "anaml_docs" {
 
           liveness_probe {
             http_get {
-              path = "/"
-              port = 80
+              path   = "/"
+              port   = local.port
+              scheme = local.port == 443 ? "HTTPS" : "HTTP"
             }
 
             initial_delay_seconds = 10
@@ -113,8 +117,9 @@ resource "kubernetes_deployment" "anaml_docs" {
 
           readiness_probe {
             http_get {
-              path = "/"
-              port = 80
+              path   = "/"
+              port   = local.port
+              scheme = local.port == 443 ? "HTTPS" : "HTTP"
             }
 
             period_seconds  = 5
@@ -144,8 +149,8 @@ resource "kubernetes_service" "anaml_docs" {
       "app.kubernetes.io/name" = local.deployment_labels["app.kubernetes.io/name"]
     }
     port {
-      name        = "http"
-      port        = 80
+      name        = var.kubernetes_secret_ssl != null ? "https" : "http"
+      port        = local.port
       protocol    = "TCP"
       target_port = "http-web-svc"
     }

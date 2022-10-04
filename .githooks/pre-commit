@@ -6,7 +6,7 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 source "$SCRIPT_DIR/logging.sh"
 
 main() {
- while IFS= read -r file ; do
+ while read -r file; do
    if [ -x "$file" ]; then
      info "Running pre-commit hook $(basename "$file")"
      if ! $file < /dev/tty; then

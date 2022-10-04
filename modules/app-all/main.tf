@@ -230,9 +230,12 @@ module "ingress" {
   source = "../kubernetes-ingress"
   count  = var.kubernetes_ingress_enable ? 1 : 0
 
-  host                    = var.kubernetes_ingress_hostname
-  kubernetes_ingress_name = var.kubernetes_ingress_name
-  kubernetes_namespace    = var.kubernetes_namespace_create ? kubernetes_namespace.anaml_namespace[0].metadata.0.name : var.kubernetes_namespace_name
+  host                               = var.kubernetes_ingress_hostname
+  kubernetes_ingress_annotations     = var.kubernetes_ingress_annotations
+  kubernetes_ingress_name            = var.kubernetes_ingress_name
+  kubernetes_ingress_tls_hosts       = var.kubernetes_ingress_tls_hosts
+  kubernetes_ingress_tls_secret_name = var.kubernetes_ingress_tls_secret_name
+  kubernetes_namespace               = var.kubernetes_namespace_create ? kubernetes_namespace.anaml_namespace[0].metadata.0.name : var.kubernetes_namespace_name
 }
 
 module "local-postgres" {

@@ -29,6 +29,15 @@ resource "kubernetes_ingress_v1" "anaml_ingress" {
   wait_for_load_balancer = true
 
   spec {
+
+    dynamic "tls" {
+      for_each = var.kubernetes_ingress_tls_secret_name != null || var.kubernetes_ingress_tls_hosts != null ? [1] : []
+      content {
+        hosts       = var.kubernetes_ingress_tls_hosts
+        secret_name = var.kubernetes_ingress_tls_secret_name
+      }
+    }
+
     rule {
       host = var.host
 
@@ -80,6 +89,21 @@ resource "kubernetes_ingress_v1" "anaml_ingress" {
           }
 
           path = "/*"
+        }
+
+        dynamic "path" {
+          for_each = var.kubernetes_ingress_additional_paths
+          content {
+            path = path.path
+            backend {
+              service {
+                name = path.backend.service.name
+                port {
+                  number = path.backend.port.number
+                }
+              }
+            }
+          }
         }
       }
     }

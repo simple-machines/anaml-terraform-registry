@@ -12,7 +12,34 @@ variable "kubernetes_ingress_name" {
   default = "anaml"
 }
 
+variable "kubernetes_ingress_tls_secret_name" {
+  type    = string
+  default = null
+}
+
+variable "kubernetes_ingress_tls_hosts" {
+  type    = set(string)
+  default = null
+}
+
 variable "host" {
   type    = string
   default = null
+}
+
+variable "kubernetes_ingress_additional_paths" {
+  type = list(
+    object({
+      path = string,
+      backend = object({
+        service = object({
+          name = string
+          port = object({
+            number = number
+          })
+        })
+      })
+    })
+  )
+  default = []
 }

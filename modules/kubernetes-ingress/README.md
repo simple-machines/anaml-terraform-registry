@@ -45,6 +45,30 @@ Type: `string`
 
 Default: `null`
 
+### <a name="input_kubernetes_ingress_additional_paths"></a> [kubernetes\_ingress\_additional\_paths](#input\_kubernetes\_ingress\_additional\_paths)
+
+Description: n/a
+
+Type:
+
+```hcl
+list(
+    object({
+      path = string,
+      backend = object({
+        service = object({
+          name = string
+          port = object({
+            number = number
+          })
+        })
+      })
+    })
+  )
+```
+
+Default: `[]`
+
 ### <a name="input_kubernetes_ingress_annotations"></a> [kubernetes\_ingress\_annotations](#input\_kubernetes\_ingress\_annotations)
 
 Description: n/a
@@ -60,6 +84,22 @@ Description: n/a
 Type: `string`
 
 Default: `"anaml"`
+
+### <a name="input_kubernetes_ingress_tls_hosts"></a> [kubernetes\_ingress\_tls\_hosts](#input\_kubernetes\_ingress\_tls\_hosts)
+
+Description: n/a
+
+Type: `set(string)`
+
+Default: `null`
+
+### <a name="input_kubernetes_ingress_tls_secret_name"></a> [kubernetes\_ingress\_tls\_secret\_name](#input\_kubernetes\_ingress\_tls\_secret\_name)
+
+Description: n/a
+
+Type: `string`
+
+Default: `null`
 
 ## Outputs
 

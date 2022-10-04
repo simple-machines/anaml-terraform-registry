@@ -32,6 +32,39 @@ variable "kubernetes_container_env_from_anaml_server" {
   default     = []
 }
 
+variable "kubernetes_ingress_annotations" {
+  type        = map(string)
+  default     = null
+  description = "(Optional) Annotations to set on the Ingress"
+}
+
+variable "kubernetes_ingress_tls_secret_name" {
+  type    = string
+  default = null
+}
+
+variable "kubernetes_ingress_tls_hosts" {
+  type    = set(string)
+  default = null
+}
+
+variable "kubernetes_ingress_additional_paths" {
+  type = list(
+    object({
+      path = string,
+      backend = object({
+        service = object({
+          name = string
+          port = object({
+            number = number
+          })
+        })
+      })
+    })
+  )
+  default = []
+}
+
 variable "kubernetes_ingress_enable" {
   type        = bool
   default     = false

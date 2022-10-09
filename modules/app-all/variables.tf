@@ -396,6 +396,12 @@ variable "override_spark_history_server_additional_volumes" {
   default = []
 }
 
+variable "override_anaml_spark_server_kubernetes_deployment_replicas_anaml_spark_server" {
+  type        = string
+  default     = null
+  description = "(Optional) The number of desired replicas. This attribute is a string to be able to distinguish between explicit zero and not specified. Defaults to 1."
+}
+
 variable "override_spark_history_server_additional_env_values" {
   type = list(object({
     name  = string

@@ -754,6 +754,14 @@ list(object({
 
 Default: `[]`
 
+### <a name="input_override_anaml_spark_server_kubernetes_deployment_replicas_anaml_spark_server"></a> [override\_anaml\_spark\_server\_kubernetes\_deployment\_replicas\_anaml\_spark\_server](#input\_override\_anaml\_spark\_server\_kubernetes\_deployment\_replicas\_anaml\_spark\_server)
+
+Description: (Optional) The number of desired replicas. This attribute is a string to be able to distinguish between explicit zero and not specified. Defaults to 1.
+
+Type: `string`
+
+Default: `null`
+
 ### <a name="input_override_anaml_spark_server_log4j_overrides"></a> [override\_anaml\_spark\_server\_log4j\_overrides](#input\_override\_anaml\_spark\_server\_log4j\_overrides)
 
 Description: Override anaml-spark-sercer log4j default log levels. Format is class.name={debug|error|info|trace|warn}

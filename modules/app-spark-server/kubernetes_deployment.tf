@@ -10,6 +10,9 @@ resource "kubernetes_deployment" "anaml_spark_server_deployment" {
         "app.kubernetes.io/name" = local.anaml_spark_server_labels["app.kubernetes.io/name"]
       }
     }
+
+    replicas = var.kubernetes_deployment_replicas_anaml_spark_server
+
     template {
       metadata {
         name      = var.kubernetes_deployment_name

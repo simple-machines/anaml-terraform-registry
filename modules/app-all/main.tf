@@ -177,6 +177,8 @@ module "spark-server" {
   kubernetes_service_annotations_anaml_spark_server    = var.kubernetes_service_annotations_anaml_spark_server
   kubernetes_service_annotations_spark_history_service = var.kubernetes_service_annotations_spark_history_service
 
+  kubernetes_deployment_replicas_anaml_spark_server = var.override_anaml_spark_server_kubernetes_deployment_replicas_anaml_spark_server
+
   spark_config_overrides = var.override_anaml_spark_server_spark_config_overrides
 
   spark_log_directory = var.override_anaml_spark_server_spark_log_directory

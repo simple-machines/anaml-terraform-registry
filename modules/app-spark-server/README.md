@@ -263,6 +263,14 @@ Type: `string`
 
 Default: `"anaml-spark-server"`
 
+### <a name="input_kubernetes_deployment_replicas_anaml_spark_server"></a> [kubernetes\_deployment\_replicas\_anaml\_spark\_server](#input\_kubernetes\_deployment\_replicas\_anaml\_spark\_server)
+
+Description: (Optional) The number of desired replicas. This attribute is a string to be able to distinguish between explicit zero and not specified. Defaults to 1.
+
+Type: `string`
+
+Default: `"1"`
+
 ### <a name="input_kubernetes_image_pull_policy"></a> [kubernetes\_image\_pull\_policy](#input\_kubernetes\_image\_pull\_policy)
 
 Description:  (Optional) Image pull policy. One of Always, Never, IfNotPresent. Defaults to Always if `anaml_spark_server_version` is set to`latest`, or IfNotPresent otherwise. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/images#updating-images)

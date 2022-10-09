@@ -10,6 +10,13 @@ variable "kubernetes_deployment_labels" {
   description = "Kubernetes labels to set if any. These values will be merged with the defaults"
 }
 
+variable "kubernetes_deployment_replicas_anaml_spark_server" {
+  type        = string
+  default     = "1"
+  description = "(Optional) The number of desired replicas. This attribute is a string to be able to distinguish between explicit zero and not specified. Defaults to 1."
+  nullable    = false
+}
+
 # This is the Driver deployment so deploy to the app pool so the expensive spark pool can scale down
 # The driver is configured so workers will use anaml-spark-pool
 variable "kubernetes_node_selector_app" {

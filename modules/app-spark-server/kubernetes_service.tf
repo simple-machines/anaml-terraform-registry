@@ -9,7 +9,8 @@ resource "kubernetes_service" "anaml_spark_server_service" {
   spec {
     type = var.kubernetes_service_type
     selector = {
-      "app.kubernetes.io/name" = local.anaml_spark_server_labels["app.kubernetes.io/name"]
+      "app.kubernetes.io/name"        = local.anaml_spark_server_labels["app.kubernetes.io/name"]
+      "terraform/deployment-instance" = random_uuid.deployment_instance.result
     }
     port {
       name        = "http"
@@ -52,7 +53,8 @@ resource "kubernetes_service" "spark_history_server_service" {
   spec {
     type = var.kubernetes_service_type
     selector = {
-      "app.kubernetes.io/name" = local.spark_history_server_labels["app.kubernetes.io/name"]
+      "app.kubernetes.io/name"        = local.spark_history_server_labels["app.kubernetes.io/name"]
+      "terraform/deployment-instance" = random_uuid.deployment_instance.result
     }
     port {
       name        = var.ssl_kubernetes_secret_pkcs12_keystore == null ? "http" : "https"

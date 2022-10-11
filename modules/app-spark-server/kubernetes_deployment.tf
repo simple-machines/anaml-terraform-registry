@@ -7,7 +7,8 @@ resource "kubernetes_deployment" "anaml_spark_server_deployment" {
   spec {
     selector {
       match_labels = {
-        "app.kubernetes.io/name" = local.anaml_spark_server_labels["app.kubernetes.io/name"]
+        "app.kubernetes.io/name"        = local.anaml_spark_server_labels["app.kubernetes.io/name"]
+        "terraform/deployment-instance" = random_uuid.deployment_instance.result
       }
     }
     template {
@@ -306,7 +307,8 @@ resource "kubernetes_deployment" "spark_history_server_deployment" {
   spec {
     selector {
       match_labels = {
-        "app.kubernetes.io/name" = local.spark_history_server_labels["app.kubernetes.io/name"]
+        "app.kubernetes.io/name"        = local.spark_history_server_labels["app.kubernetes.io/name"]
+        "terraform/deployment-instance" = random_uuid.deployment_instance.result
       }
     }
     template {

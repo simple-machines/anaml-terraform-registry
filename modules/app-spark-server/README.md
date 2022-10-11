@@ -7,11 +7,15 @@ The following requirements are needed by this module:
 
 - <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) (~> 2.11)
 
+- <a name="requirement_random"></a> [random](#requirement\_random) (>= 2.2.1)
+
 ## Providers
 
 The following providers are used by this module:
 
 - <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) (~> 2.11)
+
+- <a name="provider_random"></a> [random](#provider\_random) (>= 2.2.1)
 
 ## Modules
 
@@ -31,6 +35,7 @@ The following resources are used by this module:
 - [kubernetes_service.anaml_spark_server_service](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/service) (resource)
 - [kubernetes_service.spark_history_server_service](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/service) (resource)
 - [kubernetes_service_account.spark](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/service_account) (resource)
+- [random_uuid.deployment_instance](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) (resource)
 
 ## Required Inputs
 

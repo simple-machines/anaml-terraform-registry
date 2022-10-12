@@ -179,6 +179,12 @@ variable "override_anaml_server_version" {
   description = "anaml-server version override. This value should contain the container tag to deploy"
 }
 
+variable "override_anaml_server_deployment_count" {
+  type        = number
+  default     = null
+  description = "(Optional) the number of independent anaml-spark-servers clusters deploy. Each cluster is isolated from each other."
+}
+
 variable "override_anaml_server_java_opts" {
   type        = list(string)
   default     = []

@@ -561,14 +561,6 @@ Type: `string`
 
 Default: `null`
 
-### <a name="input_override_anaml_server_deployment_count"></a> [override\_anaml\_server\_deployment\_count](#input\_override\_anaml\_server\_deployment\_count)
-
-Description: (Optional) the number of independent anaml-spark-servers clusters deploy. Each cluster is isolated from each other.
-
-Type: `number`
-
-Default: `null`
-
 ### <a name="input_override_anaml_server_governance_run_type_checks"></a> [override\_anaml\_server\_governance\_run\_type\_checks](#input\_override\_anaml\_server\_governance\_run\_type\_checks)
 
 Description: n/a
@@ -761,6 +753,14 @@ list(object({
 ```
 
 Default: `[]`
+
+### <a name="input_override_anaml_spark_server_kubernetes_deployment_name"></a> [override\_anaml\_spark\_server\_kubernetes\_deployment\_name](#input\_override\_anaml\_spark\_server\_kubernetes\_deployment\_name)
+
+Description: n/a
+
+Type: `set(string)`
+
+Default: `null`
 
 ### <a name="input_override_anaml_spark_server_log4j_overrides"></a> [override\_anaml\_spark\_server\_log4j\_overrides](#input\_override\_anaml\_spark\_server\_log4j\_overrides)
 

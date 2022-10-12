@@ -1,26 +1,26 @@
 resource "kubernetes_deployment" "anaml_spark_server_deployment" {
-  for_each = toset(formatlist("%02g", range(0, var.deployment_count)))
+  for_each = var.kubernetes_deployment_name
 
   metadata {
-    name      = "${var.kubernetes_deployment_name}-${each.key}"
+    name      = each.key
     namespace = var.kubernetes_namespace
     labels = merge(local.base_deployment_labels, {
-      "app.kubernetes.io/name" = "anaml-spark-server-${each.key}"
+      "app.kubernetes.io/name" = each.key
     })
 
   }
   spec {
     selector {
       match_labels = {
-        "app.kubernetes.io/name" = "anaml-spark-server-${each.key}"
+        "app.kubernetes.io/name" = each.key
       }
     }
     template {
       metadata {
-        name      = "${var.kubernetes_deployment_name}-${each.key}"
+        name      = each.key
         namespace = var.kubernetes_namespace
         labels = merge(local.base_deployment_labels, {
-          "app.kubernetes.io/name" = "anaml-spark-server-${each.key}"
+          "app.kubernetes.io/name" = each.key
         })
         annotations = {
           "checksum/configmap_${kubernetes_config_map.anaml_spark_server_config.metadata[0].name}" = sha256(jsonencode(kubernetes_config_map.anaml_spark_server_config.data))

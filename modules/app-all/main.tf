@@ -164,8 +164,6 @@ module "spark-server" {
 
   checkpoint_location = var.override_anaml_spark_server_checkpoint_location
 
-  deployment_count = var.override_anaml_server_deployment_count
-
   postgres_host     = local.postgres_host
   postgres_password = "$(PGPASSWORD)"
   postgres_port     = var.postgres_port
@@ -201,6 +199,8 @@ module "spark-server" {
 
   kubernetes_container_spark_server_volumes       = var.override_anaml_spark_server_additional_volumes
   kubernetes_container_spark_server_volume_mounts = var.override_anaml_spark_server_additional_volume_mounts
+
+  kubernetes_deployment_name = var.override_anaml_spark_server_kubernetes_deployment_name
 
   ssl_kubernetes_secret_pkcs12_truststore              = var.override_anaml_spark_server_ssl_kubernetes_secret_pkcs12_truststore
   ssl_kubernetes_secret_pkcs12_truststore_key          = var.override_anaml_spark_server_ssl_kubernetes_secret_pkcs12_truststore_key

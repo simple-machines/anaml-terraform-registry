@@ -1,12 +1,12 @@
 resource "kubernetes_service" "anaml_spark_server_service" {
-  for_each = toset(formatlist("%02g", range(0, var.deployment_count)))
+  for_each = var.kubernetes_deployment_name
 
   metadata {
-    name      = "anaml-spark-server-${each.key}"
+    name      = each.key
     namespace = var.kubernetes_namespace
     labels = merge(
       { for k, v in local.anaml_spark_server_labels : k => v if k != "app.kubernetes.io/version" },
-      { "app.kubernetes.io/name" = "anaml-spark-server-${each.key}" }
+      { "app.kubernetes.io/name" = each.key }
     )
     annotations = var.kubernetes_service_annotations_anaml_spark_server
   }
@@ -14,7 +14,7 @@ resource "kubernetes_service" "anaml_spark_server_service" {
   spec {
     type = var.kubernetes_service_type
     selector = {
-      "app.kubernetes.io/name" = "anaml-spark-server-${each.key}"
+      "app.kubernetes.io/name" = each.key
     }
     port {
       name        = "http"

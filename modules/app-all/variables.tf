@@ -179,12 +179,6 @@ variable "override_anaml_server_version" {
   description = "anaml-server version override. This value should contain the container tag to deploy"
 }
 
-variable "override_anaml_server_deployment_count" {
-  type        = number
-  default     = null
-  description = "(Optional) the number of independent anaml-spark-servers clusters deploy. Each cluster is isolated from each other."
-}
-
 variable "override_anaml_server_java_opts" {
   type        = list(string)
   default     = []
@@ -247,6 +241,11 @@ variable "override_anaml_server_ssl_kubernetes_secret_pkcs12_keystore_password_k
 
 variable "override_anaml_server_governance_run_type_checks" {
   type    = bool
+  default = null
+}
+
+variable "override_anaml_spark_server_kubernetes_deployment_name" {
+  type    = set(string)
   default = null
 }
 

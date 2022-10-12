@@ -29,9 +29,15 @@ variable "kubernetes_node_selector_spark_executor" {
 }
 
 variable "kubernetes_deployment_name" {
-  type        = string
-  default     = "anaml-spark-server"
+  type        = set(string)
+  default     = ["anaml-spark-server"]
   description = "(Optional) Name of the deployment, must be unique. Cannot be updated. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/identifiers#names)"
+  nullable    = false
+
+  validation {
+    condition     = length(var.kubernetes_deployment_name) > 0
+    error_message = "The kubernetes_deployment_name must have at least one value"
+  }
 }
 
 variable "kubernetes_container_spark_server_env_from" {
@@ -419,16 +425,4 @@ variable "ssl_kubernetes_secret_pkcs12_keystore_password_key" {
   default     = "javax.net.ssl.keyStorePassword"
   description = "(Optional) The key used inside ssl_kubernetes_secret_pkcs12_keystore_password for the trust store password if set"
   nullable    = false
-}
-
-variable "deployment_count" {
-  type        = number
-  default     = 1
-  nullable    = false
-  description = "(Optional) the number of independent anaml-spark-servers clusters deploy. Each cluster is isolated from each other."
-
-  validation {
-    condition     = var.deployment_count > 0
-    error_message = "The deployment_count must be greater than 0."
-  }
 }

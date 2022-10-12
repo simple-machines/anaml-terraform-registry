@@ -164,14 +164,6 @@ Type: `string`
 
 Default: `"http://anaml-server.anaml.svc.cluster.local:8080"`
 
-### <a name="input_deployment_count"></a> [deployment\_count](#input\_deployment\_count)
-
-Description: (Optional) the number of independent anaml-spark-servers clusters deploy. Each cluster is isolated from each other.
-
-Type: `number`
-
-Default: `1`
-
 ### <a name="input_kubernetes_container_spark_history_server_env_from"></a> [kubernetes\_container\_spark\_history\_server\_env\_from](#input\_kubernetes\_container\_spark\_history\_server\_env\_from)
 
 Description: Inject additional `env_from` values in to the deployment. This is useful for example if you want to mount the Postgres credentials from a secret\_ref to use in the `postgres_user` and `postgres_password` values
@@ -269,9 +261,15 @@ Default: `null`
 
 Description: (Optional) Name of the deployment, must be unique. Cannot be updated. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/identifiers#names)
 
-Type: `string`
+Type: `set(string)`
 
-Default: `"anaml-spark-server"`
+Default:
+
+```json
+[
+  "anaml-spark-server"
+]
+```
 
 ### <a name="input_kubernetes_image_pull_policy"></a> [kubernetes\_image\_pull\_policy](#input\_kubernetes\_image\_pull\_policy)
 

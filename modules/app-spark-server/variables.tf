@@ -420,3 +420,15 @@ variable "ssl_kubernetes_secret_pkcs12_keystore_password_key" {
   description = "(Optional) The key used inside ssl_kubernetes_secret_pkcs12_keystore_password for the trust store password if set"
   nullable    = false
 }
+
+variable "deployment_count" {
+  type        = number
+  default     = 1
+  nullable    = false
+  description = "(Optional) the number of independent anaml-spark-servers clusters deploy. Each cluster is isolated from each other."
+
+  validation {
+    condition     = var.deployment_count > 0
+    error_message = "The deployment_count must be greater than 0."
+  }
+}

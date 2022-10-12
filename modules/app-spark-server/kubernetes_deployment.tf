@@ -1,21 +1,27 @@
 resource "kubernetes_deployment" "anaml_spark_server_deployment" {
+  for_each = toset(formatlist("%02g", range(0, var.deployment_count)))
+
   metadata {
-    name      = var.kubernetes_deployment_name
+    name      = "${var.kubernetes_deployment_name}-${each.key}"
     namespace = var.kubernetes_namespace
-    labels    = local.anaml_spark_server_labels
+    labels = merge(local.base_deployment_labels, {
+      "app.kubernetes.io/name" = "anaml-spark-server-${each.key}"
+    })
+
   }
   spec {
     selector {
       match_labels = {
-        "app.kubernetes.io/name"        = local.anaml_spark_server_labels["app.kubernetes.io/name"]
-        "terraform/deployment-instance" = random_uuid.deployment_instance.result
+        "app.kubernetes.io/name" = "anaml-spark-server-${each.key}"
       }
     }
     template {
       metadata {
-        name      = var.kubernetes_deployment_name
+        name      = "${var.kubernetes_deployment_name}-${each.key}"
         namespace = var.kubernetes_namespace
-        labels    = local.anaml_spark_server_labels
+        labels = merge(local.base_deployment_labels, {
+          "app.kubernetes.io/name" = "anaml-spark-server-${each.key}"
+        })
         annotations = {
           "checksum/configmap_${kubernetes_config_map.anaml_spark_server_config.metadata[0].name}" = sha256(jsonencode(kubernetes_config_map.anaml_spark_server_config.data))
         }
@@ -307,8 +313,7 @@ resource "kubernetes_deployment" "spark_history_server_deployment" {
   spec {
     selector {
       match_labels = {
-        "app.kubernetes.io/name"        = local.spark_history_server_labels["app.kubernetes.io/name"]
-        "terraform/deployment-instance" = random_uuid.deployment_instance.result
+        "app.kubernetes.io/name" = local.spark_history_server_labels["app.kubernetes.io/name"]
       }
     }
     template {

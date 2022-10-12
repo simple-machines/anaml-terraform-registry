@@ -15,8 +15,6 @@ The following providers are used by this module:
 
 - <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) (~> 2.11)
 
-- <a name="provider_random"></a> [random](#provider\_random) (>= 2.2.1)
-
 ## Modules
 
 No modules.
@@ -35,7 +33,6 @@ The following resources are used by this module:
 - [kubernetes_service.anaml_spark_server_service](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/service) (resource)
 - [kubernetes_service.spark_history_server_service](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/service) (resource)
 - [kubernetes_service_account.spark](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/service_account) (resource)
-- [random_uuid.deployment_instance](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) (resource)
 
 ## Required Inputs
 
@@ -166,6 +163,14 @@ Description: n/a
 Type: `string`
 
 Default: `"http://anaml-server.anaml.svc.cluster.local:8080"`
+
+### <a name="input_deployment_count"></a> [deployment\_count](#input\_deployment\_count)
+
+Description: (Optional) the number of independent anaml-spark-servers clusters deploy. Each cluster is isolated from each other.
+
+Type: `number`
+
+Default: `1`
 
 ### <a name="input_kubernetes_container_spark_history_server_env_from"></a> [kubernetes\_container\_spark\_history\_server\_env\_from](#input\_kubernetes\_container\_spark\_history\_server\_env\_from)
 
@@ -550,6 +555,10 @@ Default: `"javax.net.ssl.trustStorePassword"`
 ## Outputs
 
 The following outputs are exported:
+
+### <a name="output_anaml_spark_server_internal_url"></a> [anaml\_spark\_server\_internal\_url](#output\_anaml\_spark\_server\_internal\_url)
+
+Description: n/a
 
 ### <a name="output_spark_history_server_internal_url"></a> [spark\_history\_server\_internal\_url](#output\_spark\_history\_server\_internal\_url)
 

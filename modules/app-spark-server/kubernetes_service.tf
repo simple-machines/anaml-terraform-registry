@@ -1,16 +1,20 @@
 resource "kubernetes_service" "anaml_spark_server_service" {
+  for_each = toset(formatlist("%02g", range(0, var.deployment_count)))
+
   metadata {
-    name        = "anaml-spark-server"
-    namespace   = var.kubernetes_namespace
-    labels      = { for k, v in local.anaml_spark_server_labels : k => v if k != "app.kubernetes.io/version" }
+    name      = "anaml-spark-server-${each.key}"
+    namespace = var.kubernetes_namespace
+    labels = merge(
+      { for k, v in local.anaml_spark_server_labels : k => v if k != "app.kubernetes.io/version" },
+      { "app.kubernetes.io/name" = "anaml-spark-server-${each.key}" }
+    )
     annotations = var.kubernetes_service_annotations_anaml_spark_server
   }
 
   spec {
     type = var.kubernetes_service_type
     selector = {
-      "app.kubernetes.io/name"        = local.anaml_spark_server_labels["app.kubernetes.io/name"]
-      "terraform/deployment-instance" = random_uuid.deployment_instance.result
+      "app.kubernetes.io/name" = "anaml-spark-server-${each.key}"
     }
     port {
       name        = "http"
@@ -53,8 +57,7 @@ resource "kubernetes_service" "spark_history_server_service" {
   spec {
     type = var.kubernetes_service_type
     selector = {
-      "app.kubernetes.io/name"        = local.spark_history_server_labels["app.kubernetes.io/name"]
-      "terraform/deployment-instance" = random_uuid.deployment_instance.result
+      "app.kubernetes.io/name" = local.spark_history_server_labels["app.kubernetes.io/name"]
     }
     port {
       name        = var.ssl_kubernetes_secret_pkcs12_keystore == null ? "http" : "https"

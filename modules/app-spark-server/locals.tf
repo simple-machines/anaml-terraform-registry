@@ -4,10 +4,9 @@ locals {
       replace(regex("^sha256:[a-z0-9]{8}", var.anaml_spark_server_version), ":", "_"),
       var.anaml_spark_server_version
     )
-    "app.kubernetes.io/component"   = "spark"
-    "app.kubernetes.io/part-of"     = "anaml"
-    "app.kubernetes.io/created-by"  = "terraform"
-    "terraform/deployment-instance" = random_uuid.deployment_instance.result
+    "app.kubernetes.io/component"  = "spark"
+    "app.kubernetes.io/part-of"    = "anaml"
+    "app.kubernetes.io/created-by" = "terraform"
   }, var.kubernetes_deployment_labels)
 
   anaml_spark_server_labels = merge(local.base_deployment_labels, {

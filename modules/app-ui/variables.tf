@@ -98,6 +98,12 @@ variable "skin" {
   description = "The skin to use"
 }
 
+variable "language" {
+  type        = string
+  description = "Sets the terminology to use in the UI [feature|attribute]"
+  default     = "feature"
+}
+
 variable "spark_history_server_url" {
   type     = string
   nullable = false

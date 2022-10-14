@@ -145,8 +145,8 @@ module "anaml-ui" {
   kubernetes_secret_ssl               = var.override_anaml_ui_kubernetes_secret_ssl
   kubernetes_service_annotations      = var.kubernetes_service_annotations_anaml_ui
   kubernetes_service_type             = var.kubernetes_service_type
+  language                            = var.override_anaml_language
   skin                                = var.override_anaml_ui_skin
-
 
   docs_url                 = module.anaml-docs.internal_url
   spark_history_server_url = module.spark-server.spark_history_server_internal_url

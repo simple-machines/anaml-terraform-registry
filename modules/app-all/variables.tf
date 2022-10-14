@@ -450,6 +450,12 @@ variable "override_anaml_ui_skin" {
   description = "anaml-ui skin override"
 }
 
+variable "override_anaml_language" {
+  type        = string
+  description = "Sets the terminology to use in the UI [feature|attribute]"
+  default     = "feature"
+}
+
 variable "override_anaml_ui_kubernetes_deployment_container_env" {
   type        = map(string)
   description = "(Optional) Additional environment values to pass through to the anaml-ui container. This is useful if you want to use SSL and change the default certificate paths using`NGINX_SSL_CERTIFICATE` and `NGINX_SSL_CERTIFICATE_KEY`"

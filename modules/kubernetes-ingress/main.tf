@@ -81,6 +81,21 @@ resource "kubernetes_ingress_v1" "anaml_ingress" {
           path = "/docs/*"
         }
 
+        dynamic "path" {
+          for_each = var.kubernetes_ingress_additional_paths
+          content {
+            path = path.value.path
+            backend {
+              service {
+                name = path.value.backend.service.name
+                port {
+                  number = path.value.backend.service.port.number
+                }
+              }
+            }
+          }
+        }
+
         path {
           backend {
             service {
@@ -92,21 +107,6 @@ resource "kubernetes_ingress_v1" "anaml_ingress" {
           }
 
           path = "/*"
-        }
-
-        dynamic "path" {
-          for_each = var.kubernetes_ingress_additional_paths
-          content {
-            path = path.path
-            backend {
-              service {
-                name = path.backend.service.name
-                port {
-                  number = path.backend.port.number
-                }
-              }
-            }
-          }
         }
       }
     }

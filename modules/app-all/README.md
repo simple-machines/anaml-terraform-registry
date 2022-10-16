@@ -553,6 +553,14 @@ Type: `string`
 
 Default: `null`
 
+### <a name="input_override_anaml_language"></a> [override\_anaml\_language](#input\_override\_anaml\_language)
+
+Description: Sets the terminology to use in the UI [attribute|feature]
+
+Type: `string`
+
+Default: `null`
+
 ### <a name="input_override_anaml_server_anaml_database_schema_name"></a> [override\_anaml\_server\_anaml\_database\_schema\_name](#input\_override\_anaml\_server\_anaml\_database\_schema\_name)
 
 Description: n/a

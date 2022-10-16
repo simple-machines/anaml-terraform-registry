@@ -183,6 +183,14 @@ Type: `string`
 
 Default: `"ClusterIP"`
 
+### <a name="input_language"></a> [language](#input\_language)
+
+Description: Sets the terminology to use in the UI [attribute|feature]
+
+Type: `string`
+
+Default: `"feature"`
+
 ### <a name="input_skin"></a> [skin](#input\_skin)
 
 Description: The skin to use

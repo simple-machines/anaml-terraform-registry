@@ -1,21 +1,21 @@
 <!-- BEGIN_TF_DOCS -->
 # Anaml Demo Terraform module
 
-This Terraform module creates demo Anaml resources for entities, tables, features, feature sets, and feature stores, intended to build upon generated demo data. The module is intended to be suitable for deployment both to local and remote instances of Anaml, and as such it doesn't include configuration for clusters, sources, or destinations, which may be expected to vary depending on where the module is deployed.
-
-The module is imported by the Terraform manifest for GCP as well as by a separate Terraform manifest for local development.
+This Terraform module creates demo Anaml resources for entities, tables, features, feature sets, and feature stores, intended to build upon generated demo data.
 
 ## Requirements
 
-No requirements.
+The following requirements are needed by this module:
+
+- <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (>= 1.1)
+
+- <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) (~> 2.11)
 
 ## Providers
 
 The following providers are used by this module:
 
-- <a name="provider_anaml"></a> [anaml](#provider\_anaml)
-
-- <a name="provider_anaml-operations"></a> [anaml-operations](#provider\_anaml-operations)
+- <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) (~> 2.11)
 
 ## Modules
 
@@ -25,154 +25,193 @@ No modules.
 
 The following resources are used by this module:
 
-- [anaml-operations_attribute_restriction.country](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/attribute_restriction) (resource)
-- [anaml-operations_attribute_restriction.criticality](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/attribute_restriction) (resource)
-- [anaml-operations_attribute_restriction.quality_ratings](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/attribute_restriction) (resource)
-- [anaml-operations_attribute_restriction.source_system](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/attribute_restriction) (resource)
-- [anaml-operations_attribute_restriction.support_contract](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/attribute_restriction) (resource)
-- [anaml-operations_branch_protection.official](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/branch_protection) (resource)
-- [anaml-operations_caching.table-cache](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/caching) (resource)
-- [anaml-operations_feature_store.bi_report_std_customer](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/feature_store) (resource)
-- [anaml-operations_feature_store.customer_churn_model_v1](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/feature_store) (resource)
-- [anaml-operations_feature_store.sports_marketing_campaign](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/feature_store) (resource)
-- [anaml-operations_feature_store.vegetarian_model_scoring](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/feature_store) (resource)
-- [anaml-operations_feature_store.vegetarian_model_training](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/feature_store) (resource)
-- [anaml-operations_label_restriction.behaviour](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/label_restriction) (resource)
-- [anaml-operations_label_restriction.crossbrand](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/label_restriction) (resource)
-- [anaml-operations_label_restriction.customer](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/label_restriction) (resource)
-- [anaml-operations_label_restriction.dashboard](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/label_restriction) (resource)
-- [anaml-operations_label_restriction.decisioning](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/label_restriction) (resource)
-- [anaml-operations_label_restriction.demographics](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/label_restriction) (resource)
-- [anaml-operations_label_restriction.development](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/label_restriction) (resource)
-- [anaml-operations_label_restriction.engagement](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/label_restriction) (resource)
-- [anaml-operations_label_restriction.experience](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/label_restriction) (resource)
-- [anaml-operations_label_restriction.local](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/label_restriction) (resource)
-- [anaml-operations_label_restriction.machinelearning](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/label_restriction) (resource)
-- [anaml-operations_label_restriction.pii](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/label_restriction) (resource)
-- [anaml-operations_label_restriction.product](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/label_restriction) (resource)
-- [anaml-operations_label_restriction.referencedata](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/label_restriction) (resource)
-- [anaml-operations_label_restriction.spend](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/label_restriction) (resource)
-- [anaml-operations_label_restriction.supermarket](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/label_restriction) (resource)
-- [anaml-operations_label_restriction.targeted](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/label_restriction) (resource)
-- [anaml-operations_label_restriction.telco](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/label_restriction) (resource)
-- [anaml-operations_monitoring.table-monitor](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/monitoring) (resource)
-- [anaml-operations_user.freddie_strong](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/user) (resource)
-- [anaml-operations_user.genevieve_steele](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/user) (resource)
-- [anaml-operations_user.gideon_york](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/user) (resource)
-- [anaml-operations_user.jacob_carlisle](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/user) (resource)
-- [anaml-operations_user.shawn_bloodworth](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/user) (resource)
-- [anaml-operations_user.sonny_bowman](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/user) (resource)
-- [anaml-operations_user.test_user](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/user) (resource)
-- [anaml-operations_user_group.all_users](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/user_group) (resource)
-- [anaml-operations_user_group.analysts](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/user_group) (resource)
-- [anaml-operations_user_group.engineering](https://registry.terraform.io/providers/simple-machines/anaml-operations/latest/docs/resources/user_group) (resource)
-- [anaml_entity.customer](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/entity) (resource)
-- [anaml_entity.household](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/entity) (resource)
-- [anaml_entity.phone_plan](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/entity) (resource)
-- [anaml_entity.store](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/entity) (resource)
-- [anaml_entity.tower](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/entity) (resource)
-- [anaml_entity.town](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/entity) (resource)
-- [anaml_entity_mapping.plan_to_customer](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/entity_mapping) (resource)
-- [anaml_feature.bill_amount_average](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/feature) (resource)
-- [anaml_feature.bill_percentage_change](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/feature) (resource)
-- [anaml_feature.cooked_meats_spend_sum_28_days](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/feature) (resource)
-- [anaml_feature.customer_age](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/feature) (resource)
-- [anaml_feature.data_loss_last_30_days](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/feature) (resource)
-- [anaml_feature.data_usage_daily_maximum_last_30_days](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/feature) (resource)
-- [anaml_feature.fruitveg_spend_sum_28_days](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/feature) (resource)
-- [anaml_feature.items_bought_last_n_days](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/feature) (resource)
-- [anaml_feature.items_lower_socio_economic_count_30_days](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/feature) (resource)
-- [anaml_feature.meat_spend_sum_28_days](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/feature) (resource)
-- [anaml_feature.plan_age](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/feature) (resource)
-- [anaml_feature.plan_customer](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/feature) (resource)
-- [anaml_feature.plan_size](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/feature) (resource)
-- [anaml_feature.seafood_spend_sum_28_days](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/feature) (resource)
-- [anaml_feature.shopping_basket_big_spender_last_30_days](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/feature) (resource)
-- [anaml_feature.shopping_basket_max_spend_30_days](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/feature) (resource)
-- [anaml_feature.sport_data_usage_last_n_days](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/feature) (resource)
-- [anaml_feature.sport_data_usage_last_n_days_by_customer](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/feature) (resource)
-- [anaml_feature.visit_count](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/feature) (resource)
-- [anaml_feature.visted_any_last_14_days](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/feature) (resource)
-- [anaml_feature_set.bi_report_std_customer](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/feature_set) (resource)
-- [anaml_feature_set.customer_churn_model_v1](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/feature_set) (resource)
-- [anaml_feature_set.sports_marketing_campaign](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/feature_set) (resource)
-- [anaml_feature_set.vegetarian_model](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/feature_set) (resource)
-- [anaml_feature_template.items_bought_last_n_days](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/feature_template) (resource)
-- [anaml_feature_template.sport_data_usage_last_n_days](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/feature_template) (resource)
-- [anaml_table.bills](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/table) (resource)
-- [anaml_table.brands](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/table) (resource)
-- [anaml_table.customer](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/table) (resource)
-- [anaml_table.data_usage](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/table) (resource)
-- [anaml_table.labels](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/table) (resource)
-- [anaml_table.plan_to_customer_pivot](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/table) (resource)
-- [anaml_table.plans](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/table) (resource)
-- [anaml_table.sku](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/table) (resource)
-- [anaml_table.sku_enriched](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/table) (resource)
-- [anaml_table.sku_hierarchy](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/table) (resource)
-- [anaml_table.towers](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/table) (resource)
-- [anaml_table.towns](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/table) (resource)
-- [anaml_table.transactions](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/table) (resource)
-- [anaml_table.transactions_enriched](https://registry.terraform.io/providers/simple-machines/anaml/latest/docs/resources/table) (resource)
+- [kubernetes_cron_job.data_generation](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/cron_job) (resource)
+- [kubernetes_job.data_generation_init](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/job) (resource)
+- [kubernetes_persistent_volume_claim.data_generation_volume](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/persistent_volume_claim) (resource)
 
 ## Required Inputs
 
 The following input variables are required:
 
-### <a name="input_caching_prefix_url"></a> [caching\_prefix\_url](#input\_caching\_prefix\_url)
+### <a name="input_anaml_api_password"></a> [anaml\_api\_password](#input\_anaml\_api\_password)
 
-Description: Destination for caching results. e.g gs://anaml-dev-warehouse/vapour-cache
-
-Type: `string`
-
-### <a name="input_cluster_id"></a> [cluster\_id](#input\_cluster\_id)
-
-Description: The ID of the Anaml cluster to run feature stores and previews on.
-
-Type: `number`
-
-### <a name="input_destination_id"></a> [destination\_id](#input\_destination\_id)
-
-Description: The ID of the Anaml destination to write stores to.
-
-Type: `number`
-
-### <a name="input_destination_type"></a> [destination\_type](#input\_destination\_type)
-
-Description: The type of the destination: local|gcs
+Description: n/a
 
 Type: `string`
 
-### <a name="input_online_feature_store_id"></a> [online\_feature\_store\_id](#input\_online\_feature\_store\_id)
+### <a name="input_anaml_api_url"></a> [anaml\_api\_url](#input\_anaml\_api\_url)
 
-Description: The ID of the Anaml Online Feature Store destination to write to.
+Description: n/a
 
-Type: `number`
+Type: `string`
 
-### <a name="input_source_id"></a> [source\_id](#input\_source\_id)
+### <a name="input_anaml_api_username"></a> [anaml\_api\_username](#input\_anaml\_api\_username)
 
-Description: The ID of the Anaml source to run retrieve table datas from.
+Description: n/a
 
-Type: `number`
+Type: `string`
 
-### <a name="input_source_type"></a> [source\_type](#input\_source\_type)
+### <a name="input_anaml_server_url"></a> [anaml\_server\_url](#input\_anaml\_server\_url)
 
-Description: The type of the source: local|gcs
+Description: n/a
+
+Type: `string`
+
+### <a name="input_anaml_spark_server_url"></a> [anaml\_spark\_server\_url](#input\_anaml\_spark\_server\_url)
+
+Description: n/a
+
+Type: `string`
+
+### <a name="input_input_path"></a> [input\_path](#input\_input\_path)
+
+Description: n/a
+
+Type: `string`
+
+### <a name="input_job_cluster_id"></a> [job\_cluster\_id](#input\_job\_cluster\_id)
+
+Description: n/a
+
+Type: `string`
+
+### <a name="input_kubernetes_namespace"></a> [kubernetes\_namespace](#input\_kubernetes\_namespace)
+
+Description: n/a
+
+Type: `string`
+
+### <a name="input_kubernetes_secret_anaml_api_password_key"></a> [kubernetes\_secret\_anaml\_api\_password\_key](#input\_kubernetes\_secret\_anaml\_api\_password\_key)
+
+Description: n/a
+
+Type: `string`
+
+### <a name="input_kubernetes_secret_anaml_api_password_name"></a> [kubernetes\_secret\_anaml\_api\_password\_name](#input\_kubernetes\_secret\_anaml\_api\_password\_name)
+
+Description: n/a
+
+Type: `string`
+
+### <a name="input_kubernetes_secret_pg_password_key"></a> [kubernetes\_secret\_pg\_password\_key](#input\_kubernetes\_secret\_pg\_password\_key)
+
+Description: n/a
+
+Type: `string`
+
+### <a name="input_kubernetes_secret_pg_password_name"></a> [kubernetes\_secret\_pg\_password\_name](#input\_kubernetes\_secret\_pg\_password\_name)
+
+Description: n/a
+
+Type: `string`
+
+### <a name="input_kubernetes_service_account_name"></a> [kubernetes\_service\_account\_name](#input\_kubernetes\_service\_account\_name)
+
+Description: Kubernetes service account to run the job under. Ensure this service account has access to the `input_path` and `output_path` destinations
+
+Type: `string`
+
+### <a name="input_output_path"></a> [output\_path](#input\_output\_path)
+
+Description: n/a
+
+Type: `string`
+
+### <a name="input_pg_host"></a> [pg\_host](#input\_pg\_host)
+
+Description: n/a
+
+Type: `string`
+
+### <a name="input_pg_password"></a> [pg\_password](#input\_pg\_password)
+
+Description: n/a
+
+Type: `string`
+
+### <a name="input_preview_cluster_id"></a> [preview\_cluster\_id](#input\_preview\_cluster\_id)
+
+Description: n/a
 
 Type: `string`
 
 ## Optional Inputs
 
-No optional inputs.
+The following input variables are optional (have default values):
+
+### <a name="input_anaml_demo_image_version"></a> [anaml\_demo\_image\_version](#input\_anaml\_demo\_image\_version)
+
+Description: The version of oniomania (https://github.com/simple-machines/anaml-devops/tree/master/docker/anaml-demo-setup) container image to deploy
+
+Type: `string`
+
+Default: `"faaa2511bd9010678b9af31b189a81e8b183e824"`
+
+### <a name="input_backdate_day_count"></a> [backdate\_day\_count](#input\_backdate\_day\_count)
+
+Description: Number of days to generate backdated data for
+
+Type: `number`
+
+Default: `30`
+
+### <a name="input_container_registry"></a> [container\_registry](#input\_container\_registry)
+
+Description: The container registry to use to fetch the anaml-docs container
+
+Type: `string`
+
+Default: `"australia-southeast1-docker.pkg.dev/anaml-release-artifacts/docker"`
+
+### <a name="input_cron_schedule"></a> [cron\_schedule](#input\_cron\_schedule)
+
+Description: The t 01:00+10:00 (AEST)
+
+Type: `string`
+
+Default: `"0 15 * * *"`
+
+### <a name="input_kubernetes_deployment_labels"></a> [kubernetes\_deployment\_labels](#input\_kubernetes\_deployment\_labels)
+
+Description: Kubernetes labels to set if any. These values will be merged with the defaults
+
+Type: `map(string)`
+
+Default: `null`
+
+### <a name="input_kubernetes_image_pull_policy"></a> [kubernetes\_image\_pull\_policy](#input\_kubernetes\_image\_pull\_policy)
+
+Description: n/a
+
+Type: `string`
+
+Default: `"IfNotPresent"`
+
+### <a name="input_kubernetes_node_selector"></a> [kubernetes\_node\_selector](#input\_kubernetes\_node\_selector)
+
+Description: (Optional) NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/node-selection).
+
+Type: `map(string)`
+
+Default: `null`
+
+### <a name="input_max_cust"></a> [max\_cust](#input\_max\_cust)
+
+Description: n/a
+
+Type: `number`
+
+Default: `200000`
+
+### <a name="input_max_skus"></a> [max\_skus](#input\_max\_skus)
+
+Description: n/a
+
+Type: `number`
+
+Default: `100000`
 
 ## Outputs
 
-The following outputs are exported:
-
-### <a name="output_customer_entity_id"></a> [customer\_entity\_id](#output\_customer\_entity\_id)
-
-Description: n/a
-
-### <a name="output_plan_entity_id"></a> [plan\_entity\_id](#output\_plan\_entity\_id)
-
-Description: n/a
+No outputs.
 <!-- END_TF_DOCS -->

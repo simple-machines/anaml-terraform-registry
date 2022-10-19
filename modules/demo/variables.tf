@@ -1,42 +1,132 @@
-variable "source_id" {
-  type        = number
-  description = "The ID of the Anaml source to run retrieve table datas from."
+variable "anaml_api_password" {
+  type = string
 }
 
-variable "cluster_id" {
-  type        = number
-  description = "The ID of the Anaml cluster to run feature stores and previews on."
+variable "anaml_api_url" {
+  type = string
 }
 
-variable "destination_id" {
-  type        = number
-  description = "The ID of the Anaml destination to write stores to."
+variable "anaml_api_username" {
+  type = string
 }
 
-variable "online_feature_store_id" {
-  type        = number
-  description = "The ID of the Anaml Online Feature Store destination to write to."
-}
-
-variable "source_type" {
+variable "anaml_demo_image_version" {
   type        = string
-  description = "The type of the source: local|gcs"
+  description = "The version of oniomania (https://github.com/simple-machines/anaml-devops/tree/master/docker/anaml-demo-setup) container image to deploy"
+  default     = "faaa2511bd9010678b9af31b189a81e8b183e824"
+  nullable    = false
 }
 
-variable "destination_type" {
+variable "anaml_server_url" {
+  type = string
+}
+
+variable "anaml_spark_server_url" {
+  type = string
+}
+
+variable "backdate_day_count" {
+  type        = number
+  default     = 30
+  description = "Number of days to generate backdated data for"
+}
+
+variable "container_registry" {
   type        = string
-  description = "The type of the destination: local|gcs"
+  default     = "australia-southeast1-docker.pkg.dev/anaml-release-artifacts/docker"
+  description = "The container registry to use to fetch the anaml-docs container"
+  nullable    = false
 }
 
-variable "caching_prefix_url" {
+variable "cron_schedule" {
   type        = string
-  description = "Destination for caching results. e.g gs://anaml-dev-warehouse/vapour-cache"
+  default     = "0 15 * * *"
+  description = "The t 01:00+10:00 (AEST)"
+  nullable    = false
 }
 
-output "customer_entity_id" {
-  value = anaml_entity.customer.id
+variable "input_path" {
+  type     = string
+  nullable = false
 }
 
-output "plan_entity_id" {
-  value = anaml_entity.phone_plan.id
+variable "job_cluster_id" {
+  type = string
+}
+
+variable "kubernetes_deployment_labels" {
+  type        = map(string)
+  default     = null
+  description = "Kubernetes labels to set if any. These values will be merged with the defaults"
+}
+
+variable "kubernetes_image_pull_policy" {
+  type    = string
+  default = "IfNotPresent"
+}
+
+variable "kubernetes_namespace" {
+  type     = string
+  nullable = false
+}
+
+variable "kubernetes_node_selector" {
+  type        = map(string)
+  default     = null
+  description = "(Optional) NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/node-selection)."
+  nullable    = true
+}
+
+variable "kubernetes_secret_anaml_api_password_key" {
+  type     = string
+  nullable = false
+}
+
+variable "kubernetes_secret_anaml_api_password_name" {
+  type     = string
+  nullable = false
+}
+
+variable "kubernetes_secret_pg_password_key" {
+  type     = string
+  nullable = false
+}
+
+variable "kubernetes_secret_pg_password_name" {
+  type     = string
+  nullable = false
+}
+
+variable "kubernetes_service_account_name" {
+  type        = string
+  description = "Kubernetes service account to run the job under. Ensure this service account has access to the `input_path` and `output_path` destinations"
+}
+
+variable "max_cust" {
+  type     = number
+  default  = 200000
+  nullable = false
+}
+
+variable "max_skus" {
+  type     = number
+  nullable = false
+  default  = 100000
+}
+
+variable "output_path" {
+  type     = string
+  nullable = false
+}
+
+variable "pg_host" {
+  type = string
+}
+
+variable "pg_password" {
+  type = string
+}
+
+variable "preview_cluster_id" {
+  type = string
 }

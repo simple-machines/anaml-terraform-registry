@@ -18,3 +18,8 @@ output "anaml_server_port" {
 output "ingress_dns_hostname" {
   value = one(module.ingress[*].dns_hostname)
 }
+
+
+output "anaml_spark_server_internal_url" {
+  value = module.spark-server.anaml_spark_server_internal_url
+}

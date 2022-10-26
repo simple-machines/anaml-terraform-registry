@@ -1011,6 +1011,10 @@ Description: n/a
 
 Description: n/a
 
+### <a name="output_anaml_spark_server_internal_url"></a> [anaml\_spark\_server\_internal\_url](#output\_anaml\_spark\_server\_internal\_url)
+
+Description: n/a
+
 ### <a name="output_ingress_dns_hostname"></a> [ingress\_dns\_hostname](#output\_ingress\_dns\_hostname)
 
 Description: n/a

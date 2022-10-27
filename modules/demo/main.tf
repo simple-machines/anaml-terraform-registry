@@ -49,8 +49,8 @@ resource "kubernetes_cron_job" "data_generation" {
 
               image = (
                 can(regex("^sha256:[0-9A-Za-z]+$", var.anaml_demo_image_version))
-                ? "${var.container_registry}/anaml_demo_setup@${var.anaml_demo_image_version}"
-                : "${var.container_registry}/anaml_demo_setup:${var.anaml_demo_image_version}"
+                ? "${var.container_registry}/anaml-demo-setup@${var.anaml_demo_image_version}"
+                : "${var.container_registry}/anaml-demo-setup:${var.anaml_demo_image_version}"
               )
 
               image_pull_policy = var.kubernetes_image_pull_policy

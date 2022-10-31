@@ -1,5 +1,8 @@
 /**
- * # demo-batch-data-generation
+ * # demo-batch-data-generation (DEPRECATED)
+ *
+ * ## WARNING: DEPRECATED
+ * This module is DEPRECATED. Use https://github.com/simple-machines/anaml-terraform-registry/tree/main/modules/demo instead
  *
  * This module
  *   - Runs a one-off data initialization **job** creating seed data at the `output_path`

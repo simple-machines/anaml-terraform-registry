@@ -6,22 +6,17 @@ resource "kubernetes_config_map" "anaml_spark_server_config" {
   }
 
   data = merge(
-    # Generate dynamic Spark executor pod templates
+
+    # Generate custom Spark cluster executor templates
     {
-      for k, v in var.additional_spark_executor_pod_templates : "${k}-spark-executor-template.yaml" =>
-      templatefile("${path.module}/_templates/spark-executor-template.yaml", {
-        tolerations = v.tolerations
-      })
+      for spark_cluster in var.spark_cluster_configs : "${spark_cluster.cluster_name}-spark-executor-template.yaml" => spark_cluster.executor_pod_template
     },
 
-    # Generate dynamic Spark driver pod templates
-    {
-      for k, v in var.additional_spark_driver_pod_templates : "${k}-spark-driver-template.yaml" =>
-      templatefile("${path.module}/_templates/spark-driver-template.yaml", {
-        tolerations = v.tolerations
-      })
-    },
 
+    # Generate custom Spark cluster executor templates
+    {
+      for spark_cluster in var.spark_cluster_configs : "${spark_cluster.cluster_name}-spark-driver-template.yaml" => spark_cluster.driver_pod_template
+    },
 
     {
       "application.conf" = templatefile("${path.module}/_templates/application.conf", {

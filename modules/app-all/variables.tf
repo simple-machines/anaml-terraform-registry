@@ -300,34 +300,14 @@ variable "override_anaml_spark_server_additional_volume_mounts" {
   default = []
 }
 
-variable "override_anaml_spark_server_additional_spark_executor_pod_templates" {
-  type = map(
-    object({
-      tolerations = set(
-        object({
-          key      = string
-          operator = string
-          effect   = string
-        })
-      )
-    })
-  )
-  default = null
-}
-
-variable "override_anaml_spark_server_additional_spark_driver_pod_templates" {
-  type = map(
-    object({
-      tolerations = set(
-        object({
-          key      = string
-          operator = string
-          effect   = string
-        })
-      )
-    })
-  )
-  default = null
+variable "override_anaml_spark_server_spark_cluster_configs" {
+  type = list(object({
+    cluster_name          = string
+    executor_pod_template = string
+    driver_pod_template   = string
+  }))
+  default     = null
+  description = "If you need to generate custom spark cluster pod templates set this value. This function generates '/config/CLUSTER_NAME-spark-{driver|executor}-template.yaml files in the pod using the given executor/driver template values."
 }
 
 

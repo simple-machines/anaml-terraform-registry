@@ -96,50 +96,6 @@ Type: `string`
 
 The following input variables are optional (have default values):
 
-### <a name="input_additional_spark_driver_pod_templates"></a> [additional\_spark\_driver\_pod\_templates](#input\_additional\_spark\_driver\_pod\_templates)
-
-Description: n/a
-
-Type:
-
-```hcl
-map(
-    object({
-      tolerations = set(
-        object({
-          key      = string
-          operator = string
-          effect   = string
-        })
-      )
-    })
-  )
-```
-
-Default: `{}`
-
-### <a name="input_additional_spark_executor_pod_templates"></a> [additional\_spark\_executor\_pod\_templates](#input\_additional\_spark\_executor\_pod\_templates)
-
-Description: n/a
-
-Type:
-
-```hcl
-map(
-    object({
-      tolerations = set(
-        object({
-          key      = string
-          operator = string
-          effect   = string
-        })
-      )
-    })
-  )
-```
-
-Default: `{}`
-
 ### <a name="input_anaml_database_name"></a> [anaml\_database\_name](#input\_anaml\_database\_name)
 
 Description: n/a
@@ -408,6 +364,22 @@ Description: n/a
 Type: `number`
 
 Default: `5432`
+
+### <a name="input_spark_cluster_configs"></a> [spark\_cluster\_configs](#input\_spark\_cluster\_configs)
+
+Description: If you need to generate custom spark cluster pod templates set this value. This function generates '/config/CLUSTER\_NAME-spark-{driver|executor}-template.yaml files in the pod using the given executor/driver template values.
+
+Type:
+
+```hcl
+list(object({
+    cluster_name          = string
+    executor_pod_template = string
+    driver_pod_template   = string
+  }))
+```
+
+Default: `[]`
 
 ### <a name="input_spark_config_overrides"></a> [spark\_config\_overrides](#input\_spark\_config\_overrides)
 

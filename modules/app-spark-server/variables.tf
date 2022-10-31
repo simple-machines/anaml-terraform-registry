@@ -298,68 +298,15 @@ variable "kubernetes_pod_sidecars" {
   description = "Optional sidecars to provision i.e. Google Cloud SQL Auth Proxy if deploying in GCP"
 }
 
-variable "additional_spark_executor_pod_templates" {
-  type = map(
-    object({
-      tolerations = set(
-        object({
-          key      = string
-          operator = string
-          effect   = string
-        })
-      )
-    })
-  )
-  default  = {}
-  nullable = false
-
-  validation {
-    condition     = alltrue([for k, v in var.additional_spark_executor_pod_templates : can(regex("^[a-zA-Z0-9-]+$", k))])
-    error_message = "An executor pod template toleration is invalid. key must match `^[a-zA-Z0-9-]+$`"
-  }
-
-  validation {
-    condition     = alltrue([for k, v in var.additional_spark_executor_pod_templates : alltrue([for toleration in v.tolerations : contains(["NoSchedule", "NoExecute", "PreferNoSchedule"], toleration.effect)])])
-    error_message = "An executor pod template toleration is invalid. toleration.effect must be one of one of Equal or Exists"
-  }
-
-  validation {
-    condition     = alltrue([for k, v in var.additional_spark_executor_pod_templates : alltrue([for toleration in v.tolerations : contains(["NoSchedule", "NoExecute", "PreferNoSchedule"], toleration.effect)])])
-    error_message = "An executor pod template toleration is invalid. toleration.effect must be one of NoExecute, NoSchedule or PreferNoSchedule"
-  }
-
-}
-
-variable "additional_spark_driver_pod_templates" {
-  type = map(
-    object({
-      tolerations = set(
-        object({
-          key      = string
-          operator = string
-          effect   = string
-        })
-      )
-    })
-  )
-  default  = {}
-  nullable = false
-
-  validation {
-    condition     = alltrue([for k, v in var.additional_spark_driver_pod_templates : can(regex("^[a-zA-Z0-9-]+$", k))])
-    error_message = "An driver pod template toleration is invalid. key must match `^[a-zA-Z0-9-]+$`"
-  }
-
-  validation {
-    condition     = alltrue([for k, v in var.additional_spark_driver_pod_templates : alltrue([for toleration in v.tolerations : contains(["NoSchedule", "NoExecute", "PreferNoSchedule"], toleration.effect)])])
-    error_message = "An driver pod template toleration is invalid. toleration.effect must be one of one of Equal or Exists"
-  }
-
-  validation {
-    condition     = alltrue([for k, v in var.additional_spark_driver_pod_templates : alltrue([for toleration in v.tolerations : contains(["NoSchedule", "NoExecute", "PreferNoSchedule"], toleration.effect)])])
-    error_message = "An driver pod template toleration is invalid. toleration.effect must be one of NoExecute, NoSchedule or PreferNoSchedule"
-  }
-
+variable "spark_cluster_configs" {
+  type = list(object({
+    cluster_name          = string
+    executor_pod_template = string
+    driver_pod_template   = string
+  }))
+  default     = []
+  nullable    = false
+  description = "If you need to generate custom spark cluster pod templates set this value. This function generates '/config/CLUSTER_NAME-spark-{driver|executor}-template.yaml files in the pod using the given executor/driver template values."
 }
 
 variable "log4j_overrides" {

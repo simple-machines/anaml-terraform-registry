@@ -159,9 +159,6 @@ module "spark-server" {
   anaml_spark_server_version = coalesce(var.override_anaml_spark_server_version, var.anaml_version)
   container_registry         = var.container_registry
 
-  additional_spark_executor_pod_templates = var.override_anaml_spark_server_additional_spark_executor_pod_templates
-  additional_spark_driver_pod_templates   = var.override_anaml_spark_server_additional_spark_driver_pod_templates
-
   checkpoint_location = var.override_anaml_spark_server_checkpoint_location
 
   postgres_host     = local.postgres_host
@@ -179,6 +176,8 @@ module "spark-server" {
   kubernetes_service_annotations_spark_history_service = var.kubernetes_service_annotations_spark_history_service
 
   spark_config_overrides = var.override_anaml_spark_server_spark_config_overrides
+
+  spark_cluster_configs = var.override_anaml_spark_server_spark_cluster_configs
 
   spark_log_directory = var.override_anaml_spark_server_spark_log_directory
 

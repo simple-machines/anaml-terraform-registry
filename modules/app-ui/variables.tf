@@ -106,7 +106,7 @@ variable "language" {
 
   validation {
     condition     = contains(["attribute", "feature"], var.language)
-    error_message = "Language must be one of attribute or feature"
+    error_message = "Language must be one of attribute or feature."
   }
 }
 

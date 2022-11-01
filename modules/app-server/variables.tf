@@ -290,7 +290,7 @@ variable "log4j_overrides" {
 
   validation {
     condition     = alltrue([for k, v in var.log4j_overrides : contains(["debug", "error", "info", "trace", "warn"], v)])
-    error_message = "Value is not a valid log level. Must be one of debug, error, info, trace, warn"
+    error_message = "Value is not a valid log level. Must be one of debug, error, info, trace, warn."
   }
 }
 

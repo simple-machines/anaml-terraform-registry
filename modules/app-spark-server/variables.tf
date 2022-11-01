@@ -36,7 +36,7 @@ variable "kubernetes_deployment_name" {
 
   validation {
     condition     = length(var.kubernetes_deployment_name) > 0
-    error_message = "The kubernetes_deployment_name must have at least one value"
+    error_message = "The kubernetes_deployment_name must have at least one value."
   }
 }
 
@@ -145,6 +145,15 @@ variable "kubernetes_container_spark_server_volumes" {
 
     secret = optional(object({
       secret_name = string
+      items = optional(
+        list(
+          object({
+            key  = optional(string)
+            mode = optional(string)
+            path = optional(string)
+          })
+        )
+      )
     }))
 
     config_map = optional(object({
@@ -180,6 +189,15 @@ variable "spark_history_server_additional_volumes" {
 
     secret = optional(object({
       secret_name = string
+      items = optional(
+        list(
+          object({
+            key  = optional(string)
+            mode = optional(string)
+            path = optional(string)
+          })
+        )
+      )
     }))
 
     config_map = optional(object({
@@ -318,7 +336,7 @@ variable "log4j_overrides" {
 
   validation {
     condition     = alltrue([for k, v in var.log4j_overrides : contains(["debug", "error", "info", "trace", "warn"], v)])
-    error_message = "Value is not a valid log level. Must be one of debug, error, info, trace, warn"
+    error_message = "Value is not a valid log level. Must be one of debug, error, info, trace, warn."
   }
 }
 

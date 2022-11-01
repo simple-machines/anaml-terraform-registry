@@ -108,6 +108,8 @@ module "anaml-server" {
   postgres_port                  = var.postgres_port
   postgres_user                  = var.postgres_user
 
+  kubernetes_security_context = var.override_anaml_server_kubernetes_security_context
+
   kubernetes_service_account_name = coalesce(
     var.override_anaml_spark_server_kubernetes_service_account,
     var.kubernetes_service_account_create ? kubernetes_service_account.anaml[0].metadata.0.name : var.kubernetes_service_account_name

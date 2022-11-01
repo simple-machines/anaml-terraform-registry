@@ -260,6 +260,15 @@ resource "kubernetes_deployment" "anaml_server" {
       spec {
         service_account_name = var.kubernetes_service_account_name
 
+        dynamic "security_context" {
+          for_each = var.kubernetes_security_context != null ? [var.kubernetes_security_context] : []
+          content {
+            run_as_user  = security_context.value.run_as_user
+            run_as_group = security_context.value.run_as_group
+            fs_group     = security_context.value.fs_group
+          }
+        }
+
         volume {
           name = "config"
           config_map {

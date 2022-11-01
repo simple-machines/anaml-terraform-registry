@@ -39,6 +39,15 @@ variable "kubernetes_image_pull_policy" {
   }
 }
 
+variable "kubernetes_security_context" {
+  type = object({
+    run_as_user : number
+    run_as_group : number
+    fs_group : number
+  })
+  default = null
+}
+
 variable "kubernetes_service_annotations" {
   type        = map(string)
   default     = null

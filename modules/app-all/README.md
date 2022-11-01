@@ -593,6 +593,22 @@ Type: `list(string)`
 
 Default: `[]`
 
+### <a name="input_override_anaml_server_kubernetes_security_context"></a> [override\_anaml\_server\_kubernetes\_security\_context](#input\_override\_anaml\_server\_kubernetes\_security\_context)
+
+Description: n/a
+
+Type:
+
+```hcl
+object({
+    run_as_user: number
+    run_as_group: number
+    fs_group: number
+  })
+```
+
+Default: `null`
+
 ### <a name="input_override_anaml_server_log4j_overrides"></a> [override\_anaml\_server\_log4j\_overrides](#input\_override\_anaml\_server\_log4j\_overrides)
 
 Description: Override anaml-sercer log4j default log levels. Format is class.name={debug|error|info|trace|warn}

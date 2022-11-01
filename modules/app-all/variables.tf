@@ -427,7 +427,14 @@ variable "override_anaml_server_anaml_database_schema_name" {
   default = null
 }
 
-
+variable "override_anaml_server_kubernetes_security_context" {
+  type = object({
+    run_as_user : number
+    run_as_group : number
+    fs_group : number
+  })
+  default = null
+}
 
 variable "override_anaml_ui_version" {
   type        = string

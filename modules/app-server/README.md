@@ -316,6 +316,22 @@ set(
 
 Default: `[]`
 
+### <a name="input_kubernetes_security_context"></a> [kubernetes\_security\_context](#input\_kubernetes\_security\_context)
+
+Description: n/a
+
+Type:
+
+```hcl
+object({
+    run_as_user: number
+    run_as_group: number
+    fs_group: number
+  })
+```
+
+Default: `null`
+
 ### <a name="input_kubernetes_service_account_name"></a> [kubernetes\_service\_account\_name](#input\_kubernetes\_service\_account\_name)
 
 Description: n/a

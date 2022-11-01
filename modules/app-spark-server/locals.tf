@@ -55,7 +55,11 @@ locals {
       "spark.sql.cbo.enabled"                                                   = "true"
       "spark.sql.cbo.joinReorder.enabled"                                       = "true"
     },
-    var.kubernetes_service_account == null ? {} : { "spark.kubernetes.authenticate.driver.serviceAccountName" = var.kubernetes_service_account }
+
+    var.kubernetes_service_account_spark_driver_executor == null ? {} : {
+      "spark.kubernetes.authenticate.driver.serviceAccountName"   = var.kubernetes_service_account_spark_driver_executor
+      "spark.kubernetes.authenticate.executor.serviceAccountName" = var.kubernetes_service_account_spark_driver_executor
+    }
   )
 
   default_executor_template_tolerations = [

@@ -99,6 +99,18 @@ Description: n/a
 
 Type: `string`
 
+### <a name="input_override_anaml_spark_server_kubernetes_service_account_spark_driver_executor"></a> [override\_anaml\_spark\_server\_kubernetes\_service\_account\_spark\_driver\_executor](#input\_override\_anaml\_spark\_server\_kubernetes\_service\_account\_spark\_driver\_executor)
+
+Description: n/a
+
+Type: `string`
+
+### <a name="input_override_anaml_spark_server_kubernetes_service_account_spark_driver_executor_create"></a> [override\_anaml\_spark\_server\_kubernetes\_service\_account\_spark\_driver\_executor\_create](#input\_override\_anaml\_spark\_server\_kubernetes\_service\_account\_spark\_driver\_executor\_create)
+
+Description: n/a
+
+Type: `bool`
+
 ### <a name="input_override_anaml_spark_server_spark_log_directory"></a> [override\_anaml\_spark\_server\_spark\_log\_directory](#input\_override\_anaml\_spark\_server\_spark\_log\_directory)
 
 Description: n/a
@@ -735,7 +747,7 @@ list(object({
       items = optional(
         list(
           object({
-            key = optional(string)
+            key  = optional(string)
             mode = optional(string)
             path = optional(string)
           })
@@ -957,7 +969,7 @@ list(object({
       items = optional(
         list(
           object({
-            key = optional(string)
+            key  = optional(string)
             mode = optional(string)
             path = optional(string)
           })

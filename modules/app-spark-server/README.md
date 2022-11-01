@@ -28,11 +28,11 @@ The following resources are used by this module:
 - [kubernetes_config_map.spark_defaults_conf](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/config_map) (resource)
 - [kubernetes_deployment.anaml_spark_server_deployment](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/deployment) (resource)
 - [kubernetes_deployment.spark_history_server_deployment](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/deployment) (resource)
-- [kubernetes_role.spark](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/role) (resource)
+- [kubernetes_role.default](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/role) (resource)
 - [kubernetes_role_binding.spark](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/role_binding) (resource)
 - [kubernetes_service.anaml_spark_server_service](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/service) (resource)
 - [kubernetes_service.spark_history_server_service](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/service) (resource)
-- [kubernetes_service_account.spark](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/service_account) (resource)
+- [kubernetes_service_account.default](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/service_account) (resource)
 
 ## Required Inputs
 
@@ -65,6 +65,12 @@ Type: `string`
 ### <a name="input_container_registry"></a> [container\_registry](#input\_container\_registry)
 
 Description: n/a
+
+Type: `string`
+
+### <a name="input_kubernetes_service_account_spark_driver_executor"></a> [kubernetes\_service\_account\_spark\_driver\_executor](#input\_kubernetes\_service\_account\_spark\_driver\_executor)
+
+Description: Service account used for the spark drivers and executors
 
 Type: `string`
 
@@ -198,7 +204,7 @@ list(object({
       items = optional(
         list(
           object({
-            key = optional(string)
+            key  = optional(string)
             mode = optional(string)
             path = optional(string)
           })
@@ -326,13 +332,51 @@ set(
 
 Default: `[]`
 
-### <a name="input_kubernetes_service_account"></a> [kubernetes\_service\_account](#input\_kubernetes\_service\_account)
+### <a name="input_kubernetes_role_spark_driver_executor_create"></a> [kubernetes\_role\_spark\_driver\_executor\_create](#input\_kubernetes\_role\_spark\_driver\_executor\_create)
+
+Description: If this module should create the specified service account
+
+Type: `bool`
+
+Default: `true`
+
+### <a name="input_kubernetes_role_spark_driver_executor_name"></a> [kubernetes\_role\_spark\_driver\_executor\_name](#input\_kubernetes\_role\_spark\_driver\_executor\_name)
 
 Description: n/a
 
 Type: `string`
 
+Default: `"spark"`
+
+### <a name="input_kubernetes_service_account_deployment"></a> [kubernetes\_service\_account\_deployment](#input\_kubernetes\_service\_account\_deployment)
+
+Description: Service account used for anaml-spark-server and spark-history-server
+
+Type: `string`
+
 Default: `null`
+
+### <a name="input_kubernetes_service_account_spark_driver_executor_annotations"></a> [kubernetes\_service\_account\_spark\_driver\_executor\_annotations](#input\_kubernetes\_service\_account\_spark\_driver\_executor\_annotations)
+
+Description: n/a
+
+Type: `map`
+
+Default:
+
+```json
+{
+  "eks.amazonaws.com/role-arn": "arn:aws:iam::757039164792:role/svc_anaml"
+}
+```
+
+### <a name="input_kubernetes_service_account_spark_driver_executor_create"></a> [kubernetes\_service\_account\_spark\_driver\_executor\_create](#input\_kubernetes\_service\_account\_spark\_driver\_executor\_create)
+
+Description: If this module should create the specified service account. This should be false if the service account already exists.
+
+Type: `bool`
+
+Default: `true`
 
 ### <a name="input_kubernetes_service_annotations_anaml_spark_server"></a> [kubernetes\_service\_annotations\_anaml\_spark\_server](#input\_kubernetes\_service\_annotations\_anaml\_spark\_server)
 
@@ -452,7 +496,7 @@ list(object({
       items = optional(
         list(
           object({
-            key = optional(string)
+            key  = optional(string)
             mode = optional(string)
             path = optional(string)
           })

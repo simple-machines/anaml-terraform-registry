@@ -271,6 +271,15 @@ variable "override_anaml_spark_server_spark_log_directory" {
   nullable = false
 }
 
+variable "override_anaml_spark_server_kubernetes_service_account_spark_driver_executor" {
+  type     = string
+  nullable = false
+}
+
+variable "override_anaml_spark_server_kubernetes_service_account_spark_driver_executor_create" {
+  type = bool
+}
+
 
 variable "override_anaml_spark_server_additional_volumes" {
   type = list(object({

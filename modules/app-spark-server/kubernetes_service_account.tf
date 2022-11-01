@@ -1,14 +1,16 @@
-resource "kubernetes_service_account" "spark" {
+resource "kubernetes_service_account" "default" {
+  count = var.kubernetes_service_account_spark_driver_executor_create ? 1 : 0
   metadata {
-    name      = "spark"
-    namespace = var.kubernetes_namespace
-    labels    = { for k, v in local.anaml_spark_server_labels : k => v if k != "app.kubernetes.io/version" }
+    name        = var.kubernetes_service_account_spark_driver_executor
+    namespace   = var.kubernetes_namespace
+    labels      = { for k, v in local.anaml_spark_server_labels : k => v if k != "app.kubernetes.io/version" }
+    annotations = var.kubernetes_service_account_spark_driver_executor_annotations
   }
 }
 
-resource "kubernetes_role" "spark" {
+resource "kubernetes_role" "default" {
   metadata {
-    name      = "spark"
+    name      = var.kubernetes_role_spark_driver_executor_name
     namespace = var.kubernetes_namespace
     labels    = { for k, v in local.anaml_spark_server_labels : k => v if k != "app.kubernetes.io/version" }
   }
@@ -21,23 +23,18 @@ resource "kubernetes_role" "spark" {
 
 resource "kubernetes_role_binding" "spark" {
   metadata {
-    name      = "spark"
+    name      = var.kubernetes_role_spark_driver_executor_name
     namespace = var.kubernetes_namespace
     labels    = { for k, v in local.anaml_spark_server_labels : k => v if k != "app.kubernetes.io/version" }
   }
   role_ref {
     api_group = "rbac.authorization.k8s.io"
     kind      = "Role"
-    name      = "spark"
-  }
-  subject {
-    kind      = "ServiceAccount"
-    name      = kubernetes_service_account.spark.metadata[0].name
-    namespace = var.kubernetes_namespace
+    name      = var.kubernetes_role_spark_driver_executor_name
   }
 
   dynamic "subject" {
-    for_each = var.kubernetes_service_account != null ? [var.kubernetes_service_account] : []
+    for_each = toset(compact([var.kubernetes_service_account_deployment, var.kubernetes_service_account_spark_driver_executor]))
 
     content {
       kind      = "ServiceAccount"

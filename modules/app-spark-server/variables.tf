@@ -71,9 +71,39 @@ variable "kubernetes_image_pull_policy" {
   }
 }
 
-variable "kubernetes_service_account" {
+variable "kubernetes_service_account_deployment" {
+  type        = string
+  default     = null
+  description = "Service account used for anaml-spark-server and spark-history-server"
+}
+
+variable "kubernetes_service_account_spark_driver_executor" {
+  type        = string
+  description = "Service account used for the spark drivers and executors"
+}
+
+variable "kubernetes_service_account_spark_driver_executor_create" {
+  type        = bool
+  default     = true
+  description = "If this module should create the specified service account. This should be false if the service account already exists."
+}
+
+variable "kubernetes_role_spark_driver_executor_create" {
+  type        = bool
+  default     = true
+  description = "If this module should create the specified service account"
+}
+
+variable "kubernetes_role_spark_driver_executor_name" {
   type    = string
-  default = null
+  default = "spark"
+}
+
+variable "kubernetes_service_account_spark_driver_executor_annotations" {
+  type = map(any)
+  default = {
+    "eks.amazonaws.com/role-arn" : "arn:aws:iam::757039164792:role/svc_anaml" #aws_iam_role.service_account.arn
+  }
 }
 
 variable "kubernetes_service_type" {

@@ -178,7 +178,7 @@ module "spark-server" {
   kubernetes_node_selector_spark_executor = var.kubernetes_pod_node_selector_spark_executor
   kubernetes_node_selector_app            = var.kubernetes_pod_node_selector_app
 
-  kubernetes_service_account                           = var.kubernetes_service_account_create ? kubernetes_service_account.anaml[0].metadata.0.name : var.kubernetes_service_account_name
+  kubernetes_service_account_deployment                = var.kubernetes_service_account_create ? kubernetes_service_account.anaml[0].metadata.0.name : var.kubernetes_service_account_name
   kubernetes_service_annotations_anaml_spark_server    = var.kubernetes_service_annotations_anaml_spark_server
   kubernetes_service_annotations_spark_history_service = var.kubernetes_service_annotations_spark_history_service
 
@@ -207,6 +207,9 @@ module "spark-server" {
   kubernetes_container_spark_server_volume_mounts = var.override_anaml_spark_server_additional_volume_mounts
 
   kubernetes_deployment_name = var.override_anaml_spark_server_kubernetes_deployment_name
+
+  kubernetes_service_account_spark_driver_executor        = var.override_anaml_spark_server_kubernetes_service_account_spark_driver_executor
+  kubernetes_service_account_spark_driver_executor_create = var.override_anaml_spark_server_kubernetes_service_account_spark_driver_executor_create
 
   ssl_kubernetes_secret_pkcs12_truststore              = var.override_anaml_spark_server_ssl_kubernetes_secret_pkcs12_truststore
   ssl_kubernetes_secret_pkcs12_truststore_key          = var.override_anaml_spark_server_ssl_kubernetes_secret_pkcs12_truststore_key

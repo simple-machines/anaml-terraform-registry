@@ -30,9 +30,10 @@ locals {
       "spark.dynamicAllocation.enabled"                                         = "true"
       "spark.dynamicAllocation.schedulerBacklogTimeout"                         = "2s"
       "spark.dynamicAllocation.shuffleTracking.enabled"                         = "true"
-      "spark.eventLog.enabled"                                                  = "true"
       "spark.eventLog.dir"                                                      = var.spark_log_directory
+      "spark.eventLog.enabled"                                                  = "true"
       "spark.executor.extraClassPath"                                           = "/opt/docker/lib/*"
+      "spark.executor.extraJavaOptions"                                         = "-Djava.library.path=/opt/hadoop/lib/native"
       "spark.hadoop.fs.AbstractFileSystem.gs.impl"                              = "com.google.cloud.hadoop.fs.gcs.GoogleHadoopFS"
       "spark.hadoop.fs.gs.impl"                                                 = "com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystem"
       "spark.hadoop.fs.gs.implicit.dir.infer.enable"                            = "true"
@@ -46,13 +47,13 @@ locals {
       "spark.kubernetes.executor.volumes.emptyDir.spark-local-dir-1.mount.path" = "/spark-work-dir-1"
       "spark.kubernetes.namespace"                                              = var.kubernetes_namespace
       "spark.kubernetes.node.selector.node_pool"                                = var.kubernetes_node_selector_spark_executor.node_pool
+      "spark.kubernetes.report.interval"                                        = "30s"
       "spark.local.dir"                                                         = "/spark-work-dir-1"
       "spark.scheduler.mode"                                                    = "FAIR"
-      "spark.sql.autoBroadcastJoinThreshold"                                    = "96m"
       "spark.sql.adaptive.enabled"                                              = "true"
+      "spark.sql.autoBroadcastJoinThreshold"                                    = "96m"
       "spark.sql.cbo.enabled"                                                   = "true"
       "spark.sql.cbo.joinReorder.enabled"                                       = "true"
-      "spark.executor.extraJavaOptions"                                         = "-Djava.library.path=/opt/hadoop/lib/native"
     },
     var.kubernetes_service_account == null ? {} : { "spark.kubernetes.authenticate.driver.serviceAccountName" = var.kubernetes_service_account }
   )

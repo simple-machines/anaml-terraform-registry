@@ -138,6 +138,14 @@ Type: `string`
 
 Default: `"ClusterIP"`
 
+### <a name="input_rebrand"></a> [rebrand](#input\_rebrand)
+
+Description: (Optional) This value selects the skin/theme to use
+
+Type: `string`
+
+Default: `null`
+
 ## Outputs
 
 The following outputs are exported:

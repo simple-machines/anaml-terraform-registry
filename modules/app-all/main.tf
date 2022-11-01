@@ -69,6 +69,8 @@ module "anaml-docs" {
   kubernetes_secret_ssl          = var.override_anaml_docs_kubernetes_secret_ssl
   kubernetes_service_annotations = var.kubernetes_service_annotations_anaml_docs
   kubernetes_service_type        = var.kubernetes_service_type
+
+  rebrand = var.override_anaml_docs_rebrand
 }
 
 module "anaml-server" {

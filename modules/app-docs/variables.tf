@@ -80,3 +80,9 @@ variable "kubernetes_secret_ssl" {
   default     = null
   description = "(Optional) The name of the Kubernetes secret cotaining `tls.cert` and `tls.key` if you wish to terminate SSL inside the pod"
 }
+
+variable "rebrand" {
+  type        = string
+  default     = null
+  description = "(Optional) This value selects the skin/theme to use"
+}

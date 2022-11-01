@@ -102,6 +102,14 @@ resource "kubernetes_deployment" "anaml_docs" {
             }
           }
 
+          dynamic "env" {
+            for_each = var.rebrand == null ? [] : [var.rebrand]
+            content {
+              name  = "REBRAND"
+              value = env.value
+            }
+          }
+
           liveness_probe {
             http_get {
               path   = "/"

@@ -545,6 +545,14 @@ Type: `string`
 
 Default: `null`
 
+### <a name="input_override_anaml_docs_rebrand"></a> [override\_anaml\_docs\_rebrand](#input\_override\_anaml\_docs\_rebrand)
+
+Description: (Optional) This value selects the skin/theme to use
+
+Type: `string`
+
+Default: `null`
+
 ### <a name="input_override_anaml_docs_version"></a> [override\_anaml\_docs\_version](#input\_override\_anaml\_docs\_version)
 
 Description: anaml-docs version override. This value should contain the container tag to deploy

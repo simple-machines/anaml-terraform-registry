@@ -734,6 +734,14 @@ Type: `set(string)`
 
 Default: `null`
 
+### <a name="input_override_anaml_spark_server_kubernetes_service_account"></a> [override\_anaml\_spark\_server\_kubernetes\_service\_account](#input\_override\_anaml\_spark\_server\_kubernetes\_service\_account)
+
+Description: n/a
+
+Type: `string`
+
+Default: `null`
+
 ### <a name="input_override_anaml_spark_server_log4j_overrides"></a> [override\_anaml\_spark\_server\_log4j\_overrides](#input\_override\_anaml\_spark\_server\_log4j\_overrides)
 
 Description: Override anaml-spark-sercer log4j default log levels. Format is class.name={debug|error|info|trace|warn}

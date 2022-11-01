@@ -371,6 +371,11 @@ variable "override_anaml_spark_server_ssl_kubernetes_secret_pkcs12_keystore_pass
   default     = null
 }
 
+variable "override_anaml_spark_server_kubernetes_service_account" {
+  type    = string
+  default = null
+}
+
 variable "override_spark_history_server_additional_volumes" {
   type = list(object({
     name = string

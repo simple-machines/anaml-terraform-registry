@@ -193,7 +193,7 @@ variable "override_anaml_server_java_opts" {
 
 variable "override_anaml_server_log4j_overrides" {
   type        = map(string)
-  description = "Override anaml-sercer log4j default log levels. Format is class.name={debug|error|info|trace|warn}"
+  description = "Override anaml-server log4j default log levels. Format is class.name={debug|error|info|trace|warn}"
   default     = null
 }
 
@@ -319,7 +319,7 @@ variable "override_anaml_spark_server_spark_cluster_configs" {
 
 variable "override_anaml_spark_server_log4j_overrides" {
   type        = map(string)
-  description = "Override anaml-spark-sercer log4j default log levels. Format is class.name={debug|error|info|trace|warn}"
+  description = "Override anaml-spark-server log4j default log levels. Format is class.name={debug|error|info|trace|warn}"
   default     = null
 }
 

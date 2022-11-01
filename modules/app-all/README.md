@@ -601,9 +601,9 @@ Type:
 
 ```hcl
 object({
-    run_as_user: number
-    run_as_group: number
-    fs_group: number
+    run_as_user : number
+    run_as_group : number
+    fs_group : number
   })
 ```
 
@@ -611,7 +611,7 @@ Default: `null`
 
 ### <a name="input_override_anaml_server_log4j_overrides"></a> [override\_anaml\_server\_log4j\_overrides](#input\_override\_anaml\_server\_log4j\_overrides)
 
-Description: Override anaml-sercer log4j default log levels. Format is class.name={debug|error|info|trace|warn}
+Description: Override anaml-server log4j default log levels. Format is class.name={debug|error|info|trace|warn}
 
 Type: `map(string)`
 
@@ -760,7 +760,7 @@ Default: `null`
 
 ### <a name="input_override_anaml_spark_server_log4j_overrides"></a> [override\_anaml\_spark\_server\_log4j\_overrides](#input\_override\_anaml\_spark\_server\_log4j\_overrides)
 
-Description: Override anaml-spark-sercer log4j default log levels. Format is class.name={debug|error|info|trace|warn}
+Description: Override anaml-spark-server log4j default log levels. Format is class.name={debug|error|info|trace|warn}
 
 Type: `map(string)`
 

@@ -324,9 +324,9 @@ Type:
 
 ```hcl
 object({
-    run_as_user: number
-    run_as_group: number
-    fs_group: number
+    run_as_user : number
+    run_as_group : number
+    fs_group : number
   })
 ```
 

@@ -195,6 +195,15 @@ list(object({
 
     secret = optional(object({
       secret_name = string
+      items = optional(
+        list(
+          object({
+            key = optional(string)
+            mode = optional(string)
+            path = optional(string)
+          })
+        )
+      )
     }))
 
     config_map = optional(object({
@@ -440,6 +449,15 @@ list(object({
 
     secret = optional(object({
       secret_name = string
+      items = optional(
+        list(
+          object({
+            key = optional(string)
+            mode = optional(string)
+            path = optional(string)
+          })
+        )
+      )
     }))
 
     config_map = optional(object({

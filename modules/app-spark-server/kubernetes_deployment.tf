@@ -53,6 +53,14 @@ resource "kubernetes_deployment" "anaml_spark_server_deployment" {
               for_each = volume.value.secret != null ? [volume.value.secret] : []
               content {
                 secret_name = secret.value.secret_name
+                dynamic "items" {
+                  for_each = coalesce(secret.value.items, [])
+                  content {
+                    key  = items.value.key
+                    mode = items.value.mode
+                    path = items.value.path
+                  }
+                }
               }
             }
 
@@ -379,6 +387,14 @@ resource "kubernetes_deployment" "spark_history_server_deployment" {
               for_each = volume.value.secret != null ? [volume.value.secret] : []
               content {
                 secret_name = secret.value.secret_name
+                dynamic "items" {
+                  for_each = coalesce(secret.value.items, [])
+                  content {
+                    key  = items.value.key
+                    mode = items.value.mode
+                    path = items.value.path
+                  }
+                }
               }
             }
 

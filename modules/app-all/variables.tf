@@ -278,6 +278,15 @@ variable "override_anaml_spark_server_additional_volumes" {
 
     secret = optional(object({
       secret_name = string
+      items = optional(
+        list(
+          object({
+            key  = optional(string)
+            mode = optional(string)
+            path = optional(string)
+          })
+        )
+      )
     }))
 
     config_map = optional(object({
@@ -382,6 +391,15 @@ variable "override_spark_history_server_additional_volumes" {
 
     secret = optional(object({
       secret_name = string
+      items = optional(
+        list(
+          object({
+            key  = optional(string)
+            mode = optional(string)
+            path = optional(string)
+          })
+        )
+      )
     }))
 
     config_map = optional(object({

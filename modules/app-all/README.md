@@ -779,6 +779,14 @@ Type: `string`
 
 Default: `null`
 
+### <a name="input_override_anaml_spark_server_kubernetes_service_account_spark_driver_executor_annotations"></a> [override\_anaml\_spark\_server\_kubernetes\_service\_account\_spark\_driver\_executor\_annotations](#input\_override\_anaml\_spark\_server\_kubernetes\_service\_account\_spark\_driver\_executor\_annotations)
+
+Description: n/a
+
+Type: `map(string)`
+
+Default: `null`
+
 ### <a name="input_override_anaml_spark_server_log4j_overrides"></a> [override\_anaml\_spark\_server\_log4j\_overrides](#input\_override\_anaml\_spark\_server\_log4j\_overrides)
 
 Description: Override anaml-spark-server log4j default log levels. Format is class.name={debug|error|info|trace|warn}

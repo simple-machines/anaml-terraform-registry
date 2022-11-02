@@ -100,10 +100,8 @@ variable "kubernetes_role_spark_driver_executor_name" {
 }
 
 variable "kubernetes_service_account_spark_driver_executor_annotations" {
-  type = map(any)
-  default = {
-    "eks.amazonaws.com/role-arn" : "arn:aws:iam::757039164792:role/svc_anaml" #aws_iam_role.service_account.arn
-  }
+  type    = map(any)
+  default = null
 }
 
 variable "kubernetes_service_type" {

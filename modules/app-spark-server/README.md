@@ -13,7 +13,7 @@ The following requirements are needed by this module:
 
 The following providers are used by this module:
 
-- <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) (~> 2.11)
+- <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) (2.15.0)
 
 ## Modules
 
@@ -360,15 +360,9 @@ Default: `null`
 
 Description: n/a
 
-Type: `map`
+Type: `map(any)`
 
-Default:
-
-```json
-{
-  "eks.amazonaws.com/role-arn": "arn:aws:iam::757039164792:role/svc_anaml"
-}
-```
+Default: `null`
 
 ### <a name="input_kubernetes_service_account_spark_driver_executor_create"></a> [kubernetes\_service\_account\_spark\_driver\_executor\_create](#input\_kubernetes\_service\_account\_spark\_driver\_executor\_create)
 

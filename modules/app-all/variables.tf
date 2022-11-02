@@ -280,6 +280,11 @@ variable "override_anaml_spark_server_kubernetes_service_account_spark_driver_ex
   type = bool
 }
 
+variable "override_anaml_spark_server_kubernetes_service_account_spark_driver_executor_annotations" {
+  type    = map(string)
+  default = null
+}
+
 
 variable "override_anaml_spark_server_additional_volumes" {
   type = list(object({

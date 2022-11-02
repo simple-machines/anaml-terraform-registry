@@ -208,8 +208,9 @@ module "spark-server" {
 
   kubernetes_deployment_name = var.override_anaml_spark_server_kubernetes_deployment_name
 
-  kubernetes_service_account_spark_driver_executor        = var.override_anaml_spark_server_kubernetes_service_account_spark_driver_executor
-  kubernetes_service_account_spark_driver_executor_create = var.override_anaml_spark_server_kubernetes_service_account_spark_driver_executor_create
+  kubernetes_service_account_spark_driver_executor             = var.override_anaml_spark_server_kubernetes_service_account_spark_driver_executor
+  kubernetes_service_account_spark_driver_executor_create      = var.override_anaml_spark_server_kubernetes_service_account_spark_driver_executor_create
+  kubernetes_service_account_spark_driver_executor_annotations = var.override_anaml_spark_server_kubernetes_service_account_spark_driver_executor_annotations
 
   ssl_kubernetes_secret_pkcs12_truststore              = var.override_anaml_spark_server_ssl_kubernetes_secret_pkcs12_truststore
   ssl_kubernetes_secret_pkcs12_truststore_key          = var.override_anaml_spark_server_ssl_kubernetes_secret_pkcs12_truststore_key

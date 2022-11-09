@@ -345,3 +345,15 @@ variable "ssl_kubernetes_secret_pkcs12_keystore_password_key" {
   description = "(Optional) The key used inside ssl_kubernetes_secret_pkcs12_keystore_password for the trust store password if set"
   nullable    = false
 }
+
+variable "enable_request_header_debug_logging" {
+  type        = bool
+  default     = false
+  description = "Log request headers with the access log for debug purposes"
+}
+
+variable "enable_request_body_debug_logging" {
+  type        = bool
+  default     = false
+  description = "Enable request body debug logging. **WARNING** - this should **not** be enabled on production instances and is for debug purposes only. Enabling this option can leak sensitive information to the application logs"
+}

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="WARN">
+<Configuration status="WARN" packages="tech.petrepopescu.logging">
     <Appenders>
-        <Console name="Console" target="SYSTEM_OUT" packages="tech.petrepopescu.logging">
+        <Console name="Console" target="SYSTEM_OUT">
             <!-- <JsonLayout compact="true" complete="false" eventEol="true" properties="true" /> -->
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msk - %X%n"/>
         </Console>

@@ -198,6 +198,22 @@ Type: `bool`
 
 Default: `false`
 
+### <a name="input_enable_request_body_debug_logging"></a> [enable\_request\_body\_debug\_logging](#input\_enable\_request\_body\_debug\_logging)
+
+Description: Enable request body debug logging. **WARNING** - this should **not** be enabled on production instances and is for debug purposes only. Enabling this option can leak sensitive information to the application logs
+
+Type: `bool`
+
+Default: `false`
+
+### <a name="input_enable_request_header_debug_logging"></a> [enable\_request\_header\_debug\_logging](#input\_enable\_request\_header\_debug\_logging)
+
+Description: Log request headers with the access log for debug purposes
+
+Type: `bool`
+
+Default: `false`
+
 ### <a name="input_governance_run_type_checks"></a> [governance\_run\_type\_checks](#input\_governance\_run\_type\_checks)
 
 Description: n/a

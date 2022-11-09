@@ -13,7 +13,7 @@ The following requirements are needed by this module:
 
 The following providers are used by this module:
 
-- <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) (2.15.0)
+- <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) (~> 2.11)
 
 ## Modules
 

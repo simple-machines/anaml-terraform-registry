@@ -175,6 +175,10 @@ module "spark-server" {
   postgres_port     = var.postgres_port
   postgres_user     = var.postgres_user
 
+  kubernetes_container_resources_requests_cpu    = var.override_anaml_spark_server_kubernetes_container_resources_requests_cpu
+  kubernetes_container_resources_requests_memory = var.override_anaml_spark_server_kubernetes_container_resources_requests_memory
+  kubernetes_container_resources_limits_cpu      = var.override_anaml_spark_server_kubernetes_container_resources_limits_cpu
+  kubernetes_container_resources_limits_memory   = var.override_anaml_spark_server_kubernetes_container_resources_limits_memory
 
   kubernetes_pod_sidecars                 = var.kubernetes_pod_anaml_spark_server_sidecars
   kubernetes_node_selector_spark_executor = var.kubernetes_pod_node_selector_spark_executor

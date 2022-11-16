@@ -134,6 +134,38 @@ Type: `bool`
 
 Default: `true`
 
+### <a name="input_kubernetes_container_resources_limits_cpu"></a> [kubernetes\_container\_resources\_limits\_cpu](#input\_kubernetes\_container\_resources\_limits\_cpu)
+
+Description: n/a
+
+Type: `string`
+
+Default: `null`
+
+### <a name="input_kubernetes_container_resources_limits_memory"></a> [kubernetes\_container\_resources\_limits\_memory](#input\_kubernetes\_container\_resources\_limits\_memory)
+
+Description: n/a
+
+Type: `string`
+
+Default: `null`
+
+### <a name="input_kubernetes_container_resources_requests_cpu"></a> [kubernetes\_container\_resources\_requests\_cpu](#input\_kubernetes\_container\_resources\_requests\_cpu)
+
+Description: n/a
+
+Type: `string`
+
+Default: `null`
+
+### <a name="input_kubernetes_container_resources_requests_memory"></a> [kubernetes\_container\_resources\_requests\_memory](#input\_kubernetes\_container\_resources\_requests\_memory)
+
+Description: n/a
+
+Type: `string`
+
+Default: `null`
+
 ### <a name="input_kubernetes_container_spark_history_server_env_from"></a> [kubernetes\_container\_spark\_history\_server\_env\_from](#input\_kubernetes\_container\_spark\_history\_server\_env\_from)
 
 Description: Inject additional `env_from` values in to the deployment. This is useful for example if you want to mount the Postgres credentials from a secret\_ref to use in the `postgres_user` and `postgres_password` values

@@ -206,6 +206,26 @@ variable "kubernetes_container_spark_server_volume_mounts" {
   default = []
 }
 
+variable "kubernetes_container_resources_requests_cpu" {
+  type    = string
+  default = null
+}
+
+variable "kubernetes_container_resources_requests_memory" {
+  type    = string
+  default = null
+}
+
+variable "kubernetes_container_resources_limits_cpu" {
+  type    = string
+  default = null
+}
+
+variable "kubernetes_container_resources_limits_memory" {
+  type    = string
+  default = null
+}
+
 
 variable "spark_history_server_additional_env_values" {
   type = list(object({

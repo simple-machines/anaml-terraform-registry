@@ -266,6 +266,26 @@ variable "override_anaml_spark_server_version" {
   description = "anaml-spark-server version override. This value should contain the container tag to deploy"
 }
 
+variable "override_anaml_spark_server_kubernetes_container_resources_requests_cpu" {
+  type    = string
+  default = null
+}
+
+variable "override_anaml_spark_server_kubernetes_container_resources_requests_memory" {
+  type    = string
+  default = null
+}
+
+variable "override_anaml_spark_server_kubernetes_container_resources_limits_cpu" {
+  type    = string
+  default = null
+}
+
+variable "override_anaml_spark_server_kubernetes_container_resources_limits_memory" {
+  type    = string
+  default = null
+}
+
 variable "override_anaml_spark_server_spark_config_overrides" {
   type    = map(string)
   default = {}

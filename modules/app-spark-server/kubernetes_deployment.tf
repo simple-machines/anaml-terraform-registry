@@ -129,6 +129,17 @@ resource "kubernetes_deployment" "anaml_spark_server_deployment" {
             container_port = 4040
           }
 
+          resources {
+            requests = {
+              cpu    = var.kubernetes_container_resources_requests_cpu
+              memory = var.kubernetes_container_resources_requests_memory
+            }
+            limits = {
+              cpu    = var.kubernetes_container_resources_limits_cpu
+              memory = var.kubernetes_container_resources_limits_memory
+            }
+          }
+
           dynamic "env_from" {
             for_each = var.kubernetes_container_spark_server_env_from
             content {

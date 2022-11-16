@@ -765,6 +765,38 @@ list(object({
 
 Default: `[]`
 
+### <a name="input_override_anaml_spark_server_kubernetes_container_resources_limits_cpu"></a> [override\_anaml\_spark\_server\_kubernetes\_container\_resources\_limits\_cpu](#input\_override\_anaml\_spark\_server\_kubernetes\_container\_resources\_limits\_cpu)
+
+Description: n/a
+
+Type: `string`
+
+Default: `null`
+
+### <a name="input_override_anaml_spark_server_kubernetes_container_resources_limits_memory"></a> [override\_anaml\_spark\_server\_kubernetes\_container\_resources\_limits\_memory](#input\_override\_anaml\_spark\_server\_kubernetes\_container\_resources\_limits\_memory)
+
+Description: n/a
+
+Type: `string`
+
+Default: `null`
+
+### <a name="input_override_anaml_spark_server_kubernetes_container_resources_requests_cpu"></a> [override\_anaml\_spark\_server\_kubernetes\_container\_resources\_requests\_cpu](#input\_override\_anaml\_spark\_server\_kubernetes\_container\_resources\_requests\_cpu)
+
+Description: n/a
+
+Type: `string`
+
+Default: `null`
+
+### <a name="input_override_anaml_spark_server_kubernetes_container_resources_requests_memory"></a> [override\_anaml\_spark\_server\_kubernetes\_container\_resources\_requests\_memory](#input\_override\_anaml\_spark\_server\_kubernetes\_container\_resources\_requests\_memory)
+
+Description: n/a
+
+Type: `string`
+
+Default: `null`
+
 ### <a name="input_override_anaml_spark_server_kubernetes_deployment_name"></a> [override\_anaml\_spark\_server\_kubernetes\_deployment\_name](#input\_override\_anaml\_spark\_server\_kubernetes\_deployment\_name)
 
 Description: n/a

@@ -30,8 +30,6 @@ locals {
       "spark.dynamicAllocation.enabled"                                         = "true"
       "spark.dynamicAllocation.schedulerBacklogTimeout"                         = "2s"
       "spark.dynamicAllocation.shuffleTracking.enabled"                         = "true"
-      "spark.eventLog.dir"                                                      = var.spark_log_directory
-      "spark.eventLog.enabled"                                                  = "true"
       "spark.executor.extraClassPath"                                           = "/opt/docker/lib/*"
       "spark.executor.extraJavaOptions"                                         = "-Djava.library.path=/opt/hadoop/lib/native"
       "spark.hadoop.fs.AbstractFileSystem.gs.impl"                              = "com.google.cloud.hadoop.fs.gcs.GoogleHadoopFS"
@@ -54,6 +52,11 @@ locals {
       "spark.sql.autoBroadcastJoinThreshold"                                    = "96m"
       "spark.sql.cbo.enabled"                                                   = "true"
       "spark.sql.cbo.joinReorder.enabled"                                       = "true"
+    },
+
+    var.spark_log_directory == null ? {} : {
+      "spark.eventLog.dir"     = var.spark_log_directory
+      "spark.eventLog.enabled" = "true"
     },
 
     var.kubernetes_service_account_spark_driver_executor == null ? {} : {

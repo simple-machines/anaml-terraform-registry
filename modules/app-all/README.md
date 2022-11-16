@@ -111,12 +111,6 @@ Description: n/a
 
 Type: `bool`
 
-### <a name="input_override_anaml_spark_server_spark_log_directory"></a> [override\_anaml\_spark\_server\_spark\_log\_directory](#input\_override\_anaml\_spark\_server\_spark\_log\_directory)
-
-Description: n/a
-
-Type: `string`
-
 ## Optional Inputs
 
 The following input variables are optional (have default values):
@@ -168,6 +162,14 @@ Description: Enable Login form
 Type: `bool`
 
 Default: `false`
+
+### <a name="input_enable_spark_history_server"></a> [enable\_spark\_history\_server](#input\_enable\_spark\_history\_server)
+
+Description: n/a
+
+Type: `bool`
+
+Default: `true`
 
 ### <a name="input_https_urls"></a> [https\_urls](#input\_https\_urls)
 
@@ -818,6 +820,14 @@ Description: n/a
 Type: `map(string)`
 
 Default: `{}`
+
+### <a name="input_override_anaml_spark_server_spark_log_directory"></a> [override\_anaml\_spark\_server\_spark\_log\_directory](#input\_override\_anaml\_spark\_server\_spark\_log\_directory)
+
+Description: Set the Spark log directory. This value is required if you want to enable spark history server
+
+Type: `string`
+
+Default: `null`
 
 ### <a name="input_override_anaml_spark_server_ssl_kubernetes_secret_pkcs12_keystore"></a> [override\_anaml\_spark\_server\_ssl\_kubernetes\_secret\_pkcs12\_keystore](#input\_override\_anaml\_spark\_server\_ssl\_kubernetes\_secret\_pkcs12\_keystore)
 

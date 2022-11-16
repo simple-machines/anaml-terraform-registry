@@ -313,6 +313,7 @@ resource "kubernetes_deployment" "anaml_spark_server_deployment" {
 
 
 resource "kubernetes_deployment" "spark_history_server_deployment" {
+  count = var.enable_spark_history_server && var.spark_log_directory != null ? 1 : 0
   metadata {
     name      = "spark-history-server"
     namespace = var.kubernetes_namespace

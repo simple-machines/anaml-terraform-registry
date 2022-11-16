@@ -10,6 +10,11 @@ variable "container_registry" {
   nullable = false
 }
 
+variable "enable_spark_history_server" {
+  type    = bool
+  default = true
+}
+
 variable "hostname" {
   type        = string
   description = "The hostname Anaml will be accessed from. i.e 'dev.nonprod.anaml.app'"
@@ -267,8 +272,9 @@ variable "override_anaml_spark_server_spark_config_overrides" {
 }
 
 variable "override_anaml_spark_server_spark_log_directory" {
-  type     = string
-  nullable = false
+  type        = string
+  default     = null
+  description = "Set the Spark log directory. This value is required if you want to enable spark history server"
 }
 
 variable "override_anaml_spark_server_kubernetes_service_account_spark_driver_executor" {

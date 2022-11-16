@@ -126,6 +126,14 @@ Type: `string`
 
 Default: `"http://anaml-server.anaml.svc.cluster.local:8080"`
 
+### <a name="input_enable_spark_history_server"></a> [enable\_spark\_history\_server](#input\_enable\_spark\_history\_server)
+
+Description: n/a
+
+Type: `bool`
+
+Default: `true`
+
 ### <a name="input_kubernetes_container_spark_history_server_env_from"></a> [kubernetes\_container\_spark\_history\_server\_env\_from](#input\_kubernetes\_container\_spark\_history\_server\_env\_from)
 
 Description: Inject additional `env_from` values in to the deployment. This is useful for example if you want to mount the Postgres credentials from a secret\_ref to use in the `postgres_user` and `postgres_password` values

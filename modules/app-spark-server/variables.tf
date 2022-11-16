@@ -133,7 +133,7 @@ variable "spark_config_overrides" {
 
 variable "spark_log_directory" {
   type        = string
-  nullable    = false
+  nullable    = true
   description = "The log directory used for spark.eventLodDir and spark.history.fs.logDirectory"
 }
 
@@ -156,6 +156,11 @@ variable "anaml_server_password" {
 variable "checkpoint_location" {
   type     = string
   nullable = false
+}
+
+variable "enable_spark_history_server" {
+  type    = bool
+  default = true
 }
 
 variable "kubernetes_container_spark_server_env" {

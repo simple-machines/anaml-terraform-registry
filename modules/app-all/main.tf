@@ -168,6 +168,8 @@ module "spark-server" {
 
   checkpoint_location = var.override_anaml_spark_server_checkpoint_location
 
+  enable_spark_history_server = var.enable_spark_history_server
+
   postgres_host     = local.postgres_host
   postgres_password = "$(PGPASSWORD)"
   postgres_port     = var.postgres_port

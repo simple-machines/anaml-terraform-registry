@@ -255,6 +255,16 @@ variable "override_anaml_server_governance_run_type_checks" {
   default = null
 }
 
+variable "override_anaml_server_enable_header_debug_logging" {
+  type    = bool
+  default = null
+}
+
+variable "override_anaml_server_enable_body_debug_logging" {
+  type    = bool
+  default = null
+}
+
 variable "override_anaml_spark_server_kubernetes_deployment_name" {
   type    = set(string)
   default = null

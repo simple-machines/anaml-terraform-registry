@@ -591,6 +591,22 @@ Type: `string`
 
 Default: `null`
 
+### <a name="input_override_anaml_server_enable_body_debug_logging"></a> [override\_anaml\_server\_enable\_body\_debug\_logging](#input\_override\_anaml\_server\_enable\_body\_debug\_logging)
+
+Description: n/a
+
+Type: `bool`
+
+Default: `null`
+
+### <a name="input_override_anaml_server_enable_header_debug_logging"></a> [override\_anaml\_server\_enable\_header\_debug\_logging](#input\_override\_anaml\_server\_enable\_header\_debug\_logging)
+
+Description: n/a
+
+Type: `bool`
+
+Default: `null`
+
 ### <a name="input_override_anaml_server_governance_run_type_checks"></a> [override\_anaml\_server\_governance\_run\_type\_checks](#input\_override\_anaml\_server\_governance\_run\_type\_checks)
 
 Description: n/a

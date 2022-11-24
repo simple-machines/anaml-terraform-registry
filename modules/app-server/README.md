@@ -190,6 +190,14 @@ Type: `string`
 
 Default: `"anaml"`
 
+### <a name="input_enable_body_debug_logging"></a> [enable\_body\_debug\_logging](#input\_enable\_body\_debug\_logging)
+
+Description: Enable request body debug logging. **WARNING** - this should **not** be enabled on production instances and is for debug purposes only. Enabling this option can leak sensitive information to the application logs
+
+Type: `bool`
+
+Default: `false`
+
 ### <a name="input_enable_form_client"></a> [enable\_form\_client](#input\_enable\_form\_client)
 
 Description: Enable Login form
@@ -198,15 +206,7 @@ Type: `bool`
 
 Default: `false`
 
-### <a name="input_enable_request_body_debug_logging"></a> [enable\_request\_body\_debug\_logging](#input\_enable\_request\_body\_debug\_logging)
-
-Description: Enable request body debug logging. **WARNING** - this should **not** be enabled on production instances and is for debug purposes only. Enabling this option can leak sensitive information to the application logs
-
-Type: `bool`
-
-Default: `false`
-
-### <a name="input_enable_request_header_debug_logging"></a> [enable\_request\_header\_debug\_logging](#input\_enable\_request\_header\_debug\_logging)
+### <a name="input_enable_header_debug_logging"></a> [enable\_header\_debug\_logging](#input\_enable\_header\_debug\_logging)
 
 Description: Log request headers with the access log for debug purposes
 

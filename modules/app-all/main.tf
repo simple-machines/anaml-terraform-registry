@@ -76,18 +76,20 @@ module "anaml-docs" {
 module "anaml-server" {
   source = "../app-server"
 
-  anaml_admin_email          = var.anaml_admin_email
-  anaml_admin_password       = var.anaml_admin_password
-  anaml_admin_secret         = var.anaml_admin_secret
-  anaml_admin_token          = var.anaml_admin_token
-  anaml_database_schema_name = var.override_anaml_server_anaml_database_schema_name
-  anaml_server_version       = coalesce(var.override_anaml_server_version, var.anaml_version)
-  container_registry         = var.container_registry
-  enable_form_client         = var.enable_form_client
-  governance_run_type_checks = var.override_anaml_server_governance_run_type_checks
-  hostname                   = var.hostname
-  kubernetes_namespace       = var.kubernetes_namespace_create ? kubernetes_namespace.anaml_namespace[0].metadata.0.name : var.kubernetes_namespace_name
-  kubernetes_node_selector   = var.kubernetes_pod_node_selector_app
+  anaml_admin_email           = var.anaml_admin_email
+  anaml_admin_password        = var.anaml_admin_password
+  anaml_admin_secret          = var.anaml_admin_secret
+  anaml_admin_token           = var.anaml_admin_token
+  anaml_database_schema_name  = var.override_anaml_server_anaml_database_schema_name
+  anaml_server_version        = coalesce(var.override_anaml_server_version, var.anaml_version)
+  container_registry          = var.container_registry
+  enable_form_client          = var.enable_form_client
+  enable_header_debug_logging = var.override_anaml_server_enable_header_debug_logging
+  enable_body_debug_logging   = var.override_anaml_server_enable_body_debug_logging
+  governance_run_type_checks  = var.override_anaml_server_governance_run_type_checks
+  hostname                    = var.hostname
+  kubernetes_namespace        = var.kubernetes_namespace_create ? kubernetes_namespace.anaml_namespace[0].metadata.0.name : var.kubernetes_namespace_name
+  kubernetes_node_selector    = var.kubernetes_pod_node_selector_app
 
   kubernetes_container_env_from = concat(
     [{ secret_ref = { name = "postgres-secret" } }],

@@ -137,8 +137,8 @@ resource "kubernetes_config_map" "anaml_server" {
       enable_form_client    = var.enable_form_client
       enable_oidc_client    = var.oidc_enable
 
-      enable_request_header_debug_logging = var.enable_request_header_debug_logging ? "true" : "false"
-      enable_request_body_debug_logging   = var.enable_request_body_debug_logging ? "true" : "false"
+      enable_header_debug_logging = var.enable_header_debug_logging ? "true" : "false"
+      enable_body_debug_logging   = var.enable_body_debug_logging ? "true" : "false"
 
       governance_runTypeChecks = var.governance_run_type_checks ? "true" : "false"
 

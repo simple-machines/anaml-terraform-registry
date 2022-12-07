@@ -160,7 +160,9 @@ resource "kubernetes_config_map" "anaml_server" {
 
       license_offline_activation = var.license_offline_activation
 
-      license_offline_response_file_path = var.license_activation_data == null ? null : "/license/ls_activation.lic"
+      license_offline_response_file_path = var.license_activation_data == null ? null : "/license/ls_activation.lic",
+
+      loggers = merge(local.default_log4j_loggers, var.log4j_overrides)
 
       pac4j_loginUrl = coalesce(
         try(format("/%s", join("/", concat(compact(split("/", var.proxy_base)), ["login"]))), null),

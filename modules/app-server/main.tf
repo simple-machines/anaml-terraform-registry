@@ -94,7 +94,7 @@ locals {
   }, var.kubernetes_deployment_labels)
 
   default_log4j_loggers = {
-    "io.anaml" : "debug"
+    "io.anaml" : "info"
     "org.apache.hadoop" : "error"
     "org.apache.parquet.hadoop" : "error"
     "org.apache.spark" : "error"

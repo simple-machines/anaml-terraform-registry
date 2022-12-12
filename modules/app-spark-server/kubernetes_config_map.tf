@@ -71,6 +71,8 @@ resource "kubernetes_config_map" "anaml_spark_server_config" {
         keystore              = var.ssl_kubernetes_secret_pkcs12_keystore != null ? "/tmp/certificates/java/keystore" : null,
         use_keystore_password = var.ssl_kubernetes_secret_pkcs12_keystore_password != null,
 
+        loggers = merge(local.default_log4j_loggers, var.log4j_overrides)
+
       })
 
       "log4j2.xml" = templatefile("${path.module}/_templates/log4j2.xml", {

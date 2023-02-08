@@ -113,7 +113,7 @@ module "anaml-server" {
   kubernetes_security_context = var.override_anaml_server_kubernetes_security_context
 
   kubernetes_service_account_name = coalesce(
-    var.override_anaml_spark_server_kubernetes_service_account,
+    var.override_anaml_server_kubernetes_service_account,
     var.kubernetes_service_account_create ? kubernetes_service_account.anaml[0].metadata.0.name : var.kubernetes_service_account_name
   )
 
@@ -186,7 +186,11 @@ module "spark-server" {
   kubernetes_node_selector_spark_executor = var.kubernetes_pod_node_selector_spark_executor
   kubernetes_node_selector_app            = var.kubernetes_pod_node_selector_app
 
-  kubernetes_service_account_deployment                = var.kubernetes_service_account_create ? kubernetes_service_account.anaml[0].metadata.0.name : var.kubernetes_service_account_name
+  kubernetes_service_account_deployment = coalesce(
+    var.override_anaml_spark_server_kubernetes_service_account,
+    var.kubernetes_service_account_create ? kubernetes_service_account.anaml[0].metadata.0.name : var.kubernetes_service_account_name
+  )
+
   kubernetes_service_annotations_anaml_spark_server    = var.kubernetes_service_annotations_anaml_spark_server
   kubernetes_service_annotations_spark_history_service = var.kubernetes_service_annotations_spark_history_service
 

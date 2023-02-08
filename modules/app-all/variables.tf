@@ -178,6 +178,12 @@ variable "override_anaml_docs_kubernetes_secret_ssl" {
   description = "(Optional) The name of the Kubernetes secret cotaining `tls.cert` and `tls.key` if you wish to terminate SSL inside the pod"
 }
 
+variable "override_anaml_server_kubernetes_service_account" {
+  type        = string
+  default     = null
+  description = "(Optional) override the service account used by anaml-server"
+}
+
 variable "override_anaml_docs_rebrand" {
   type        = string
   default     = null

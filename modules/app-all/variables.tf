@@ -184,7 +184,7 @@ variable "override_anaml_server_kubernetes_service_account" {
   description = "(Optional) override the service account used by anaml-server"
 }
 
-variable "override_anaml_docs_rebrand" {
+variable "override_anaml_docs_skin" {
   type        = string
   default     = null
   description = "(Optional) This value selects the skin/theme to use"

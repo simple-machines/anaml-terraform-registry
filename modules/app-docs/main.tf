@@ -103,9 +103,9 @@ resource "kubernetes_deployment" "anaml_docs" {
           }
 
           dynamic "env" {
-            for_each = var.rebrand == null ? [] : [var.rebrand]
+            for_each = var.skin == null ? [] : [var.skin]
             content {
-              name  = "REBRAND"
+              name  = "REACT_APP_FRONTEND_SKIN"
               value = env.value
             }
           }

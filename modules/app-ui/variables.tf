@@ -15,6 +15,13 @@ variable "container_registry" {
   description = "The container registry to use to fetch the anaml-ui container"
 }
 
+variable "container_image_name" {
+  type        = string
+  nullable    = false
+  default     = "anaml-ui"
+  description = "The container name"
+}
+
 variable "docs_url" {
   type     = string
   nullable = false

@@ -510,6 +510,18 @@ variable "override_anaml_server_kubernetes_security_context" {
   default = null
 }
 
+variable "override_anaml_ui_container_registry" {
+  type        = string
+  default     = null
+  description = "anaml-ui container_registry override. This overrides the container registry changing from the default container repository to the one specified here"
+}
+
+variable "override_anaml_ui_container_image_name" {
+  type        = string
+  default     = null
+  description = "anaml-ui container_image_name override. This overrides the container_image"
+}
+
 variable "override_anaml_ui_version" {
   type        = string
   default     = null

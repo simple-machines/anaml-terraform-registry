@@ -146,8 +146,12 @@ module "anaml-ui" {
     var.anaml_version
   )
 
-  basepath                            = var.ui_base_path
-  container_registry                  = var.container_registry
+  basepath = var.ui_base_path
+  container_registry = coalesce(
+    var.override_anaml_ui_container_registry,
+    var.container_registry
+  )
+  container_image_name                = var.override_anaml_ui_container_image_name
   kubernetes_deployment_container_env = var.override_anaml_ui_kubernetes_deployment_container_env
   kubernetes_namespace                = var.kubernetes_namespace_create ? kubernetes_namespace.anaml_namespace[0].metadata.0.name : var.kubernetes_namespace_name
   kubernetes_node_selector            = var.kubernetes_pod_node_selector_app

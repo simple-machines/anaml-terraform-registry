@@ -103,6 +103,14 @@ Type: `string`
 
 Default: `"/"`
 
+### <a name="input_container_image_name"></a> [container\_image\_name](#input\_container\_image\_name)
+
+Description: The container name
+
+Type: `string`
+
+Default: `"anaml-ui"`
+
 ### <a name="input_kubernetes_deployment_container_env"></a> [kubernetes\_deployment\_container\_env](#input\_kubernetes\_deployment\_container\_env)
 
 Description: (Optional) Additional environment values to pass through to the anaml-ui container. This is useful if you want to use SSL and change the default certificate paths using`NGINX_SSL_CERTIFICATE` and `NGINX_SSL_CERTIFICATE_KEY`

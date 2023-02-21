@@ -957,6 +957,22 @@ Type: `string`
 
 Default: `null`
 
+### <a name="input_override_anaml_ui_container_image_name"></a> [override\_anaml\_ui\_container\_image\_name](#input\_override\_anaml\_ui\_container\_image\_name)
+
+Description: anaml-ui container\_image\_name override. This overrides the container\_image
+
+Type: `string`
+
+Default: `null`
+
+### <a name="input_override_anaml_ui_container_registry"></a> [override\_anaml\_ui\_container\_registry](#input\_override\_anaml\_ui\_container\_registry)
+
+Description: anaml-ui container\_registry override. This overrides the container registry changing from the default container repository to the one specified here
+
+Type: `string`
+
+Default: `null`
+
 ### <a name="input_override_anaml_ui_kubernetes_deployment_container_env"></a> [override\_anaml\_ui\_kubernetes\_deployment\_container\_env](#input\_override\_anaml\_ui\_kubernetes\_deployment\_container\_env)
 
 Description: (Optional) Additional environment values to pass through to the anaml-ui container. This is useful if you want to use SSL and change the default certificate paths using`NGINX_SSL_CERTIFICATE` and `NGINX_SSL_CERTIFICATE_KEY`

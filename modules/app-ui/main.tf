@@ -110,8 +110,8 @@ resource "kubernetes_deployment" "anaml_ui" {
           name = var.kubernetes_deployment_name
           image = (
             can(regex("^sha256:[0-9A-Za-z]+$", var.anaml_ui_version))
-            ? "${var.container_registry}/anaml-ui@${var.anaml_ui_version}"
-            : "${var.container_registry}/anaml-ui:${var.anaml_ui_version}"
+            ? "${var.container_registry}/${var.container_image_name}@${var.anaml_ui_version}"
+            : "${var.container_registry}/${var.container_image_name}:${var.anaml_ui_version}"
           )
           image_pull_policy = var.kubernetes_image_pull_policy
 

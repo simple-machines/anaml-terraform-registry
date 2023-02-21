@@ -70,7 +70,7 @@ module "anaml-docs" {
   kubernetes_service_annotations = var.kubernetes_service_annotations_anaml_docs
   kubernetes_service_type        = var.kubernetes_service_type
 
-  rebrand = var.override_anaml_docs_rebrand
+  skin = var.override_anaml_docs_skin
 }
 
 module "anaml-server" {

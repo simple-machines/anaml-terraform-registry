@@ -559,7 +559,7 @@ Type: `string`
 
 Default: `null`
 
-### <a name="input_override_anaml_docs_rebrand"></a> [override\_anaml\_docs\_rebrand](#input\_override\_anaml\_docs\_rebrand)
+### <a name="input_override_anaml_docs_skin"></a> [override\_anaml\_docs\_skin](#input\_override\_anaml\_docs\_skin)
 
 Description: (Optional) This value selects the skin/theme to use
 

@@ -138,7 +138,7 @@ Type: `string`
 
 Default: `"ClusterIP"`
 
-### <a name="input_rebrand"></a> [rebrand](#input\_rebrand)
+### <a name="input_skin"></a> [skin](#input\_skin)
 
 Description: (Optional) This value selects the skin/theme to use
 

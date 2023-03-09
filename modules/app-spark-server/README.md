@@ -29,6 +29,8 @@ The following resources are used by this module:
 - [kubernetes_deployment.anaml_spark_server_deployment](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/deployment) (resource)
 - [kubernetes_deployment.spark_history_server_deployment](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/deployment) (resource)
 - [kubernetes_role.default](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/role) (resource)
+- [kubernetes_role.delete_spark_pods](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/role) (resource)
+- [kubernetes_role_binding.delete_spark_pods](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/role_binding) (resource)
 - [kubernetes_role_binding.spark](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/role_binding) (resource)
 - [kubernetes_service.anaml_spark_server_service](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/service) (resource)
 - [kubernetes_service.spark_history_server_service](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/service) (resource)

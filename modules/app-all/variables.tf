@@ -496,6 +496,11 @@ variable "override_spark_history_server_ui_proxy_base" {
   description = "Override the Spark UI `spark.ui.proxyBase` value. Generally you should not set this value and prefer the `ui_base_path` option which sets the basepath across all apps"
 }
 
+variable "override_anaml_server_anaml_database_name" {
+  type    = string
+  default = null
+}
+
 variable "override_anaml_server_anaml_database_schema_name" {
   type    = string
   default = null

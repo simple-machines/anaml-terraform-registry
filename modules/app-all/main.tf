@@ -80,6 +80,7 @@ module "anaml-server" {
   anaml_admin_password        = var.anaml_admin_password
   anaml_admin_secret          = var.anaml_admin_secret
   anaml_admin_token           = var.anaml_admin_token
+  anaml_database_name         = var.override_anaml_server_anaml_database_name
   anaml_database_schema_name  = var.override_anaml_server_anaml_database_schema_name
   anaml_server_version        = coalesce(var.override_anaml_server_version, var.anaml_version)
   container_registry          = var.container_registry

@@ -157,10 +157,6 @@ resource "kubernetes_deployment" "anaml_spark_server_deployment" {
             value = "/config/application.conf"
           }
           env {
-            name  = "ANAML_LOGGING_CONFIG_FILE"
-            value = "/config/log4j2.xml"
-          }
-          env {
             name  = "JAVA_OPTS"
             value = "-Dweb.host=0.0.0.0"
           }

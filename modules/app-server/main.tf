@@ -189,10 +189,6 @@ resource "kubernetes_config_map" "anaml_server" {
       port = local.port
     })
 
-    "log4j2.xml" = templatefile("${path.module}/_templates/log4j2.xml", {
-      loggers = merge(local.default_log4j_loggers, var.log4j_overrides)
-    })
-
   }
 }
 
@@ -283,10 +279,6 @@ resource "kubernetes_deployment" "anaml_server" {
             items {
               key  = "application.conf"
               path = "application.conf"
-            }
-            items {
-              key  = "log4j2.xml"
-              path = "log4j2.xml"
             }
           }
         }
@@ -426,7 +418,7 @@ resource "kubernetes_deployment" "anaml_server" {
 
           env {
             name  = "JAVA_OPTS"
-            value = join(" ", concat(["-Dconfig.file=/config/application.conf", "-Dlog4j2.configurationFile=/config/log4j2.xml"], var.override_java_opts))
+            value = join(" ", concat(["-Dconfig.file=/config/application.conf"], var.override_java_opts))
           }
 
           env_from {

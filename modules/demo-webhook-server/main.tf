@@ -52,17 +52,23 @@ resource "kubernetes_deployment" "webhook_server" {
         service_account_name = var.kubernetes_service_account_name
         node_selector        = var.kubernetes_node_selector
 
-        volume {
-          name = "cloud-function-svc-credentials"
-          secret {
-            secret_name = kubernetes_secret.webhook_cloud_functions_svc_credentials.metadata.0.name
+        dynamic "volume" {
+          for_each = var.webhook_cloud_functions_svc_credentials != null ? [1] : []
+          content {
+            name = "cloud-function-svc-credentials"
+            secret {
+              secret_name = kubernetes_secret.webhook_cloud_functions_svc_credentials.metadata.0.name
+            }
           }
         }
 
-        volume {
-          name = "vertex-svc-credentials"
-          secret {
-            secret_name = kubernetes_secret.webhook_vertex_svc_credentials.metadata.0.name
+        dynamic "volume" {
+          for_each = var.webhook_vertex_svc_credentials != null ? [1] : []
+          content {
+            name = "vertex-svc-credentials"
+            secret {
+              secret_name = kubernetes_secret.webhook_vertex_svc_credentials.metadata.0.name
+            }
           }
         }
 
@@ -91,31 +97,44 @@ resource "kubernetes_deployment" "webhook_server" {
             value = var.internal_anaml_api_url
           }
 
-          env {
-            name  = "CLOUD_FUNCTIONS_SERVICE_ACCOUNT_KEY_FILE"
-            value = "/var/secrets/cloud-functions/credentials.json"
+          dynamic "env" {
+            for_each = try(var.webhook_cloud_functions_svc_credentials != null, false) ? [1] : []
+            content {
+              name  = "CLOUD_FUNCTIONS_SERVICE_ACCOUNT_KEY_FILE"
+              value = "/var/secrets/cloud-functions/credentials.json"
+            }
           }
 
-          env {
-            name  = "VERTEX_SERVICE_ACCOUNT_KEY_FILE"
-            value = "/var/secrets/vertex/credentials.json"
+          dynamic "env" {
+            for_each = try(var.webhook_vertex_svc_credentials != null, false) ? [1] : []
+            content {
+              name  = "VERTEX_SERVICE_ACCOUNT_KEY_FILE"
+              value = "/var/secrets/vertex/credentials.json"
+            }
           }
+
 
           env {
             name  = "PORT"
             value = local.port
           }
 
-          volume_mount {
-            name       = "cloud-function-svc-credentials"
-            mount_path = "/var/secrets/cloud-functions"
-            read_only  = true
+          dynamic "volume_mount" {
+            for_each = var.webhook_cloud_functions_svc_credentials != null ? [1] : []
+            content {
+              name       = "cloud-function-svc-credentials"
+              mount_path = "/var/secrets/cloud-functions"
+              read_only  = true
+            }
           }
 
-          volume_mount {
-            name       = "vertex-svc-credentials"
-            mount_path = "/var/secrets/vertex"
-            read_only  = true
+          dynamic "volume_mount" {
+            for_each = var.webhook_vertex_svc_credentials != null ? [1] : []
+            content {
+              name       = "vertex-svc-credentials"
+              mount_path = "/var/secrets/vertex"
+              read_only  = true
+            }
           }
 
           # liveness_probe {
@@ -150,6 +169,7 @@ resource "kubernetes_deployment" "webhook_server" {
 }
 
 resource "kubernetes_secret" "webhook_cloud_functions_svc_credentials" {
+  count = try(var.webhook_cloud_functions_svc_credentials != null, false) ? 1 : 0
   metadata {
     name      = "webhook-server-cloud-functions-svc-credentials"
     namespace = var.kubernetes_namespace
@@ -161,6 +181,7 @@ resource "kubernetes_secret" "webhook_cloud_functions_svc_credentials" {
 }
 
 resource "kubernetes_secret" "webhook_vertex_svc_credentials" {
+  count = try(var.webhook_vertex_svc_credentials != null, false) ? 1 : 0
   metadata {
     name      = "webhook-server-vertex-svc-credentials"
     namespace = var.kubernetes_namespace

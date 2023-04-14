@@ -82,16 +82,21 @@ locals {
   ]
 
   default_log4j_loggers = {
+    # root logger is info
     "io.anaml" : "debug"
+
+    # Quiet down spark stuff
+    "com.google.cloud.spark.bigquery.repackaged" : "warn"
     "org.apache.hadoop" : "warn"
     "org.apache.parquet" : "warn"
-    "org.apache.spark" : "warn"
     "org.apache.spark.deploy.yarn.Client" : "warn"
-    "org.apache.spark.scheduler.DAGScheduler" : "info"
+    "org.apache.spark.executor" : "warn"
     "org.apache.spark.scheduler.TaskSetManager" : "warn"
+    "org.apache.spark.sql.execution" : "warn"
+    "org.apache.spark.storage.BlockManagerInfo" : "warn"
+    "org.apache.spark.storage.ShuffleBlockFetcherIterator" : "warn"
     "org.eclipse.jetty" : "warn"
     "org.http4s.blaze" : "warn"
-    "org.http4s.client.middleware" : "info"
     "org.spark_project.jetty" : "warn"
     "org.sparkproject.jetty" : "warn"
   }

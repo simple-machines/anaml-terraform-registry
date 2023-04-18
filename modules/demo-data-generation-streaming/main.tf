@@ -138,6 +138,8 @@ resource "kubernetes_persistent_volume_claim" "data_generation_volume" {
       }
     }
   }
+
+  wait_until_bound = false
 }
 
 

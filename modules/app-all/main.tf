@@ -44,7 +44,10 @@ resource "kubernetes_secret" "postgres_secret" {
   }
 
   data = {
+    PGHOST     = var.postgres_host
     PGPASSWORD = var.postgres_password
+    PGPORT     = var.postgres_port
+    PGUSER     = var.postgres_user
   }
 }
 

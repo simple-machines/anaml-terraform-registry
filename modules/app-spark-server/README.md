@@ -314,6 +314,20 @@ Default:
 }
 ```
 
+### <a name="input_kubernetes_node_selector_spark_driver"></a> [kubernetes\_node\_selector\_spark\_driver](#input\_kubernetes\_node\_selector\_spark\_driver)
+
+Description: n/a
+
+Type: `map(string)`
+
+Default:
+
+```json
+{
+  "node_pool": "spark-driver"
+}
+```
+
 ### <a name="input_kubernetes_node_selector_spark_executor"></a> [kubernetes\_node\_selector\_spark\_executor](#input\_kubernetes\_node\_selector\_spark\_executor)
 
 Description: n/a
@@ -324,7 +338,7 @@ Default:
 
 ```json
 {
-  "node_pool": "anaml-spark-pool"
+  "node_pool": "spark-exec"
 }
 ```
 

@@ -60,14 +60,14 @@ locals {
       # These settings are for nodes with 4Gb per core and at least 4 cores
       # For most production jobs, it is recommended to have 8Gb per core and override these
       # Based on https://cloud.google.com/dataproc-serverless/docs/concepts/properties
-      "spark.driver.memory" = "13400m"
-      "spark.executor.memory" = "13400m"
+      "spark.driver.memory" = "11000m"
+      "spark.executor.memory" = "11000m"
       "spark.driver.cores" = "4"
       "spark.executor.cores" = "4"
-      "spark.kubernetes.driver.request.cores" = "3500m"
-      "spark.kubernetes.driver.limit.cores" = "3500m"
-      "spark.kubernetes.executor.request.cores" = "3500m"
-      "spark.kubernetes.executor.limit.cores" = "3500m"
+      "spark.kubernetes.driver.request.cores" = "3000m"
+      "spark.kubernetes.driver.limit.cores" = "3000m"
+      "spark.kubernetes.executor.request.cores" = "3000m"
+      "spark.kubernetes.executor.limit.cores" = "3000m"
 
       # This will give a small spark job by default, and should usually be overriden on a Cluster or Schedule level
       "spark.dynamicAllocation.maxExecutors": "7"

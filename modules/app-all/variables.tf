@@ -114,6 +114,13 @@ variable "kubernetes_pod_node_selector_postgres" {
   nullable    = true
 }
 
+variable "kubernetes_pod_node_selector_spark_driver" {
+  type        = map(string)
+  default     = null
+  description = "(Optional) NodeSelector is a selector which must be true for the **spark_driver** pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/node-selection)."
+  nullable    = true
+}
+
 variable "kubernetes_pod_node_selector_spark_executor" {
   type        = map(string)
   default     = null

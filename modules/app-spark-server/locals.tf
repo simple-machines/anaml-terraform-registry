@@ -30,8 +30,9 @@ locals {
       "spark.dynamicAllocation.enabled"                                         = "true"
       "spark.dynamicAllocation.schedulerBacklogTimeout"                         = "2s"
       "spark.dynamicAllocation.shuffleTracking.enabled"                         = "true"
+      "spark.driver.extraClassPath"                                             = "/opt/docker/lib/*"
       "spark.executor.extraClassPath"                                           = "/opt/docker/lib/*"
-      "spark.executor.extraJavaOptions"                                         = "-Djava.library.path=/opt/hadoop/lib/native"
+      "spark.executor.extraJavaOptions"                                         = "-Djava.library.path=/opt/hadoop/lib/native:/usr/lib"
       "spark.hadoop.fs.AbstractFileSystem.gs.impl"                              = "com.google.cloud.hadoop.fs.gcs.GoogleHadoopFS"
       "spark.hadoop.fs.gs.impl"                                                 = "com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystem"
       "spark.hadoop.fs.gs.implicit.dir.infer.enable"                            = "true"
@@ -41,10 +42,10 @@ locals {
       "spark.kubernetes.allocation.batch.size"                                  = "2"
       "spark.kubernetes.container.image"                                        = local.image
       "spark.kubernetes.container.image.pullPolicy"                             = var.kubernetes_image_pull_policy == null ? (var.anaml_spark_server_version == "latest" ? "Always" : "IfNotPresent") : var.kubernetes_image_pull_policy
+      "spark.kubernetes.driver.podTemplateFile"                                 = "/config/spark-driver-template.yaml"
       "spark.kubernetes.executor.podTemplateFile"                               = "/config/spark-executor-template.yaml"
       "spark.kubernetes.executor.volumes.emptyDir.spark-local-dir-1.mount.path" = "/spark-work-dir-1"
       "spark.kubernetes.namespace"                                              = var.kubernetes_namespace
-      "spark.kubernetes.node.selector.node_pool"                                = var.kubernetes_node_selector_spark_executor.node_pool
       "spark.kubernetes.report.interval"                                        = "30s"
       "spark.local.dir"                                                         = "/spark-work-dir-1"
       "spark.scheduler.mode"                                                    = "FAIR"
@@ -52,6 +53,31 @@ locals {
       "spark.sql.autoBroadcastJoinThreshold"                                    = "96m"
       "spark.sql.cbo.enabled"                                                   = "true"
       "spark.sql.cbo.joinReorder.enabled"                                       = "true"
+      "spark.sql.adaptive.coalescePartitions.parallelismFirst"                  = "false"
+      "spark.dynamicAllocation.executorAllocationRatio"                         = "0.3"
+      "spark.dynamicAllocation.initialExecutors"                                = "2"
+
+      # These settings are for nodes with 4Gb per core and at least 4 cores
+      # For most production jobs, it is recommended to have 8Gb per core and override these
+      # Based on https://cloud.google.com/dataproc-serverless/docs/concepts/properties
+      "spark.driver.memory" = "11000m"
+      "spark.executor.memory" = "11000m"
+      "spark.driver.cores" = "4"
+      "spark.executor.cores" = "4"
+      "spark.kubernetes.driver.request.cores" = "3000m"
+      "spark.kubernetes.driver.limit.cores" = "3000m"
+      "spark.kubernetes.executor.request.cores" = "3000m"
+      "spark.kubernetes.executor.limit.cores" = "3000m"
+
+      # This will give a small spark job by default, and should usually be overriden on a Cluster or Schedule level
+      "spark.dynamicAllocation.maxExecutors": "7"
+    },
+
+    var.kubernetes_node_selector_spark_driver == null ? {} : {
+      "spark.kubernetes.driver.node.selector.node_pool" = var.kubernetes_node_selector_spark_driver.node_pool
+    },
+    var.kubernetes_node_selector_spark_executor == null ? {} : {
+      "spark.kubernetes.executor.node.selector.node_pool" = var.kubernetes_node_selector_spark_executor.node_pool
     },
 
     var.spark_log_directory == null ? {} : {
@@ -67,7 +93,7 @@ locals {
 
   default_executor_template_tolerations = [
     {
-      key      = "anaml-spark-pool"
+      key      = "spark-only"
       operator = "Exists"
       effect   = "NoSchedule"
     }
@@ -75,7 +101,7 @@ locals {
 
   default_driver_template_tolerations = [
     {
-      key      = "anaml-spark-pool"
+      key      = "spark-only"
       operator = "Exists"
       effect   = "NoSchedule"
     }

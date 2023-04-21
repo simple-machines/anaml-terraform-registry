@@ -191,6 +191,7 @@ module "spark-server" {
   kubernetes_container_resources_limits_memory   = var.override_anaml_spark_server_kubernetes_container_resources_limits_memory
 
   kubernetes_pod_sidecars                 = var.kubernetes_pod_anaml_spark_server_sidecars
+  kubernetes_node_selector_spark_driver   = var.kubernetes_pod_node_selector_spark_driver
   kubernetes_node_selector_spark_executor = var.kubernetes_pod_node_selector_spark_executor
   kubernetes_node_selector_app            = var.kubernetes_pod_node_selector_app
 

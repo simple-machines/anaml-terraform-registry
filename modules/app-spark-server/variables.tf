@@ -20,11 +20,15 @@ variable "kubernetes_node_selector_app" {
   nullable = true
 }
 
+variable "kubernetes_node_selector_spark_driver" {
+  type = map(string)
+  default = null
+  nullable = true
+}
+
 variable "kubernetes_node_selector_spark_executor" {
   type = map(string)
-  default = {
-    node_pool = "anaml-spark-pool"
-  }
+  default = null
   nullable = true
 }
 

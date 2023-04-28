@@ -164,7 +164,7 @@ Description: n/a
 
 Type: `string`
 
-Default: `null`
+Default: `256`
 
 ### <a name="input_kubernetes_container_spark_history_server_env_from"></a> [kubernetes\_container\_spark\_history\_server\_env\_from](#input\_kubernetes\_container\_spark\_history\_server\_env\_from)
 

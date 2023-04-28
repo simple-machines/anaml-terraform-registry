@@ -334,6 +334,12 @@ resource "kubernetes_deployment" "anaml_server" {
           )
           image_pull_policy = var.kubernetes_image_pull_policy == null ? (var.anaml_server_version == "latest" ? "Always" : "IfNotPresent") : var.kubernetes_image_pull_policy
 
+          resources {
+            requests = {
+              memory = "512Mi"
+            }
+          }
+
           port {
             container_port = local.port
             name           = "http-web-svc"

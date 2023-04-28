@@ -21,14 +21,14 @@ variable "kubernetes_node_selector_app" {
 }
 
 variable "kubernetes_node_selector_spark_driver" {
-  type = map(string)
-  default = null
+  type     = map(string)
+  default  = null
   nullable = true
 }
 
 variable "kubernetes_node_selector_spark_executor" {
-  type = map(string)
-  default = null
+  type     = map(string)
+  default  = null
   nullable = true
 }
 
@@ -217,7 +217,7 @@ variable "kubernetes_container_resources_requests_cpu" {
 
 variable "kubernetes_container_resources_requests_memory" {
   type    = string
-  default = null
+  default = 256
 }
 
 variable "kubernetes_container_resources_limits_cpu" {

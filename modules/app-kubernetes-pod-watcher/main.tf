@@ -140,6 +140,11 @@ resource "kubernetes_deployment" "anaml_pod_watcher" {
           )
           image_pull_policy = var.kubernetes_image_pull_policy == null ? (var.kubernetes_pod_watcher_version == "latest" ? "Always" : "IfNotPresent") : var.kubernetes_image_pull_policy
 
+          resources {
+            requests = {
+              memory = "128Mi"
+            }
+          }
 
           volume_mount {
             name       = "anaml-server-password"

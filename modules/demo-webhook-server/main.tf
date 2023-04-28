@@ -81,6 +81,12 @@ resource "kubernetes_deployment" "webhook_server" {
           )
           image_pull_policy = var.kubernetes_image_pull_policy == null ? (var.webhook_server_version == "latest" ? "Always" : "IfNotPresent") : var.kubernetes_image_pull_policy
 
+          resources {
+            requests = {
+              memory = "64Mi"
+            }
+          }
+
           port {
             container_port = local.port
             name           = "http-web-svc"

@@ -423,6 +423,12 @@ resource "kubernetes_deployment" "spark_history_server_deployment" {
           command           = ["/opt/spark/bin/spark-class", "org.apache.spark.deploy.history.HistoryServer"]
           image_pull_policy = var.kubernetes_image_pull_policy == null ? (var.anaml_spark_server_version == "latest" ? "Always" : "IfNotPresent") : var.kubernetes_image_pull_policy
 
+          resources {
+            requests = {
+              memory = "256Mi"
+            }
+          }
+
           port {
             container_port = var.ssl_kubernetes_secret_pkcs12_keystore == null ? 18080 : 18480
           }

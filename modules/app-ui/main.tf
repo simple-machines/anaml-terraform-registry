@@ -115,6 +115,12 @@ resource "kubernetes_deployment" "anaml_ui" {
           )
           image_pull_policy = var.kubernetes_image_pull_policy
 
+          resources {
+            requests = {
+              memory = "16Mi"
+            }
+          }
+
           port {
             container_port = 80
             name           = "http-web-svc"

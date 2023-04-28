@@ -318,13 +318,7 @@ Description: n/a
 
 Type: `map(string)`
 
-Default:
-
-```json
-{
-  "node_pool": "spark-driver"
-}
-```
+Default: `null`
 
 ### <a name="input_kubernetes_node_selector_spark_executor"></a> [kubernetes\_node\_selector\_spark\_executor](#input\_kubernetes\_node\_selector\_spark\_executor)
 
@@ -332,13 +326,7 @@ Description: n/a
 
 Type: `map(string)`
 
-Default:
-
-```json
-{
-  "node_pool": "spark-exec"
-}
-```
+Default: `null`
 
 ### <a name="input_kubernetes_pod_sidecars"></a> [kubernetes\_pod\_sidecars](#input\_kubernetes\_pod\_sidecars)
 

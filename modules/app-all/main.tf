@@ -19,8 +19,6 @@ terraform {
       version = "~> 2.11"
     }
   }
-
-  experiments = [module_variable_optional_attrs]
 }
 
 locals {

@@ -15,8 +15,6 @@ terraform {
       version = "~> 2.11"
     }
   }
-
-  experiments = [module_variable_optional_attrs]
 }
 
 locals {
@@ -97,9 +95,9 @@ resource "kubernetes_deployment" "anaml_pod_watcher" {
         labels = local.deployment_labels
         annotations = {
           # Trigger POD restart on config/secret changes by hashing contents
-          "checksum/configmap_${kubernetes_config_map.kubernetes_pod_watcher.metadata[0].name}"         = sha256(jsonencode(kubernetes_config_map.kubernetes_pod_watcher.data))
-          "checksum/secret_${kubernetes_secret.anaml_server_password.metadata[0].name}" = sha256(jsonencode(kubernetes_secret.anaml_server_password.data))
-          "checksum/secret_${kubernetes_secret.postgres_password.metadata[0].name}" = sha256(jsonencode(kubernetes_secret.postgres_password.data))
+          "checksum/configmap_${kubernetes_config_map.kubernetes_pod_watcher.metadata[0].name}" = sha256(jsonencode(kubernetes_config_map.kubernetes_pod_watcher.data))
+          "checksum/secret_${kubernetes_secret.anaml_server_password.metadata[0].name}"         = sha256(jsonencode(kubernetes_secret.anaml_server_password.data))
+          "checksum/secret_${kubernetes_secret.postgres_password.metadata[0].name}"             = sha256(jsonencode(kubernetes_secret.postgres_password.data))
         }
       }
 
@@ -144,17 +142,17 @@ resource "kubernetes_deployment" "anaml_pod_watcher" {
 
 
           volume_mount {
-            name = "anaml-server-password"
+            name       = "anaml-server-password"
             mount_path = "/var/secrets/anaml/ANAML_K8S_WATCHER_ANAML_SERVER_PASSWORD"
-            sub_path = "ANAML_K8S_WATCHER_ANAML_SERVER_PASSWORD"
-            read_only = true
+            sub_path   = "ANAML_K8S_WATCHER_ANAML_SERVER_PASSWORD"
+            read_only  = true
           }
 
           volume_mount {
-            name = "postgres-password"
+            name       = "postgres-password"
             mount_path = "/var/secrets/anaml/ANAML_K8S_WATCHER_POSTGRES_PASSWORD"
-            sub_path = "ANAML_K8S_WATCHER_POSTGRES_PASSWORD"
-            read_only = true
+            sub_path   = "ANAML_K8S_WATCHER_POSTGRES_PASSWORD"
+            read_only  = true
           }
 
           env_from {

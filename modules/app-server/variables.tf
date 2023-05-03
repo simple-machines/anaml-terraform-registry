@@ -275,6 +275,12 @@ variable "proxy_base" {
   default     = null
 }
 
+variable "enable_scheduling" {
+  type     = bool
+  default  = true
+  nullable = false
+}
+
 variable "governance_run_type_checks" {
   type     = bool
   default  = false

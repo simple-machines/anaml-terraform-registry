@@ -214,6 +214,14 @@ Type: `bool`
 
 Default: `false`
 
+### <a name="input_enable_scheduling"></a> [enable\_scheduling](#input\_enable\_scheduling)
+
+Description: n/a
+
+Type: `bool`
+
+Default: `false`
+
 ### <a name="input_governance_run_type_checks"></a> [governance\_run\_type\_checks](#input\_governance\_run\_type\_checks)
 
 Description: n/a

@@ -263,6 +263,11 @@ variable "override_anaml_server_ssl_kubernetes_secret_pkcs12_keystore_password_k
   default     = null
 }
 
+variable "override_anaml_server_enable_scheduling" {
+  type    = bool
+  default = null
+}
+
 variable "override_anaml_server_governance_run_type_checks" {
   type    = bool
   default = null

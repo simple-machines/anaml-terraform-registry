@@ -138,6 +138,8 @@ resource "kubernetes_config_map" "anaml_server" {
       enable_header_debug_logging = var.enable_header_debug_logging ? "true" : "false"
       enable_body_debug_logging   = var.enable_body_debug_logging ? "true" : "false"
 
+      enable_scheduling = var.enable_scheduling ? "true" : "false"
+
       governance_runTypeChecks = var.governance_run_type_checks ? "true" : "false"
 
       # If we get a kubernetes style environment variable, i.e. "$(ANAML_LICENSE_KEY)", convert it to the config expected format "${?ANAML_LICENSE_KEY}" otherwise use the value as given.

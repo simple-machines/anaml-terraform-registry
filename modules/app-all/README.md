@@ -187,9 +187,8 @@ Type:
 
 ```hcl
 list(object({
-    secret_ref = object({
-      name = string
-    })
+    secret_ref = optional(object({ name = string }))
+    config_map_ref = optional(object({ name = string }))
   }))
 ```
 
@@ -616,6 +615,14 @@ Type: `bool`
 Default: `null`
 
 ### <a name="input_override_anaml_server_enable_header_debug_logging"></a> [override\_anaml\_server\_enable\_header\_debug\_logging](#input\_override\_anaml\_server\_enable\_header\_debug\_logging)
+
+Description: n/a
+
+Type: `bool`
+
+Default: `null`
+
+### <a name="input_override_anaml_server_enable_scheduling"></a> [override\_anaml\_server\_enable\_scheduling](#input\_override\_anaml\_server\_enable\_scheduling)
 
 Description: n/a
 

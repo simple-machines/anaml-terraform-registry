@@ -29,9 +29,8 @@ variable "https_urls" {
 
 variable "kubernetes_container_env_from_anaml_server" {
   type = list(object({
-    secret_ref = object({
-      name = string
-    })
+    secret_ref     = optional(object({ name = string }))
+    config_map_ref = optional(object({ name = string }))
   }))
   description = "Inject additional `env_from` values in to the anaml_server deployment"
   default     = []

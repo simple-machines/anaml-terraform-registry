@@ -220,7 +220,7 @@ Description: n/a
 
 Type: `bool`
 
-Default: `false`
+Default: `true`
 
 ### <a name="input_governance_run_type_checks"></a> [governance\_run\_type\_checks](#input\_governance\_run\_type\_checks)
 
@@ -238,9 +238,8 @@ Type:
 
 ```hcl
 list(object({
-    secret_ref = object({
-      name = string
-    })
+    secret_ref = optional(object({ name = string }))
+    config_map_ref = optional(object({ name = string }))
   }))
 ```
 

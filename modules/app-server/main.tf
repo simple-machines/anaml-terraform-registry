@@ -449,9 +449,15 @@ resource "kubernetes_deployment" "anaml_server" {
             for_each = var.kubernetes_container_env_from
             content {
               dynamic "secret_ref" {
-                for_each = [env_from.value.secret_ref]
+                for_each = [for v in [env_from.value] : v.secret_ref if v.secret_ref != null]
                 content {
                   name = secret_ref.value.name
+                }
+              }
+              dynamic "config_map_ref" {
+                for_each = [for v in [env_from.value] : v.config_map_ref if v.config_map_ref != null]
+                content {
+                  name = config_map_ref.value.name
                 }
               }
             }

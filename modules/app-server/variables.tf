@@ -120,9 +120,8 @@ variable "kubernetes_pod_sidecars" {
 
 variable "kubernetes_container_env_from" {
   type = list(object({
-    secret_ref = object({
-      name = string
-    })
+    secret_ref     = optional(object({ name = string }))
+    config_map_ref = optional(object({ name = string }))
   }))
   description = "Inject additional `env_from` values in to the deployment. This is useful for example if you want to mount the Postgres credentials from a secret_ref to use in the `postgres_user` and `postgres_password` values"
   default     = []

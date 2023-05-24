@@ -238,7 +238,7 @@ Type:
 
 ```hcl
 list(object({
-    secret_ref = optional(object({ name = string }))
+    secret_ref     = optional(object({ name = string }))
     config_map_ref = optional(object({ name = string }))
   }))
 ```
@@ -446,6 +446,14 @@ Default: `null`
 ### <a name="input_oidc_enable"></a> [oidc\_enable](#input\_oidc\_enable)
 
 Description: Enable OpenID Connect login
+
+Type: `bool`
+
+Default: `false`
+
+### <a name="input_oidc_enable_azure_group_sync"></a> [oidc\_enable\_azure\_group\_sync](#input\_oidc\_enable\_azure\_group\_sync)
+
+Description: If using Azure for OIDC, allow syncing against both direct and transitive group memberships
 
 Type: `bool`
 

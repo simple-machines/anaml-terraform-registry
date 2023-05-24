@@ -129,11 +129,12 @@ resource "kubernetes_config_map" "anaml_server" {
     OIDC_CLIENT_SECRET = var.oidc_client_secret
 
     "application.conf" = templatefile("${path.module}/_templates/application.conf", {
-      additional_scopes     = var.oidc_additional_scopes != null ? var.oidc_additional_scopes : []
-      anaml_external_domain = var.hostname
-      discovery_uri         = var.oidc_discovery_uri != null ? var.oidc_discovery_uri : ""
-      enable_form_client    = var.enable_form_client
-      enable_oidc_client    = var.oidc_enable
+      additional_scopes       = var.oidc_additional_scopes != null ? var.oidc_additional_scopes : []
+      anaml_external_domain   = var.hostname
+      discovery_uri           = var.oidc_discovery_uri != null ? var.oidc_discovery_uri : ""
+      enable_form_client      = var.enable_form_client
+      enable_oidc_client      = var.oidc_enable
+      enable_azure_group_sync = var.oidc_enable_azure_group_sync
 
       enable_header_debug_logging = var.enable_header_debug_logging ? "true" : "false"
       enable_body_debug_logging   = var.enable_body_debug_logging ? "true" : "false"

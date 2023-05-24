@@ -599,6 +599,12 @@ variable "oidc_enable" {
   default     = false
 }
 
+variable "oidc_enable_azure_group_sync" {
+  type        = bool
+  description = "If using Azure for OIDC, allow syncing against both direct and transitive group memberships"
+  default     = false
+}
+
 variable "enable_form_client" {
   type        = bool
   description = "Enable Login form"

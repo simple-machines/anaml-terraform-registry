@@ -106,6 +106,7 @@ module "anaml-server" {
   oidc_client_secret             = var.oidc_client_secret
   oidc_discovery_uri             = var.oidc_discovery_uri
   oidc_enable                    = var.oidc_enable
+  oidc_enable_azure_group_sync   = var.oidc_enable_azure_group_sync
   oidc_permitted_users_group_id  = var.oidc_permitted_users_group_id
   override_java_opts             = var.override_anaml_server_java_opts
   postgres_host                  = local.postgres_host

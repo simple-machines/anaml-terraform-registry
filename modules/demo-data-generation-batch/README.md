@@ -32,7 +32,7 @@ No modules.
 
 The following resources are used by this module:
 
-- [kubernetes_cron_job.data_generation](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/cron_job) (resource)
+- [kubernetes_cron_job_v1.data_generation](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/cron_job_v1) (resource)
 - [kubernetes_job.data_generation_init](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/job) (resource)
 - [kubernetes_persistent_volume_claim.data_generation_volume](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/persistent_volume_claim) (resource)
 

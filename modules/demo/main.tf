@@ -19,7 +19,7 @@ locals {
 
 
 
-resource "kubernetes_cron_job" "data_generation" {
+resource "kubernetes_cron_job_v1" "data_generation" {
   metadata {
     name      = "anaml-demo-data-generation"
     namespace = var.kubernetes_namespace

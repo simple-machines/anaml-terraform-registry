@@ -8,7 +8,7 @@ resource "kubernetes_service" "anaml_bigquery_server_service" {
       { for k, v in local.anaml_bigquery_server_labels : k => v if k != "app.kubernetes.io/version" },
       { "app.kubernetes.io/name" = each.key }
     )
-    annotations = var.kubernetes_service_annotations_anaml_bigquery_server
+    annotations = var.kubernetes_service_annotations
   }
 
   spec {

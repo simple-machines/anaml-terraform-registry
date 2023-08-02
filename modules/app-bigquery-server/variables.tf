@@ -10,25 +10,11 @@ variable "kubernetes_deployment_labels" {
   description = "Kubernetes labels to set if any. These values will be merged with the defaults"
 }
 
-# This is the Driver deployment so deploy to the app pool so the expensive spark pool can scale down
-# The driver is configured so workers will use anaml-spark-pool
 variable "kubernetes_node_selector" {
-  type = map(string)
-  default = null
+  type        = map(string)
+  default     = null
   description = "(Optional) NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/node-selection)."
-  nullable = true
-}
-
-variable "kubernetes_node_selector_spark_driver" {
-  type     = map(string)
-  default  = null
-  nullable = true
-}
-
-variable "kubernetes_node_selector_spark_executor" {
-  type     = map(string)
-  default  = null
-  nullable = true
+  nullable    = true
 }
 
 variable "kubernetes_deployment_name" {
@@ -220,7 +206,7 @@ variable "kubernetes_container_volume_mounts" {
   default = []
 }
 
-variable "kubernetes_service_annotations_anaml_bigquery_server" {
+variable "kubernetes_service_annotations" {
   type        = map(string)
   default     = null
   description = "(Optional) An unstructured key value map stored with the **anaml_spark_server** service that may be used to store arbitrary metadata."

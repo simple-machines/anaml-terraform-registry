@@ -239,22 +239,6 @@ Type: `map(string)`
 
 Default: `null`
 
-### <a name="input_kubernetes_node_selector_spark_driver"></a> [kubernetes\_node\_selector\_spark\_driver](#input\_kubernetes\_node\_selector\_spark\_driver)
-
-Description: n/a
-
-Type: `map(string)`
-
-Default: `null`
-
-### <a name="input_kubernetes_node_selector_spark_executor"></a> [kubernetes\_node\_selector\_spark\_executor](#input\_kubernetes\_node\_selector\_spark\_executor)
-
-Description: n/a
-
-Type: `map(string)`
-
-Default: `null`
-
 ### <a name="input_kubernetes_pod_sidecars"></a> [kubernetes\_pod\_sidecars](#input\_kubernetes\_pod\_sidecars)
 
 Description: Optional sidecars to provision i.e. Google Cloud SQL Auth Proxy if deploying in GCP
@@ -309,7 +293,7 @@ Type: `string`
 
 Default: `null`
 
-### <a name="input_kubernetes_service_annotations_anaml_bigquery_server"></a> [kubernetes\_service\_annotations\_anaml\_bigquery\_server](#input\_kubernetes\_service\_annotations\_anaml\_bigquery\_server)
+### <a name="input_kubernetes_service_annotations"></a> [kubernetes\_service\_annotations](#input\_kubernetes\_service\_annotations)
 
 Description: (Optional) An unstructured key value map stored with the **anaml\_spark\_server** service that may be used to store arbitrary metadata.
 

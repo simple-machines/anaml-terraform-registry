@@ -103,7 +103,6 @@ resource "kubernetes_deployment" "anaml_bigquery_server_deployment" {
         container {
           name              = "anaml-bigquery-server"
           image             = local.image
-          command           = ["/opt/docker/bin/anaml-spark-server.sh"]
           image_pull_policy = var.kubernetes_image_pull_policy == null ? (var.anaml_bigquery_server_version == "latest" ? "Always" : "IfNotPresent") : var.kubernetes_image_pull_policy
 
           port {
@@ -134,12 +133,8 @@ resource "kubernetes_deployment" "anaml_bigquery_server_deployment" {
           }
 
           env {
-            name  = "ANAML_CONFIG_FILE"
-            value = "/config/application.conf"
-          }
-          env {
             name  = "JAVA_OPTS"
-            value = "-Dweb.host=0.0.0.0"
+            value = "-Dweb.host=0.0.0.0 -Dconfig.file=/config/application.conf"
           }
 
           dynamic "env" {
@@ -214,7 +209,7 @@ resource "kubernetes_deployment" "anaml_bigquery_server_deployment" {
             }
           }
 
-         }
+        }
 
         # User provided sidecars i.e Google Cloud SQL Auth Proxy or Logging sidecars
         dynamic "container" {

@@ -276,3 +276,9 @@ variable "ssl_kubernetes_secret_pkcs12_keystore_password_key" {
   description = "(Optional) The key used inside ssl_kubernetes_secret_pkcs12_keystore_password for the trust store password if set"
   nullable    = false
 }
+
+variable "bigquery_default_dataset" {
+  type        = string
+  description = "The default dataset bigquery should use for queries."
+  nullable    = false
+}

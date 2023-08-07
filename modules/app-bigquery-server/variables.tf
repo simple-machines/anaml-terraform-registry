@@ -282,3 +282,15 @@ variable "bigquery_default_dataset" {
   description = "The default dataset bigquery should use for queries."
   nullable    = false
 }
+
+variable "bigquery_default_location" {
+  type        = string
+  description = "The default location bigquery should use for queries."
+  nullable    = false
+}
+
+variable "bigquery_default_project" {
+  type        = string
+  description = "The default project bigquery should use for queries."
+  nullable    = false
+}

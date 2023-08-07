@@ -50,6 +50,8 @@ resource "kubernetes_config_map" "anaml_bigquery_server_config" {
         loggers = {} #merge(local.default_log4j_loggers, var.log4j_overrides)
 
         bigquery_default_dataset = var.bigquery_default_dataset
+        bigquery_default_location = var.bigquery_default_location
+        bigquery_default_project = var.bigquery_default_project
       })
 
      }

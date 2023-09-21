@@ -48,6 +48,7 @@ locals {
       "spark.kubernetes.namespace"                                              = var.kubernetes_namespace
       "spark.kubernetes.report.interval"                                        = "30s"
       "spark.local.dir"                                                         = "/spark-work-dir-1"
+      "spark.hadoop.hadoop.tmp.dir"                                             = "/spark-work-dir-1/hadoop"
       "spark.scheduler.mode"                                                    = "FAIR"
       "spark.sql.adaptive.enabled"                                              = "true"
       "spark.sql.autoBroadcastJoinThreshold"                                    = "96m"
@@ -56,10 +57,6 @@ locals {
       "spark.sql.adaptive.coalescePartitions.parallelismFirst"                  = "false"
       "spark.dynamicAllocation.executorAllocationRatio"                         = "0.3"
       "spark.dynamicAllocation.initialExecutors"                                = "2"
-      # Assuming most deployments are cloud based and not HDFS we will setup the Improve Commit Protocols
-      "spark.sql.sources.commitProtocolClass"                                   = "org.apache.spark.internal.io.cloud.PathOutputCommitProtocol"
-      "spark.sql.parquet.output.committer.class"                                = "org.apache.spark.internal.io.cloud.BindingParquetOutputCommitter"
-      "spark.hadoop.hadoop.tmp.dir"                                             = "/spark-work-dir-1/hadoop"
 
       # These settings are for nodes with 4Gb per core and at least 4 cores
       # For most production jobs, it is recommended to have 8Gb per core and override these

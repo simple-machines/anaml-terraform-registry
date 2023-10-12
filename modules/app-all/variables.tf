@@ -552,7 +552,7 @@ variable "override_anaml_ui_skin" {
 
 variable "override_anaml_language" {
   type        = string
-  description = "Sets the terminology to use in the UI [attribute|feature]"
+  description = "Sets the terminology to use in the UI [attribute|feature|metric]"
   default     = null
 }
 

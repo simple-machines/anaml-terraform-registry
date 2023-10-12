@@ -107,14 +107,9 @@ variable "skin" {
 
 variable "language" {
   type        = string
-  description = "Sets the terminology to use in the UI [attribute|feature]"
+  description = "Sets the terminology to use in the UI [attribute|feature|metric]"
   default     = "feature"
   nullable    = "false"
-
-  validation {
-    condition     = contains(["attribute", "feature"], var.language)
-    error_message = "Language must be one of attribute or feature."
-  }
 }
 
 variable "spark_history_server_url" {

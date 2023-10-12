@@ -592,7 +592,7 @@ Default: `null`
 
 ### <a name="input_override_anaml_language"></a> [override\_anaml\_language](#input\_override\_anaml\_language)
 
-Description: Sets the terminology to use in the UI [attribute|feature]
+Description: Sets the terminology to use in the UI [attribute|feature|metric]
 
 Type: `string`
 

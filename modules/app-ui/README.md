@@ -193,7 +193,7 @@ Default: `"ClusterIP"`
 
 ### <a name="input_language"></a> [language](#input\_language)
 
-Description: Sets the terminology to use in the UI [attribute|feature]
+Description: Sets the terminology to use in the UI [attribute|feature|metric]
 
 Type: `string`
 

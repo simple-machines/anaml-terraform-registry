@@ -1,4 +1,5 @@
-output "anaml_api_url" {
+output "anaml_internal_server_url" {
+  description = "The anaml-server url to use from within kubernetes"
   value = module.anaml-server.internal_url
 }
 

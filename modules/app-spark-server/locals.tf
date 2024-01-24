@@ -28,8 +28,10 @@ locals {
   spark_conf_base = merge(
     {
       "spark.dynamicAllocation.enabled"                                         = "true"
-      "spark.dynamicAllocation.schedulerBacklogTimeout"                         = "2s"
+      "spark.dynamicAllocation.schedulerBacklogTimeout"                         = "60s"
       "spark.dynamicAllocation.shuffleTracking.enabled"                         = "true"
+      "spark.dynamicAllocation.executorAllocationRatio"                         = "0.3"
+      "spark.dynamicAllocation.initialExecutors"                                = "2"
       "spark.driver.extraClassPath"                                             = "/opt/docker/lib/*"
       "spark.executor.extraClassPath"                                           = "/opt/docker/lib/*"
       "spark.executor.extraJavaOptions"                                         = "-Djava.library.path=/opt/hadoop/lib/native:/usr/lib"
@@ -39,7 +41,7 @@ locals {
       "spark.hadoop.fs.gs.implicit.dir.repair.enable"                           = "false"
       "spark.hadoop.hive.execution.engine"                                      = "mr"
       "spark.hadoop.mapreduce.fileoutputcommitter.algorithm.version"            = "2"
-      "spark.kubernetes.allocation.batch.size"                                  = "2"
+      "spark.kubernetes.allocation.batch.size"                                  = "4"
       "spark.kubernetes.container.image"                                        = local.image
       "spark.kubernetes.container.image.pullPolicy"                             = var.kubernetes_image_pull_policy == null ? (var.anaml_spark_server_version == "latest" ? "Always" : "IfNotPresent") : var.kubernetes_image_pull_policy
       "spark.kubernetes.driver.podTemplateFile"                                 = "/config/spark-driver-template.yaml"
@@ -51,12 +53,14 @@ locals {
       "spark.hadoop.hadoop.tmp.dir"                                             = "/spark-work-dir-1/hadoop"
       "spark.scheduler.mode"                                                    = "FAIR"
       "spark.sql.adaptive.enabled"                                              = "true"
-      "spark.sql.autoBroadcastJoinThreshold"                                    = "96m"
+      "spark.sql.autoBroadcastJoinThreshold"                                    = "192m"
       "spark.sql.cbo.enabled"                                                   = "true"
       "spark.sql.cbo.joinReorder.enabled"                                       = "true"
       "spark.sql.adaptive.coalescePartitions.parallelismFirst"                  = "false"
-      "spark.dynamicAllocation.executorAllocationRatio"                         = "0.3"
-      "spark.dynamicAllocation.initialExecutors"                                = "2"
+      "spark.checkpoint.compress"                                               = "true"
+      "spark.rdd.compress"                                                      = "true"
+      "spark.eventLog.compress"                                                 = "true"
+      "spark.io.compression.codec"                                              = "zstd"
 
       # These settings are for nodes with 4Gb per core and at least 4 cores
       # For most production jobs, it is recommended to have 8Gb per core and override these

@@ -61,25 +61,22 @@ locals {
       # These settings are for nodes with 4Gb per core and at least 4 cores
       # For most production jobs, it is recommended to have 8Gb per core and override these
       # Based on https://cloud.google.com/dataproc-serverless/docs/concepts/properties
-      "spark.driver.memory" = "11000m"
-      "spark.executor.memory" = "11000m"
-      "spark.driver.cores" = "4"
-      "spark.executor.cores" = "4"
-      "spark.kubernetes.driver.request.cores" = "3000m"
-      "spark.kubernetes.driver.limit.cores" = "3000m"
+      "spark.driver.memory"                     = "11000m"
+      "spark.executor.memory"                   = "11000m"
+      "spark.driver.cores"                      = "4"
+      "spark.executor.cores"                    = "4"
+      "spark.kubernetes.driver.request.cores"   = "3000m"
+      "spark.kubernetes.driver.limit.cores"     = "3000m"
       "spark.kubernetes.executor.request.cores" = "3000m"
-      "spark.kubernetes.executor.limit.cores" = "3000m"
+      "spark.kubernetes.executor.limit.cores"   = "3000m"
 
       # This will give a small spark job by default, and should usually be overriden on a Cluster or Schedule level
-      "spark.dynamicAllocation.maxExecutors": "7"
+      "spark.dynamicAllocation.maxExecutors" : "7"
     },
 
-    var.kubernetes_node_selector_spark_driver == null ? {} : {
-      "spark.kubernetes.driver.node.selector.node_pool" = var.kubernetes_node_selector_spark_driver.node_pool
-    },
-    var.kubernetes_node_selector_spark_executor == null ? {} : {
-      "spark.kubernetes.executor.node.selector.node_pool" = var.kubernetes_node_selector_spark_executor.node_pool
-    },
+    var.kubernetes_node_selector_spark_driver == null ? {} : { for k, v in var.kubernetes_node_selector_spark_driver : "spark.kubernetes.driver.node.selector.${k}" => v },
+
+    var.kubernetes_node_selector_spark_executor == null ? {} : { for k, v in var.kubernetes_node_selector_spark_executor : "spark.kubernetes.executor.node.selector.${k}" => v },
 
     var.spark_log_directory == null ? {} : {
       "spark.eventLog.dir"     = var.spark_log_directory

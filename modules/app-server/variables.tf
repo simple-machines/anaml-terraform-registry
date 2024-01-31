@@ -370,3 +370,17 @@ variable "enable_body_debug_logging" {
   description = "Enable request body debug logging. **WARNING** - this should **not** be enabled on production instances and is for debug purposes only. Enabling this option can leak sensitive information to the application logs"
   nullable    = false
 }
+
+variable "enable_secure_cookies" {
+  type        = bool
+  default     = true
+  description = "Enable Secure HTTP cookie flag"
+  nullable    = false
+}
+
+variable "enable_hsts" {
+  type        = bool
+  default     = true
+  description = "Enable HTTP Strict Transport Security (HSTS) headers Secure HTTP cookie flag"
+  nullable    = false
+}

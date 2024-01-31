@@ -214,9 +214,25 @@ Type: `bool`
 
 Default: `false`
 
+### <a name="input_enable_hsts"></a> [enable\_hsts](#input\_enable\_hsts)
+
+Description: Enable HTTP Strict Transport Security (HSTS) headers Secure HTTP cookie flag
+
+Type: `bool`
+
+Default: `true`
+
 ### <a name="input_enable_scheduling"></a> [enable\_scheduling](#input\_enable\_scheduling)
 
 Description: n/a
+
+Type: `bool`
+
+Default: `true`
+
+### <a name="input_enable_secure_cookies"></a> [enable\_secure\_cookies](#input\_enable\_secure\_cookies)
+
+Description: Enable Secure HTTP cookie flag
 
 Type: `bool`
 

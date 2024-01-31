@@ -89,10 +89,14 @@ module "anaml-server" {
   enable_header_debug_logging = var.override_anaml_server_enable_header_debug_logging
   enable_body_debug_logging   = var.override_anaml_server_enable_body_debug_logging
   enable_scheduling           = var.override_anaml_server_enable_scheduling
-  governance_run_type_checks  = var.override_anaml_server_governance_run_type_checks
-  hostname                    = var.hostname
-  kubernetes_namespace        = var.kubernetes_namespace_create ? kubernetes_namespace.anaml_namespace[0].metadata.0.name : var.kubernetes_namespace_name
-  kubernetes_node_selector    = var.kubernetes_pod_node_selector_app
+
+  enable_secure_cookies = var.override_anaml_server_enable_secure_cookies
+  enable_hsts           = var.override_anaml_server_enable_hsts
+
+  governance_run_type_checks = var.override_anaml_server_governance_run_type_checks
+  hostname                   = var.hostname
+  kubernetes_namespace       = var.kubernetes_namespace_create ? kubernetes_namespace.anaml_namespace[0].metadata.0.name : var.kubernetes_namespace_name
+  kubernetes_node_selector   = var.kubernetes_pod_node_selector_app
 
   kubernetes_container_env_from = concat(
     [{ secret_ref = { name = "postgres-secret" } }],

@@ -49,6 +49,24 @@ Description: n/a
 
 Type: `string`
 
+### <a name="input_bigquery_default_dataset"></a> [bigquery\_default\_dataset](#input\_bigquery\_default\_dataset)
+
+Description: The default dataset bigquery should use for queries.
+
+Type: `string`
+
+### <a name="input_bigquery_default_location"></a> [bigquery\_default\_location](#input\_bigquery\_default\_location)
+
+Description: The default location bigquery should use for queries.
+
+Type: `string`
+
+### <a name="input_bigquery_default_project"></a> [bigquery\_default\_project](#input\_bigquery\_default\_project)
+
+Description: The default project bigquery should use for queries.
+
+Type: `string`
+
 ### <a name="input_container_registry"></a> [container\_registry](#input\_container\_registry)
 
 Description: n/a

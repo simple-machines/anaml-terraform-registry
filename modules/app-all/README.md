@@ -630,6 +630,14 @@ Type: `bool`
 
 Default: `null`
 
+### <a name="input_override_anaml_server_enable_hsts"></a> [override\_anaml\_server\_enable\_hsts](#input\_override\_anaml\_server\_enable\_hsts)
+
+Description: Enable HTTP Strict Transport Security (HSTS) headers Secure HTTP cookie flag
+
+Type: `bool`
+
+Default: `true`
+
 ### <a name="input_override_anaml_server_enable_scheduling"></a> [override\_anaml\_server\_enable\_scheduling](#input\_override\_anaml\_server\_enable\_scheduling)
 
 Description: n/a
@@ -637,6 +645,14 @@ Description: n/a
 Type: `bool`
 
 Default: `null`
+
+### <a name="input_override_anaml_server_enable_secure_cookies"></a> [override\_anaml\_server\_enable\_secure\_cookies](#input\_override\_anaml\_server\_enable\_secure\_cookies)
+
+Description: Enable Secure HTTP cookie flag
+
+Type: `bool`
+
+Default: `true`
 
 ### <a name="input_override_anaml_server_governance_run_type_checks"></a> [override\_anaml\_server\_governance\_run\_type\_checks](#input\_override\_anaml\_server\_governance\_run\_type\_checks)
 

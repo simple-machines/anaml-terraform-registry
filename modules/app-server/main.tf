@@ -139,6 +139,9 @@ resource "kubernetes_config_map" "anaml_server" {
       enable_header_debug_logging = var.enable_header_debug_logging ? "true" : "false"
       enable_body_debug_logging   = var.enable_body_debug_logging ? "true" : "false"
 
+      enable_secure_cookies = var.enable_secure_cookies ? "true" : "false"
+      enable_hsts           = var.enable_hsts ? "true" : "false"
+
       enable_scheduling = var.enable_scheduling ? "true" : "false"
 
       governance_runTypeChecks = var.governance_run_type_checks ? "true" : "false"

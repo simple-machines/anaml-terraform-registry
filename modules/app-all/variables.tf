@@ -267,6 +267,18 @@ variable "override_anaml_server_enable_scheduling" {
   default = null
 }
 
+variable "override_anaml_server_enable_secure_cookies" {
+  type        = bool
+  default     = true
+  description = "Enable Secure HTTP cookie flag"
+}
+
+variable "override_anaml_server_enable_hsts" {
+  type        = bool
+  default     = true
+  description = "Enable HTTP Strict Transport Security (HSTS) headers Secure HTTP cookie flag"
+}
+
 variable "override_anaml_server_governance_run_type_checks" {
   type    = bool
   default = null

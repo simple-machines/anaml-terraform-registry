@@ -81,12 +81,6 @@ Description: Anaml version to deploy. This should be a valid Anaml container tag
 
 Type: `string`
 
-### <a name="input_hostname"></a> [hostname](#input\_hostname)
-
-Description: The hostname Anaml will be accessed from. i.e 'dev.nonprod.anaml.app'
-
-Type: `string`
-
 ### <a name="input_kubernetes_namespace_name"></a> [kubernetes\_namespace\_name](#input\_kubernetes\_namespace\_name)
 
 Description: Kubernetes namespace to deploy to. This should be set if create\_anaml\_namespace is false
@@ -170,6 +164,14 @@ Description: n/a
 Type: `bool`
 
 Default: `true`
+
+### <a name="input_hostname"></a> [hostname](#input\_hostname)
+
+Description: The hostname Anaml will be accessed from. i.e 'dev.nonprod.anaml.app'
+
+Type: `string`
+
+Default: `null`
 
 ### <a name="input_https_urls"></a> [https\_urls](#input\_https\_urls)
 

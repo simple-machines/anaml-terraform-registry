@@ -10,12 +10,6 @@ variable "container_registry" {
   description = "The container registry to use to fetch the anaml-docs container. I.E. \"australia-southeast1-docker.pkg.dev/anaml-release-artifacts/docker\""
 }
 
-variable "hostname" {
-  type        = string
-  nullable    = false
-  description = "The external/public hostname to use for UI links. I.E. \"anaml.example.com\""
-}
-
 variable "kubernetes_deployment_name" {
   type        = string
   description = "(Optional) Name of the deployment, must be unique. Cannot be updated. For more info see [Kubernetes reference](http://kubernetes.io/docs/user-guide/identifiers#names)"

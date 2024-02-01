@@ -98,7 +98,6 @@ resource "kubernetes_deployment" "anaml_docs" {
             container_port = local.port
             name           = "http-web-svc"
           }
-          args = ["https://${var.hostname}", "docs"]
 
           dynamic "volume_mount" {
             for_each = var.kubernetes_secret_ssl == null ? [] : ["certificates"]

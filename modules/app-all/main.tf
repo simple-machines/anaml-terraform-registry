@@ -64,7 +64,6 @@ module "anaml-docs" {
 
   anaml_docs_version             = coalesce(var.override_anaml_docs_version, var.anaml_version)
   container_registry             = var.container_registry
-  hostname                       = var.hostname
   kubernetes_namespace           = var.kubernetes_namespace_create ? kubernetes_namespace.anaml_namespace[0].metadata.0.name : var.kubernetes_namespace_name
   kubernetes_node_selector       = var.kubernetes_pod_node_selector_app
   kubernetes_secret_ssl          = var.override_anaml_docs_kubernetes_secret_ssl

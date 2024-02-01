@@ -18,7 +18,8 @@ variable "enable_spark_history_server" {
 variable "hostname" {
   type        = string
   description = "The hostname Anaml will be accessed from. i.e 'dev.nonprod.anaml.app'"
-  nullable    = false
+  default     = null
+  nullable    = true
 }
 
 variable "https_urls" {

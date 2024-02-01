@@ -114,12 +114,6 @@ Description: The container registry to use to fetch the anaml-server container
 
 Type: `string`
 
-### <a name="input_hostname"></a> [hostname](#input\_hostname)
-
-Description: The external/public hostname to use for UI links. I.E. "anaml.example.com"
-
-Type: `string`
-
 ### <a name="input_postgres_host"></a> [postgres\_host](#input\_postgres\_host)
 
 Description: The host name of the Postgres database to connecto to
@@ -245,6 +239,14 @@ Description: n/a
 Type: `bool`
 
 Default: `false`
+
+### <a name="input_hostname"></a> [hostname](#input\_hostname)
+
+Description: The external/public hostname to use for UI links. I.E. "anaml.example.com"
+
+Type: `string`
+
+Default: `null`
 
 ### <a name="input_kubernetes_container_env_from"></a> [kubernetes\_container\_env\_from](#input\_kubernetes\_container\_env\_from)
 

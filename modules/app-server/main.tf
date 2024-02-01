@@ -176,9 +176,10 @@ resource "kubernetes_config_map" "anaml_server" {
       permitted_user_group_id = var.oidc_permitted_users_group_id != null ? var.oidc_permitted_users_group_id : ""
 
       web_rootUrl = coalesce(
-        var.proxy_base == "/" ? "https://${var.hostname}" : null,
+        var.proxy_base == "/" && var.hostname != null ? "https://${var.hostname}" : null,
         try("https://${var.hostname}/${join("/", compact(split("/", var.proxy_base)))}", null),
-        "https://${var.hostname}"
+        var.hostname != null ? "https://${var.hostname}" : null,
+        "/"
       ),
 
       truststore = var.ssl_kubernetes_secret_pkcs12_truststore != null ? "/tmp/certificates/java/truststore" : null,

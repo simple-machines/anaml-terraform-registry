@@ -56,12 +56,6 @@ Description: The container registry to use to fetch the anaml-docs container. I.
 
 Type: `string`
 
-### <a name="input_hostname"></a> [hostname](#input\_hostname)
-
-Description: The external/public hostname to use for UI links. I.E. "anaml.example.com"
-
-Type: `string`
-
 ## Optional Inputs
 
 The following input variables are optional (have default values):

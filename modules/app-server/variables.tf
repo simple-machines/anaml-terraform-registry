@@ -6,8 +6,9 @@ variable "container_registry" {
 
 variable "hostname" {
   type        = string
-  nullable    = false
+  nullable    = true
   description = "The external/public hostname to use for UI links. I.E. \"anaml.example.com\""
+  default     = null
 }
 
 variable "kubernetes_namespace" {

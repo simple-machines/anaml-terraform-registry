@@ -233,14 +233,12 @@ variable "anaml_admin_password" {
 
 variable "anaml_admin_secret" {
   type        = string
-  default     = null
   description = "The Anaml API service password. This is used internally by Anaml for service-to-service communication"
   sensitive   = true
 }
 
 variable "anaml_admin_token" {
   type        = string
-  default     = null
   description = "The Anaml API service username. This is used internally by Anaml for service-to-service communication"
   sensitive   = true
 }

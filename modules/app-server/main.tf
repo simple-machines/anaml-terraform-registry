@@ -209,6 +209,16 @@ resource "kubernetes_secret" "anaml_server_admin_password" {
   type = "Opaque"
 }
 
+# If a admin_secret is not provided, create one
+resource "random_uuid" "anaml_admin_token" {
+  count = var.anaml_admin_token == null ? 1 : 0
+}
+
+resource "random_password" "anaml_admin_secret" {
+  count  = var.anaml_admin_secret == null ? 1 : 0
+  length = 32
+}
+
 resource "kubernetes_secret" "anaml_server_admin_api_auth" {
   metadata {
     name      = "${var.kubernetes_deployment_name}-admin-api-auth"
@@ -216,8 +226,8 @@ resource "kubernetes_secret" "anaml_server_admin_api_auth" {
     labels    = { for k, v in local.deployment_labels : k => v if k != "app.kubernetes.io/version" }
   }
   data = {
-    ANAML_ADMIN_SECRET = var.anaml_admin_secret
-    ANAML_ADMIN_TOKEN  = var.anaml_admin_token
+    ANAML_ADMIN_SECRET = var.anaml_admin_secret == null ? random_password.anaml_admin_secret[0].result : var.anaml_admin_secret
+    ANAML_ADMIN_TOKEN  = var.anaml_admin_token == null ? random_uuid.anaml_admin_token[0].result : var.anaml_admin_token
   }
   type = "Opaque"
 }

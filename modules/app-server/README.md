@@ -83,6 +83,8 @@ The following providers are used by this module:
 
 - <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) (~> 2.11)
 
+- <a name="provider_random"></a> [random](#provider\_random)
+
 ## Modules
 
 No modules.
@@ -97,10 +99,24 @@ The following resources are used by this module:
 - [kubernetes_secret.anaml_server_admin_password](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/secret) (resource)
 - [kubernetes_secret.offline_license_response](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/secret) (resource)
 - [kubernetes_service.anaml_server](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/service) (resource)
+- [random_password.anaml_admin_secret](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) (resource)
+- [random_uuid.anaml_admin_token](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) (resource)
 
 ## Required Inputs
 
 The following input variables are required:
+
+### <a name="input_anaml_admin_secret"></a> [anaml\_admin\_secret](#input\_anaml\_admin\_secret)
+
+Description: The Anaml API service password. This is used internally by Anaml for service-to-service communication
+
+Type: `string`
+
+### <a name="input_anaml_admin_token"></a> [anaml\_admin\_token](#input\_anaml\_admin\_token)
+
+Description: The Anaml API service username. This is used internally by Anaml for service-to-service communication
+
+Type: `string`
 
 ### <a name="input_anaml_server_version"></a> [anaml\_server\_version](#input\_anaml\_server\_version)
 
@@ -147,22 +163,6 @@ Default: `null`
 ### <a name="input_anaml_admin_password"></a> [anaml\_admin\_password](#input\_anaml\_admin\_password)
 
 Description: If `enable_form_client` is `true`, the initial admin account password for sign in
-
-Type: `string`
-
-Default: `null`
-
-### <a name="input_anaml_admin_secret"></a> [anaml\_admin\_secret](#input\_anaml\_admin\_secret)
-
-Description: The Anaml API service password. This is used internally by Anaml for service-to-service communication
-
-Type: `string`
-
-Default: `null`
-
-### <a name="input_anaml_admin_token"></a> [anaml\_admin\_token](#input\_anaml\_admin\_token)
-
-Description: The Anaml API service username. This is used internally by Anaml for service-to-service communication
 
 Type: `string`
 

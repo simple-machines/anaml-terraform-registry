@@ -158,8 +158,10 @@ variable "anaml_server_password" {
 }
 
 variable "checkpoint_location" {
-  type     = string
-  nullable = false
+  type        = string
+  default     = null
+  description = "Sets the spark checkpointLocation value. This allows S3/GCS to be used for durable checkpointing."
+  nullable    = true
 }
 
 variable "enable_spark_history_server" {

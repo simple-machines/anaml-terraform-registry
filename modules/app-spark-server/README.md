@@ -56,12 +56,6 @@ Description: n/a
 
 Type: `string`
 
-### <a name="input_checkpoint_location"></a> [checkpoint\_location](#input\_checkpoint\_location)
-
-Description: n/a
-
-Type: `string`
-
 ### <a name="input_container_registry"></a> [container\_registry](#input\_container\_registry)
 
 Description: n/a
@@ -125,6 +119,14 @@ Description: n/a
 Type: `string`
 
 Default: `"http://anaml-server.anaml.svc.cluster.local:8080"`
+
+### <a name="input_checkpoint_location"></a> [checkpoint\_location](#input\_checkpoint\_location)
+
+Description: Sets the spark checkpointLocation value. This allows S3/GCS to be used for durable checkpointing.
+
+Type: `string`
+
+Default: `null`
 
 ### <a name="input_enable_spark_history_server"></a> [enable\_spark\_history\_server](#input\_enable\_spark\_history\_server)
 

@@ -625,7 +625,9 @@ variable "enable_form_client" {
 }
 
 variable "override_anaml_spark_server_checkpoint_location" {
-  type = string
+  type     = string
+  nullable = true
+  default  = null
 }
 
 variable "oidc_client_id" {

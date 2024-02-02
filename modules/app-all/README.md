@@ -87,12 +87,6 @@ Description: Kubernetes namespace to deploy to. This should be set if create\_an
 
 Type: `string`
 
-### <a name="input_override_anaml_spark_server_checkpoint_location"></a> [override\_anaml\_spark\_server\_checkpoint\_location](#input\_override\_anaml\_spark\_server\_checkpoint\_location)
-
-Description: n/a
-
-Type: `string`
-
 ### <a name="input_override_anaml_spark_server_kubernetes_service_account_spark_driver_executor"></a> [override\_anaml\_spark\_server\_kubernetes\_service\_account\_spark\_driver\_executor](#input\_override\_anaml\_spark\_server\_kubernetes\_service\_account\_spark\_driver\_executor)
 
 Description: n/a
@@ -837,6 +831,14 @@ list(object({
 ```
 
 Default: `[]`
+
+### <a name="input_override_anaml_spark_server_checkpoint_location"></a> [override\_anaml\_spark\_server\_checkpoint\_location](#input\_override\_anaml\_spark\_server\_checkpoint\_location)
+
+Description: n/a
+
+Type: `string`
+
+Default: `null`
 
 ### <a name="input_override_anaml_spark_server_kubernetes_container_resources_limits_cpu"></a> [override\_anaml\_spark\_server\_kubernetes\_container\_resources\_limits\_cpu](#input\_override\_anaml\_spark\_server\_kubernetes\_container\_resources\_limits\_cpu)
 

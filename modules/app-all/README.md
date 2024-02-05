@@ -424,7 +424,7 @@ Description: n/a
 
 Type: `string`
 
-Default: `null`
+Default: `"anaml"`
 
 ### <a name="input_kubernetes_service_annotations_anaml_docs"></a> [kubernetes\_service\_annotations\_anaml\_docs](#input\_kubernetes\_service\_annotations\_anaml\_docs)
 

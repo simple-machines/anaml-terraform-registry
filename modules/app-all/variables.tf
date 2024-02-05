@@ -778,7 +778,7 @@ variable "kubernetes_pod_anaml_spark_server_sidecars" {
 
 variable "kubernetes_service_account_name" {
   type    = string
-  default = null
+  default = "anaml"
 }
 
 variable "kubernetes_service_account_create" {

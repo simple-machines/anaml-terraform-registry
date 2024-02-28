@@ -27,7 +27,7 @@ locals {
   kafka_config = merge({
     "acks" : "all"
     "bootstrap.servers" : var.kafka_bootstrap_servers
-    "key.serializer" : "org.apache.kafka.common.serialization.VoidSerializer"
+    "key.serializer" : "org.apache.kafka.common.serialization.StringSerializer"
     "schema.registry.url" : var.kafka_schema_registry_url
     "value.serializer" : "io.confluent.kafka.serializers.KafkaAvroSerializer"
   }, var.kafka_additional_config)

@@ -1178,9 +1178,9 @@ Default: `"/"`
 
 The following outputs are exported:
 
-### <a name="output_anaml_api_url"></a> [anaml\_api\_url](#output\_anaml\_api\_url)
+### <a name="output_anaml_internal_server_url"></a> [anaml\_internal\_server\_url](#output\_anaml\_internal\_server\_url)
 
-Description: n/a
+Description: The anaml-server url to use from within kubernetes
 
 ### <a name="output_anaml_server_port"></a> [anaml\_server\_port](#output\_anaml\_server\_port)
 

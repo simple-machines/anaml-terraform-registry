@@ -17,7 +17,15 @@ resource "kubernetes_role" "default" {
   rule {
     api_groups = [""]
     resources  = ["pods", "configmaps", "services", "persistentvolumeclaims"]
-    verbs      = ["get", "list", "watch", "create", "delete", "deletecollection"]
+    verbs = [
+      "create",
+      "delete",
+      "deletecollection",
+      "get",
+      "list",
+      "patch",
+      "watch"
+    ]
   }
 }
 

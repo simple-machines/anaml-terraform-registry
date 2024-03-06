@@ -1194,6 +1194,10 @@ Description: n/a
 
 Description: n/a
 
+### <a name="output_kubernetes_namespace"></a> [kubernetes\_namespace](#output\_kubernetes\_namespace)
+
+Description: The Kubernetes used for deployments
+
 ### <a name="output_kubernetes_service_account"></a> [kubernetes\_service\_account](#output\_kubernetes\_service\_account)
 
 Description: The Kubernetes service account used for deployments

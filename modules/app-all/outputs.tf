@@ -1,11 +1,16 @@
 output "anaml_internal_server_url" {
   description = "The anaml-server url to use from within kubernetes"
-  value = module.anaml-server.internal_url
+  value       = module.anaml-server.internal_url
 }
 
 output "kubernetes_service_account" {
   description = "The Kubernetes service account used for deployments"
   value       = var.kubernetes_service_account_name
+}
+
+output "kubernetes_namespace" {
+  description = "The Kubernetes used for deployments"
+  value       = var.kubernetes_namespace_name
 }
 
 output "kubernetes_service_name_anaml_server" {

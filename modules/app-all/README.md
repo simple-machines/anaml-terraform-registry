@@ -1202,6 +1202,10 @@ Description: The Kubernetes used for deployments
 
 Description: The Kubernetes service account used for deployments
 
+### <a name="output_kubernetes_service_account_spark_executor_driver"></a> [kubernetes\_service\_account\_spark\_executor\_driver](#output\_kubernetes\_service\_account\_spark\_executor\_driver)
+
+Description: The Kubernetes service account used for Spark
+
 ### <a name="output_kubernetes_service_name_anaml_server"></a> [kubernetes\_service\_name\_anaml\_server](#output\_kubernetes\_service\_name\_anaml\_server)
 
 Description: n/a

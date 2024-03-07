@@ -630,6 +630,10 @@ The following outputs are exported:
 
 Description: n/a
 
+### <a name="output_kubernetes_service_account"></a> [kubernetes\_service\_account](#output\_kubernetes\_service\_account)
+
+Description: n/a
+
 ### <a name="output_spark_history_server_internal_url"></a> [spark\_history\_server\_internal\_url](#output\_spark\_history\_server\_internal\_url)
 
 Description: n/a

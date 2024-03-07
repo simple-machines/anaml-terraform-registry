@@ -8,6 +8,11 @@ output "kubernetes_service_account" {
   value       = var.kubernetes_service_account_name
 }
 
+output "kubernetes_service_account_spark_executor_driver" {
+  description = "The Kubernetes service account used for Spark"
+  value       = module.spark-server.kubernetes_service_account
+}
+
 output "kubernetes_namespace" {
   description = "The Kubernetes used for deployments"
   value       = var.kubernetes_namespace_name

@@ -19,3 +19,7 @@ output "anaml_spark_server_internal_url" {
     )
   }
 }
+
+output "kubernetes_service_account" {
+  value = var.kubernetes_service_account_spark_driver_executor
+}

@@ -53,7 +53,7 @@ resource "kubernetes_deployment" "webhook_server" {
         node_selector        = var.kubernetes_node_selector
 
         dynamic "volume" {
-          for_each = var.webhook_cloud_functions_svc_credentials != null ? [1] : []
+          for_each = try(var.webhook_cloud_functions_svc_credentials != null, false) ? [1] : []
           content {
             name = "cloud-function-svc-credentials"
             secret {
@@ -63,7 +63,7 @@ resource "kubernetes_deployment" "webhook_server" {
         }
 
         dynamic "volume" {
-          for_each = var.webhook_vertex_svc_credentials != null ? [1] : []
+          for_each = try(var.webhook_vertex_svc_credentials != null, false) ? [1] : []
           content {
             name = "vertex-svc-credentials"
             secret {
@@ -126,7 +126,7 @@ resource "kubernetes_deployment" "webhook_server" {
           }
 
           dynamic "volume_mount" {
-            for_each = var.webhook_cloud_functions_svc_credentials != null ? [1] : []
+            for_each = try(var.webhook_cloud_functions_svc_credentials != null, false) ? [1] : []
             content {
               name       = "cloud-function-svc-credentials"
               mount_path = "/var/secrets/cloud-functions"
@@ -135,7 +135,7 @@ resource "kubernetes_deployment" "webhook_server" {
           }
 
           dynamic "volume_mount" {
-            for_each = var.webhook_vertex_svc_credentials != null ? [1] : []
+            for_each = try(var.webhook_vertex_svc_credentials != null, false) ? [1] : []
             content {
               name       = "vertex-svc-credentials"
               mount_path = "/var/secrets/vertex"

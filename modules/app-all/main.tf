@@ -171,6 +171,7 @@ module "anaml-ui" {
   docs_url                 = module.anaml-docs.internal_url
   spark_history_server_url = module.spark-server.spark_history_server_internal_url
   anaml_server_url         = module.anaml-server.internal_url
+  metabase_url             = var.metabase_url
 }
 
 module "spark-server" {

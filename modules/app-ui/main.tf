@@ -62,7 +62,8 @@ locals {
     "ANAML_DOCS_ORIGIN_URL" : var.docs_url,
     "ANAML_LANGUAGE" : var.language,
     "REACT_APP_FRONTEND_SKIN" : var.skin,
-    "SPARK_HISTORY_SERVER_ORIGIN_URL" : var.spark_history_server_url
+    "SPARK_HISTORY_SERVER_ORIGIN_URL" : var.spark_history_server_url,
+    "METABASE_ORIGIN_URL" : var.metabase_url,
   }, var.kubernetes_deployment_container_env)
 }
 

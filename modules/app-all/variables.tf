@@ -816,3 +816,8 @@ variable "ui_base_path" {
   nullable    = false
   description = "Set the application basepath if running on a path other than `/`. Useful if using pathbased routing and not host based routing"
 }
+
+variable "metabase_url" {
+  type        = string
+  default     = null
+}

@@ -117,6 +117,11 @@ variable "spark_history_server_url" {
   nullable = false
 }
 
+variable "metabase_url" {
+  type        = string
+  default     = null
+}
+
 variable "anaml_ui_version" {
   type        = string
   nullable    = false

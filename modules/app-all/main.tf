@@ -305,9 +305,11 @@ module "postgres-proxy" {
     var.kubernetes_service_account_create ? kubernetes_service_account.anaml[0].metadata.0.name : var.kubernetes_service_account_name
   )
   internal_anaml_api_url          = module.anaml-server.internal_url
-  anaml_postgres_proxy_version    = "latest"
+  anaml_postgres_proxy_version    = coalesce(
+    var.override_anaml_postgresql_proxy_version,
+    var.anaml_version
+  )
 }
-
 
 module "metabase" {
   source = "../app-metabase"

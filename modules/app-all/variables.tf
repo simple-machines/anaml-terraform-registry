@@ -824,6 +824,13 @@ variable "ui_base_path" {
   description = "Set the application basepath if running on a path other than `/`. Useful if using pathbased routing and not host based routing"
 }
 
+
+variable "override_anaml_postgresql_proxy_version" {
+  type        = string
+  default     = null
+  description = "anaml-ui version override. This value should contain the container tag to deploy"
+}
+
 variable "metabase_version" {
   type        = string
   default     = "latest"

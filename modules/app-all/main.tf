@@ -295,6 +295,20 @@ module "local-postgres" {
   kubernetes_persistent_volume_claim_storage_class_name = var.kubernetes_persistent_volume_claim_storage_class_name_postgres
 }
 
+
+module "postgres-proxy" {
+  source = "../app-postgresql-proxy"
+
+  kubernetes_namespace            = var.kubernetes_namespace_create ? kubernetes_namespace.anaml_namespace[0].metadata.0.name : var.kubernetes_namespace_name
+  kubernetes_service_account_name = coalesce(
+    var.override_anaml_server_kubernetes_service_account,
+    var.kubernetes_service_account_create ? kubernetes_service_account.anaml[0].metadata.0.name : var.kubernetes_service_account_name
+  )
+  internal_anaml_api_url          = module.anaml-server.internal_url
+  anaml_postgres_proxy_version    = "latest"
+}
+
+
 module "metabase" {
   source = "../app-metabase"
 

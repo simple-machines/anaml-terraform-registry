@@ -199,6 +199,14 @@ Type: `string`
 
 Default: `"feature"`
 
+### <a name="input_metabase_url"></a> [metabase\_url](#input\_metabase\_url)
+
+Description: An optional url to a metabase server to server at /metabase
+
+Type: `string`
+
+Default: `null`
+
 ### <a name="input_skin"></a> [skin](#input\_skin)
 
 Description: The skin to use

@@ -498,6 +498,14 @@ Type: `string`
 
 Default: `null`
 
+### <a name="input_metabase_url"></a> [metabase\_url](#input\_metabase\_url)
+
+Description: An optional url to a metabase server to server at /metabase
+
+Type: `string`
+
+Default: `null`
+
 ### <a name="input_oidc_additional_scopes"></a> [oidc\_additional\_scopes](#input\_oidc\_additional\_scopes)
 
 Description: OpenID Connect scopes to request from the provider. Optional when using OIDC authentication method.

@@ -120,6 +120,7 @@ variable "spark_history_server_url" {
 variable "metabase_url" {
   type        = string
   default     = null
+  description = "An optional url to a metabase server to server at /metabase"
 }
 
 variable "anaml_ui_version" {

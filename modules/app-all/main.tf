@@ -171,7 +171,7 @@ module "anaml-ui" {
   docs_url                 = module.anaml-docs.internal_url
   spark_history_server_url = module.spark-server.spark_history_server_internal_url
   anaml_server_url         = module.anaml-server.internal_url
-  metabase_url             = var.metabase_url
+  metabase_url             = module.metabase.internal_url
 }
 
 module "spark-server" {
@@ -293,4 +293,15 @@ module "local-postgres" {
   password                                              = var.postgres_password
   user                                                  = var.postgres_user
   kubernetes_persistent_volume_claim_storage_class_name = var.kubernetes_persistent_volume_claim_storage_class_name_postgres
+}
+
+module "metabase" {
+  source = "../app-metabase"
+
+  kubernetes_namespace            = var.kubernetes_namespace_create ? kubernetes_namespace.anaml_namespace[0].metadata.0.name : var.kubernetes_namespace_name
+  kubernetes_service_account_name = coalesce(
+    var.override_anaml_server_kubernetes_service_account,
+    var.kubernetes_service_account_create ? kubernetes_service_account.anaml[0].metadata.0.name : var.kubernetes_service_account_name
+  )
+  metabase_version                = "latest"
 }

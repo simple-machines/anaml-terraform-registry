@@ -161,6 +161,13 @@ variable "kubernetes_service_enable_postgres" {
   nullable    = false
 }
 
+variable "kubernetes_service_enable_metabase" {
+  type        = bool
+  default     = false
+  description = "If true, deploy a Postgres pod for Anaml to use. If false you should provide the Postgres host details"
+  nullable    = false
+}
+
 variable "kubernetes_service_type" {
   type        = string
   default     = "ClusterIP"
@@ -817,7 +824,9 @@ variable "ui_base_path" {
   description = "Set the application basepath if running on a path other than `/`. Useful if using pathbased routing and not host based routing"
 }
 
-variable "metabase_url" {
+variable "metabase_version" {
   type        = string
-  default     = null
+  default     = "latest"
+  nullable    = false
+  description = "The version of anaml-docs to deploy. I.E. \"v0.6\" or \"latest\"."
 }
